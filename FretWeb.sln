@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music.Tests", "test\Music.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FretWeb", "src\FretWeb\FretWeb.csproj", "{59521C76-F7CB-4DCC-8996-DA965008AE3E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{5C17E4E6-4A37-442A-B418-D57C869DABC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{12519DDE-3958-4E84-B5E4-E9E6ACCA3324}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\main_frets.yml = .github\workflows\main_frets.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,5 +46,6 @@ Global
 		{2010A708-9047-49B8-9787-B440BCC37992} = {5E04C11E-82AB-4C89-B087-E4B907650903}
 		{330CE75D-5414-458C-8F85-3B318D757B75} = {0DE0E6CD-B8B3-4709-AA2E-2BACD6A5F276}
 		{59521C76-F7CB-4DCC-8996-DA965008AE3E} = {5E04C11E-82AB-4C89-B087-E4B907650903}
+		{12519DDE-3958-4E84-B5E4-E9E6ACCA3324} = {5C17E4E6-4A37-442A-B418-D57C869DABC5}
 	EndGlobalSection
 EndGlobal
