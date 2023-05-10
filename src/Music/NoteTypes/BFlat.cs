@@ -6,4 +6,6 @@ public sealed class BFlat : Note
     public override Sign Sign => Sign.Flat;
     public override string Display => DisplayStrings.BFlat;
     public override Note Alt => Notes.ASharp;
+
+    public override Note AddSemitone() => Notes.B;
 }

@@ -6,4 +6,6 @@ public sealed class BSharp : Note
     public override Sign Sign => Sign.Sharp;
     public override string Display => DisplayStrings.CSharp;
     public override Note Alt => Notes.C;
+
+    public override Note AddSemitone() => Notes.CSharp;
 }

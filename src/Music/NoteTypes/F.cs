@@ -6,4 +6,6 @@ public sealed class F : Note
     public override Sign Sign => Sign.Natural;
     public override string Display => DisplayStrings.F;
     public override Note Alt => Notes.ESharp;
+
+    public override Note AddSemitone() => Notes.FSharp;
 }

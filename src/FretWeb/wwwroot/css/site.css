@@ -23,6 +23,55 @@ body {
 
 .scale-note {
   font-size: 2em;
+  font-weight: bold;
   min-width: 64px;
   text-align: center;
+}
+
+.color-C {
+  color: #f94144;
+}
+
+.color-C-sharp, .color-D-flat {
+  color: #f65a38;
+}
+
+.color-D {
+  color: #f3722c;
+}
+
+.color-D-sharp, .color-E-flat {
+  color: #f68425;
+}
+
+.color-E {
+  color: #f8961e;
+}
+
+.color-F {
+  color: #f9c74f;
+}
+
+.color-F-sharp, .color-G-flat {
+  color: #c5c35e;
+}
+
+.color-G {
+  color: #90be6d;
+}
+
+.color-G-sharp, .color-A-flat {
+  color: #6ab47c;
+}
+
+.color-A {
+  color: #43aa8b;
+}
+
+.color-A-sharp, .color-B-flat {
+  color: #4d908e;
+}
+
+.color-B {
+  color: #577590;
 }

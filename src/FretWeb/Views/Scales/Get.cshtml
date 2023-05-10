@@ -14,9 +14,9 @@
       <td class="scale-note"><strong>@scale[0].Display</strong></td>
       @foreach (var note in scale)
       {
-        <td class="scale-note">@note.Display</td>
+        <td class="scale-note color-@note.Text">@note.Display</td>
       }
-      <td class="scale-note">@scale[0].Display</td>
+      <td class="scale-note color-@scale[0].Text">@scale[0].Display</td>
     </tr>
   }
 </table>

@@ -4,14 +4,20 @@ namespace FretWeb.Music.NoteTypes;
 
 public abstract class Note : IEquatable<Note>
 {
+    private string? _text;
+    
     public abstract char Letter { get; }
     public abstract Sign Sign { get; }
     public abstract string Display { get; }
     public abstract Note Alt { get; }
 
+    public string Text => _text ??= GetText();
+
     public bool IsSharp => Sign == Sign.Sharp;
     public bool IsFlat => Sign == Sign.Flat;
     public bool IsNatural => Sign == Sign.Natural;
+
+    public abstract Note AddSemitone();
 
     public bool IsEquivalentTo(Note other) => Equals(other) || Equals(other.Alt);
 
@@ -37,6 +43,18 @@ public abstract class Note : IEquatable<Note>
     public static bool operator !=(Note? left, Note? right)
     {
         return !Equals(left, right);
+    }
+
+    private string GetText()
+    {
+        var sign = Sign switch
+        {
+            Sign.Natural => "",
+            Sign.Flat => "-flat",
+            Sign.Sharp => "-sharp",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        return $"{Letter}{sign}";
     }
 
     public static bool TryParse(string str, [NotNullWhen(true)] out Note? note)

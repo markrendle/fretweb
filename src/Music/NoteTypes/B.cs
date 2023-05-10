@@ -6,4 +6,6 @@ public sealed class B : Note
     public override Sign Sign => Sign.Natural;
     public override string Display => DisplayStrings.B;
     public override Note Alt => Notes.CFlat;
+
+    public override Note AddSemitone() => Notes.C;
 }
