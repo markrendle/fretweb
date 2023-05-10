@@ -25,4 +25,56 @@ public static class Notes
     public static readonly Note BFlat = new BFlat();
     public static readonly Note B = new B();
     public static readonly Note BSharp = new BSharp();
+
+    private static Dictionary<char, Note[]>? _lookup;
+
+    public static Note Get(char letter, Sign sign)
+    {
+        var lookup = _lookup ??= CreateLookup();
+        letter = char.ToUpperInvariant(letter);
+        int index = (int)sign;
+        if (index is < 0 or > 2) throw new ArgumentOutOfRangeException(nameof(sign));
+        if (!lookup.TryGetValue(letter, out var notes)) throw new ArgumentOutOfRangeException(nameof(letter));
+        return notes[index];
+    }
+
+    public static IEnumerable<Note> All()
+    {
+        yield return C;
+        yield return CSharp;
+        yield return DFlat;
+        yield return D;
+        yield return DSharp;
+        yield return EFlat;
+        yield return E;
+        // yield return ESharp;
+        // yield return FFlat;
+        yield return F;
+        yield return FSharp;
+        yield return GFlat;
+        yield return G;
+        yield return GSharp;
+        yield return AFlat;
+        yield return A;
+        yield return ASharp;
+        yield return BFlat;
+        yield return B;
+        // yield return BSharp;
+        // yield return CFlat;
+    }
+
+    private static Dictionary<char, Note[]> CreateLookup()
+    {
+        // Sign enum is Natural 0, Flat 1, Sharp 2
+        return new Dictionary<char, Note[]>()
+        {
+            ['C'] = new[] { C, CFlat, CSharp },
+            ['D'] = new[] { D, DFlat, DSharp },
+            ['E'] = new[] { E, EFlat, ESharp },
+            ['F'] = new[] { F, FFlat, FSharp },
+            ['G'] = new[] { G, GFlat, GSharp },
+            ['A'] = new[] { A, AFlat, ASharp },
+            ['B'] = new[] { B, BFlat, BSharp },
+        };
+    }
 }

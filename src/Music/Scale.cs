@@ -34,4 +34,35 @@ public class Scale : IEnumerable<Note>
     {
         return GetEnumerator();
     }
+
+    public Scale AsDorian() => ShiftLeft(1);
+    public Scale AsPhrygian() => ShiftLeft(2);
+    
+    public Scale AsLydian() => ShiftLeft(3);
+    public Scale AsMixolydian() => ShiftLeft(4);
+    public Scale AsAeolian() => ShiftLeft(5);
+    public Scale AsLocrian() => ShiftLeft(6);
+
+    public Scale ShiftLeft(int by)
+    {
+        var notes = new Note[_notes.Length];
+        int index = 0;
+        for (int i = by; i < _notes.Length; i++)
+        {
+            notes[index++] = _notes[i];
+        }
+
+        for (int i = 0; i < by; i++)
+        {
+            notes[index++] = _notes[i];
+        }
+
+        return new Scale(notes);
+    }
+
+    public Scale Alt()
+    {
+        var notes = _notes.Select(n => n.Alt).ToArray();
+        return new Scale(notes);
+    }
 }

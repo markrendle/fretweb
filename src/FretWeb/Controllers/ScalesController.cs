@@ -15,11 +15,14 @@ public class ScalesController : Controller
         var scaleSet = name switch
         {
             "major" => Scales.Major,
-            "ionian" => Scales.Ionian,
             "minor" => Scales.Minor,
-            "aeolian" => Scales.Aeolian,
-            "mixolydian" => Scales.Mixolydian,
+            "ionian" => Scales.Ionian,
             "dorian" => Scales.Dorian,
+            "phrygian" => Scales.Phrygian,
+            "lydian" => Scales.Lydian,
+            "mixolydian" => Scales.Mixolydian,
+            "aeolian" => Scales.Aeolian,
+            "locrian" => Scales.Locrian,
             _ => null
         };
         
@@ -28,11 +31,14 @@ public class ScalesController : Controller
         name = name switch
         {
             "major" => "Major",
-            "ionian" => "Ionian",
             "minor" => "Minor",
-            "aeolian" => "Aeolian",
-            "mixolydian" => "Mixolydian",
+            "ionian" => "Ionian",
             "dorian" => "Dorian",
+            "phrygian" => "Phrygian",
+            "lydian" => "Lydian",
+            "mixolydian" => "Mixolydian",
+            "aeolian" => "Aeolian",
+            "locrian" => "Locrian",
             _ => throw new ArgumentException()
         };
 

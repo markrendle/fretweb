@@ -6,6 +6,7 @@ public abstract class Note : IEquatable<Note>
 {
     private string? _text;
     
+    public abstract int Value { get; }
     public abstract char Letter { get; }
     public abstract Sign Sign { get; }
     public abstract string Display { get; }
@@ -16,8 +17,12 @@ public abstract class Note : IEquatable<Note>
     public bool IsSharp => Sign == Sign.Sharp;
     public bool IsFlat => Sign == Sign.Flat;
     public bool IsNatural => Sign == Sign.Natural;
+    public virtual bool IsTheoretical => false;
 
     public abstract Note AddSemitone();
+    public Note AddTone() => AddSemitone().AddSemitone();
+    public abstract Note SubtractSemitone();
+    public Note SubtractTone() => SubtractSemitone().SubtractSemitone();
 
     public bool IsEquivalentTo(Note other) => Equals(other) || Equals(other.Alt);
 

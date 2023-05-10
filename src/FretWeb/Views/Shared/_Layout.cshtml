@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - FretWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FretWeb.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/FretWeb.styles.css" asp-append-version="true" /> *@
 </head>
 <body>
     <header>
@@ -27,9 +27,12 @@
                             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="major">Major</a>
                             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="minor">Minor</a>
                             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="ionian">Ionian</a>
-                            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="aeolian">Aeolian</a>
                             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="dorian">Dorian</a>
+                            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="phrygian">Phrygian</a>
+                            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="lydian">Lydian</a>
                             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="mixolydian">Mixolydian</a>
+                            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="aeolian">Aeolian</a>
+                            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="locrian">Locrian</a>
                         </div>
                     </div>
                         @* <li class="nav-item"> *@

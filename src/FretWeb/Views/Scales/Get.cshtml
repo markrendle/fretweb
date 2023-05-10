@@ -5,13 +5,13 @@
   Layout = "_Layout";
 }
 
-<h2>@Model.Name scales</h2>
+<h2>@Model.Name Scales</h2>
 
 <table class="table table-striped">
   @foreach (var scale in Model.ScaleSet.Enumerate())
   {
     <tr>
-      <td class="scale-note"><strong>@scale[0].Display</strong></td>
+      <td class="scale-note">@scale[0].Display</td>
       @foreach (var note in scale)
       {
         <td class="scale-note color-@note.Text">@note.Display</td>
