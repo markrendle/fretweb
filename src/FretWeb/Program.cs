@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,8 +17,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+const int duration = 60 * 60 * 24;
+var cacheHeader = $"public,max-age={duration}";
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers[HeaderNames.CacheControl] = cacheHeader;
+    }
+});
 
 app.UseRouting();
 
