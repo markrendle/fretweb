@@ -16,9 +16,10 @@ public class ScalesController : Controller
         {
             "major" => Scales.Major,
             "ionian" => Scales.Ionian,
-            "minor" => Scales.Major,
+            "minor" => Scales.Minor,
             "aeolian" => Scales.Aeolian,
             "mixolydian" => Scales.Mixolydian,
+            "dorian" => Scales.Dorian,
             _ => null
         };
         
@@ -31,6 +32,7 @@ public class ScalesController : Controller
             "minor" => "Minor",
             "aeolian" => "Aeolian",
             "mixolydian" => "Mixolydian",
+            "dorian" => "Dorian",
             _ => throw new ArgumentException()
         };
 
