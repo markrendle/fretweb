@@ -28,7 +28,7 @@ body {
   text-align: center;
 }
 
-.color-C {
+.color-C, .color-B-sharp {
   color: #f94144;
 }
 
@@ -44,11 +44,11 @@ body {
   color: #f68425;
 }
 
-.color-E {
+.color-E, .color-F-flat {
   color: #f8961e;
 }
 
-.color-F {
+.color-F, .color-E-sharp {
   color: #f9c74f;
 }
 
@@ -72,6 +72,6 @@ body {
   color: #4d908e;
 }
 
-.color-B {
+.color-B, .color-C-flat {
   color: #577590;
 }
