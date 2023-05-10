@@ -2,7 +2,7 @@ namespace FretWeb.Music;
 
 public static partial class Scales
 {
-    public static ScaleSet Mixolydian = new(
+    public static ScaleSet Mixolydian { get; } = new(
         new Scale(Notes.C, Notes.D, Notes.E, Notes.F, Notes.G, Notes.A, Notes.BFlat),
         new Scale(Notes.DFlat, Notes.EFlat, Notes.F, Notes.GFlat, Notes.AFlat, Notes.BFlat, Notes.CFlat),
         new Scale(Notes.D, Notes.E, Notes.FSharp, Notes.G, Notes.A, Notes.B, Notes.C),

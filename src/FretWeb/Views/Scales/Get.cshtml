@@ -1,0 +1,21 @@
+﻿@model FretWeb.Models.ScalesViewModel
+
+@{
+  ViewBag.Title = $"{Model.Name} scales";
+  Layout = "_Layout";
+}
+
+<h2>@Model.Name scales</h2>
+
+<table class="table table-striped">
+  @foreach (var scale in Model.ScaleSet.Enumerate())
+  {
+    <tr>
+      <td class="scale-note"><strong>@scale[0].Display</strong></td>
+      @foreach (var note in scale)
+      {
+        <td class="scale-note">@note.Display</td>
+      }
+    </tr>
+  }
+</table>
