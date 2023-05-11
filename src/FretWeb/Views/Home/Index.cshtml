@@ -1,8 +1,61 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+  ViewData["Title"] = "FretWeb";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Fretboards</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Bass</h3>
+
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("EADG")" class="nav-link">Standard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("DADG")" class="nav-link">Drop-D</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("EfAfDfGf")" class="nav-link">Semitone Down</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("DGCF")" class="nav-link">Tone Down</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Guitar</h3>
+
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("EADGBE")" class="nav-link">Standard</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("DADGBE")" class="nav-link">Drop-D</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("EfAfDfGfBfEf")" class="nav-link">Semitone Down</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard("DGCFAD")" class="nav-link">Tone Down</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

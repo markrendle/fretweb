@@ -21,6 +21,22 @@ body {
   margin-bottom: 60px;
 }
 
+main {
+  min-height: 80vh;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
 .scale-note {
   font-size: 2em;
   font-weight: bold;
@@ -74,4 +90,10 @@ body {
 
 .color-B, .color-C-flat {
   color: #577590;
+}
+
+.btn-scale {
+  font-size: 1.2em;
+  min-width: 64px;
+  padding: 1px;
 }

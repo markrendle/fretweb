@@ -4,27 +4,27 @@ namespace FretWeb.Music;
 
 public static class Notes
 {
-    public static readonly Note CFlat = new CFlat();
-    public static readonly Note C = new C();
-    public static readonly Note CSharp = new CSharp();
-    public static readonly Note DFlat = new DFlat();
-    public static readonly Note D = new D();
-    public static readonly Note DSharp = new DSharp();
-    public static readonly Note EFlat = new EFlat();
-    public static readonly Note E = new E();
-    public static readonly Note ESharp = new ESharp();
-    public static readonly Note FFlat = new FFlat();
-    public static readonly Note F = new F();
-    public static readonly Note FSharp = new FSharp();
-    public static readonly Note GFlat = new GFlat();
-    public static readonly Note G = new G();
-    public static readonly Note GSharp = new GSharp();
-    public static readonly Note AFlat = new AFlat();
-    public static readonly Note A = new A();
-    public static readonly Note ASharp = new ASharp();
-    public static readonly Note BFlat = new BFlat();
-    public static readonly Note B = new B();
-    public static readonly Note BSharp = new BSharp();
+    public static readonly Note CFlat = NoteTypes.CFlat.Instance;
+    public static readonly Note C = NoteTypes.C.Instance;
+    public static readonly Note CSharp = NoteTypes.CSharp.Instance;
+    public static readonly Note DFlat = NoteTypes.DFlat.Instance;
+    public static readonly Note D = NoteTypes.D.Instance;
+    public static readonly Note DSharp = NoteTypes.DSharp.Instance;
+    public static readonly Note EFlat = NoteTypes.EFlat.Instance;
+    public static readonly Note E = NoteTypes.E.Instance;
+    public static readonly Note ESharp = NoteTypes.ESharp.Instance;
+    public static readonly Note FFlat = NoteTypes.FFlat.Instance;
+    public static readonly Note F = NoteTypes.F.Instance;
+    public static readonly Note FSharp = NoteTypes.FSharp.Instance;
+    public static readonly Note GFlat = NoteTypes.GFlat.Instance;
+    public static readonly Note G = NoteTypes.G.Instance;
+    public static readonly Note GSharp = NoteTypes.GSharp.Instance;
+    public static readonly Note AFlat = NoteTypes.AFlat.Instance;
+    public static readonly Note A = NoteTypes.A.Instance;
+    public static readonly Note ASharp = NoteTypes.ASharp.Instance;
+    public static readonly Note BFlat = NoteTypes.BFlat.Instance;
+    public static readonly Note B = NoteTypes.B.Instance;
+    public static readonly Note BSharp = NoteTypes.BSharp.Instance;
 
     private static Dictionary<char, Note[]>? _lookup;
 

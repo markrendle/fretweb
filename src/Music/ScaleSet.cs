@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FretWeb.Music.NoteTypes;
 
 namespace FretWeb.Music;
@@ -10,15 +11,24 @@ public class ScaleSet
     {
         _scales = scales.ToDictionary(s => s[0], s => s);
     }
+    
+    public required string Name { get; init; }
 
-    public ScaleSet ToDorian() => Shift(1);
-    public ScaleSet ToPhrygian() => Shift(2);
-    public ScaleSet ToLydian() => Shift(3);
-    public ScaleSet ToMixolydian() => Shift(4);
-    public ScaleSet ToAeolian() => Shift(5);
-    public ScaleSet ToLocrian() => Shift(6);
+    public ScaleSet Clone(string name)
+    {
+        return new ScaleSet(Enumerate().ToArray())
+        {
+            Name = name
+        };
+    }
+    public ScaleSet ToDorian() => Shift(1, "Dorian");
+    public ScaleSet ToPhrygian() => Shift(2, "Phrygian");
+    public ScaleSet ToLydian() => Shift(3, "Lydian");
+    public ScaleSet ToMixolydian() => Shift(4, "Mixolydian");
+    public ScaleSet ToAeolian() => Shift(5, "Aeolian");
+    public ScaleSet ToLocrian() => Shift(6, "Locrian");
 
-    private ScaleSet Shift(int shiftBy)
+    private ScaleSet Shift(int shiftBy, string name)
     {
         var scales = _scales.Values.ToArray();
         for (int i = 0; i < scales.Length; i++)
@@ -30,7 +40,10 @@ public class ScaleSet
             }
         }
 
-        return new ScaleSet(scales);
+        return new ScaleSet(scales)
+        {
+            Name = name
+        };
     }
 
     private Scale[] RotateDown(Scale[] scales, int by)
@@ -54,4 +67,6 @@ public class ScaleSet
     public IEnumerable<Scale> Enumerate() => _scales.Values.OrderBy(s => s[0].Value);
 
     public Scale Get(Note note) => _scales[note];
+
+    public bool TryGet(Note note, [NotNullWhen(true)] out Scale? scale) => _scales.TryGetValue(note, out scale);
 }

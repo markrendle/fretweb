@@ -2,6 +2,9 @@ namespace FretWeb.Music.NoteTypes;
 
 public sealed class D : Note
 {
+    public static D Instance { get; } = new ();
+    private D() { }
+    
     public override int Value => 2;
     public override char Letter => 'D';
     public override Sign Sign => Sign.Natural;

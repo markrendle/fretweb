@@ -2,6 +2,9 @@ namespace FretWeb.Music.NoteTypes;
 
 public sealed class CFlat : Note
 {
+    public static CFlat Instance { get; } = new ();
+    private CFlat() { }
+    
     public override int Value => 11;
     public override char Letter => 'C';
     public override Sign Sign => Sign.Flat;

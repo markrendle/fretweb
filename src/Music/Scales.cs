@@ -1,5 +1,31 @@
 namespace FretWeb.Music;
 
+public static class ScaleNames
+{
+    public const string Major = "Major";
+    public const string Minor = "Minor";
+    public const string Ionian = "Ionian";
+    public const string Dorian = "Dorian";
+    public const string Phrygian = "Phrygian";
+    public const string Lydian = "Lydian";
+    public const string Mixolydian = "Mixolydian";
+    public const string Aeolian = "Aeolian";
+    public const string Locrian = "Locrian";
+
+    public static IEnumerable<string> Enumerate()
+    {
+        yield return Major;
+        yield return Minor;
+        yield return Ionian;
+        yield return Dorian;
+        yield return Phrygian;
+        yield return Lydian;
+        yield return Mixolydian;
+        yield return Aeolian;
+        yield return Locrian;
+    }
+}
+
 public static class Scales
 {
     static Scales()
@@ -17,17 +43,23 @@ public static class Scales
             new Scale(Notes.A, Notes.B, Notes.CSharp, Notes.D, Notes.E, Notes.FSharp, Notes.GSharp),
             new Scale(Notes.BFlat, Notes.C, Notes.D, Notes.EFlat, Notes.F, Notes.G, Notes.A),
             new Scale(Notes.B, Notes.CSharp, Notes.DSharp, Notes.E, Notes.FSharp, Notes.GSharp, Notes.ASharp)
-        );
+        )
+        {
+            Name = "Ionian"
+        };
         Dorian = Ionian.ToDorian();
         Phrygian = Ionian.ToPhrygian();
         Lydian = Ionian.ToLydian();
         Mixolydian = Ionian.ToMixolydian();
         Aeolian = Ionian.ToAeolian();
         Locrian = Ionian.ToLocrian();
+
+        Major = Ionian.Clone("Major");
+        Minor = Aeolian.Clone("Minor");
     }
 
-    public static ScaleSet Major => Ionian;
-    public static ScaleSet Minor => Aeolian;
+    public static ScaleSet Major { get; }
+    public static ScaleSet Minor { get; }
     
     public static ScaleSet Ionian { get; }
     public static ScaleSet Dorian { get; }
@@ -36,4 +68,19 @@ public static class Scales
     public static ScaleSet Mixolydian { get; }
     public static ScaleSet Aeolian { get; }
     public static ScaleSet Locrian { get; }
+    
+    public static IEnumerable<ScaleSet> Enumerate()
+    {
+        yield return Major;
+        yield return Minor;
+        yield return Ionian;
+        yield return Dorian;
+        yield return Phrygian;
+        yield return Lydian;
+        yield return Mixolydian;
+        yield return Aeolian;
+        yield return Locrian;
+    }
+
+    public static ScaleSet? FindByName(string name) => Enumerate().FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 }

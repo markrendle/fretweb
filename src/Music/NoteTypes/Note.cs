@@ -5,6 +5,11 @@ namespace FretWeb.Music.NoteTypes;
 public abstract class Note : IEquatable<Note>
 {
     private string? _text;
+
+    private protected Note()
+    {
+        
+    }
     
     public abstract int Value { get; }
     public abstract char Letter { get; }

@@ -2,6 +2,9 @@ namespace FretWeb.Music.NoteTypes;
 
 public sealed class E : Note
 {
+    public static E Instance { get; } = new ();
+    private E() { }
+    
     public override int Value => 4;
     public override char Letter => 'E';
     public override Sign Sign => Sign.Natural;

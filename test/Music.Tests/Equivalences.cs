@@ -1,6 +1,4 @@
-using FretWeb.Music;
-
-namespace Music.Tests;
+namespace FretWeb.Music.Tests;
 
 public class Equivalences
 {

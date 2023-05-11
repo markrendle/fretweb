@@ -7,7 +7,6 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <RootNamespace>FretWeb.Music.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Music\Music.csproj" />
+    <ProjectReference Include="..\..\src\Fretboards\Fretboards.csproj" />
   </ItemGroup>
 
 </Project>
