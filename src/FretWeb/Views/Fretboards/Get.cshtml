@@ -35,7 +35,10 @@ else
         @foreach (var fs in openFret.Strings)
         {
           <div class="open-fret-string color-@fs.Note.Text">
-            <span class="fret-badge">@fs.Badge</span>
+              @if (fs.Badge is {Length: > 0})
+              {
+                <span class="fret-badge">@fs.Badge</span>
+              }
           </div>
         }
         <div class="fretboard-bottom"></div>
