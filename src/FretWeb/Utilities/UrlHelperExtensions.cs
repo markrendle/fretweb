@@ -5,6 +5,7 @@ namespace FretWeb.Utilities;
 
 public static class UrlHelperExtensions
 {
+    public static string? Scale(this IUrlHelper urlHelper, string name) => urlHelper.Action("Get", "Scales", new { name });
     public static string? Fretboard(this IUrlHelper urlHelper, string openNotes, string? scale = null, string? root = null, int? frets = null,
         string? tab = null)
     {
