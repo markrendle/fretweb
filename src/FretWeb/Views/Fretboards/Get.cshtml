@@ -67,7 +67,8 @@ else
             <div class="fret-string color-@fs.Note.Text">
               @if (fs.Badge is {Length: > 0})
               {
-                <span class="fret-badge">@fs.Badge</span>
+                var cls = fs.IsRoot ? "fret-badge fret-badge-root" : "fret-badge";
+                <span class="@cls">@fs.Badge</span>
               }
             </div>
           }

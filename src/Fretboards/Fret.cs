@@ -36,30 +36,57 @@ public class Fret
                 note = note.Alt;
             }
         }
+
+        if (!Scales.Major.TryGet(scale.Root, out var majorScale))
+        {
+            Scales.Major.TryGet(scale.Root.Alt, out majorScale);
+        }
         
         foreach (var fretString in _strings)
         {
-            int index = notes.IndexOf(fretString.Note);
+            var note = fretString.Note;
+            
+            int index = notes.IndexOf(note);
             if (index < 0 && !fretString.Note.IsNatural)
             {
-                index = notes.IndexOf(fretString.Note.Alt);
+                note = note.Alt;
+                index = notes.IndexOf(note);
             }
             if (index < 0)
             {
                 fretString.Badge = string.Empty;
                 fretString.IsRoot = false;
+                continue;
             }
-            else if (index == 0)
+
+            if (index == 0)
             {
                 fretString.Badge = notes[index].Display;
                 fretString.IsRoot = true;
+                continue;
             }
-            else
+
+            int display = index + 1;
+            string badge = display.ToString();
+
+            // If we're on e.g. Eflat as the third note of C Minor, then the third note in C Major is E
+            // So get the third note of CMajor,
+
+            if (majorScale is not null)
             {
-                ++index;
-                fretString.Badge = index.ToString();
-                fretString.IsRoot = false;
+                var major = majorScale.AsSpan();
+                index %= major.Length;
+                if (!major[index].IsEquivalentTo(note))
+                {
+                    if (major[index].IsEquivalentTo(note.AddSemitone()))
+                    {
+                        badge = $"{DisplayStrings.Flat}{display}";
+                    }
+                }
             }
+
+            fretString.Badge = badge;
+            fretString.IsRoot = false;
         }
     }
 }

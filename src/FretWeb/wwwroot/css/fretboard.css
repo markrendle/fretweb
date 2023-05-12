@@ -71,7 +71,17 @@
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
-    line-height: 2.5rem;
+    line-height: 2.4rem;
     border-width: thin;
     background-color: #222222;
+}
+
+.fret-badge-root {
+    border-style: solid;
+    border-radius: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    line-height: 2.3rem;
+    border-width: medium;
+    background-color: #111111;
 }

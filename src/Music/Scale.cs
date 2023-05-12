@@ -13,6 +13,8 @@ public class Scale : IEnumerable<Note>
         _notes = notes;
     }
 
+    public Note Root => this[0];
+
     public Note this[int index]
     {
         get
