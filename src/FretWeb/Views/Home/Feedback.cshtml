@@ -1,0 +1,27 @@
+﻿@model FeedbackViewModel
+
+@{
+  ViewBag.Title = "Feedback";
+  Layout = "_Layout";
+}
+
+<h1>Feedback</h1>
+
+@if (Model.IsUnavailable)
+{
+  <p>Sorry, the feedback feature is currently unavailable. 🙁</p>
+}
+else
+{
+<div class="row">
+  <div class="col-6 offset-3 col-md-12 offset-md-0">
+    <form asp-action="PostFeedback" method="post">
+      <div class="form-group">
+        <label class="form-label m-2 text-lg-start" asp-for="Feedback">What's the problem?</label>
+        <textarea class="form-control form-control-lg m-2" rows="8" placeholder="I am sad/happy because..." asp-for="Feedback"></textarea>
+      </div>
+      <button class="btn btn-primary w-25 m-2" type="submit">Send Feedback</button>
+    </form>
+  </div>
+</div>
+}

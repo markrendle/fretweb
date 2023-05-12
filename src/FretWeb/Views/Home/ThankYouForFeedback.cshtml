@@ -1,0 +1,19 @@
+﻿@model ThankYouForFeedbackViewModel
+
+@{
+  ViewBag.Title = "title";
+  Layout = "_Layout";
+}
+
+@if (Model.Failed)
+{
+<h1>Oh bother 😖</h1>
+
+  <p>Great, now the feedback feature isn't working either. Sorry. If you have a GitHub account you can
+    <a href="https://github.com/markrendle/fretweb/issues">open an issue</a> to report any problems.</p>
+}
+else
+{
+  <h1>Thank you! ❤</h1>
+  <p>Thanks for taking the time to send some feedback. We appreciate you.</p>
+}
