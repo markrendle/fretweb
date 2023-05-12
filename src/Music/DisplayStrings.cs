@@ -4,7 +4,9 @@ public static class DisplayStrings
 {
     public const string Natural = "";
     public const string Sharp = "♯";
+    public const string SharpSharp = "♯♯";
     public const string Flat = "♭";
+    public const string FlatFlat = "♭♭";
     public const string CFlat = "C♭";
     public const string C = "C";
     public const string CSharp = "C♯";

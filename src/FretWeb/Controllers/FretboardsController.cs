@@ -12,7 +12,7 @@ public class FretboardsController : Controller
     [HttpGet("{openNotes}")]
     public IActionResult Get(string openNotes, [FromQuery] int? frets,
         [FromQuery(Name = "scale")] string? scaleName, [FromQuery] string? root,
-        [FromQuery] string? tab)
+        [FromQuery(Name = "chord")] string? chordId, [FromQuery] string? tab)
     {
         var openNoteArray = ParseOpenNoteArray(openNotes);
         
@@ -23,11 +23,17 @@ public class FretboardsController : Controller
             OpenNotes = openNotes,
             Frets = frets,
             Scale = scaleName,
+            Chord = chordId,
             Root = root,
             Tab = tab ?? "Scales"
         };
+
+        if (root is not { Length: > 0 } || !Note.TryParse(root, out var rootNote))
+        {
+            return View(viewModel);
+        }
         
-        if (scaleName is { Length: > 0 } && root is { Length: > 0 } && Note.TryParse(root, out var rootNote))
+        if (scaleName is { Length: > 0 })
         {
             var scaleSet = Scales.FindByName(scaleName);
             if (scaleSet is not null && scaleSet.TryGet(rootNote, out var scale))
@@ -36,6 +42,20 @@ public class FretboardsController : Controller
                 
                 fretboard.SetBadges(scale, rootNote.Sign);
             }
+        }
+        else if (chordId is { Length: > 0 })
+        {
+            if (Chords.TryGet(chordId, out var chord))
+            {
+                viewModel.Title = $"{rootNote.Display} {chord.Name}";
+
+                fretboard.SetBadges(chord, rootNote);
+            }
+        }
+        else
+        {
+            viewModel.Title = rootNote.Display;
+            fretboard.SetBadges(rootNote);
         }
         
         return View(viewModel);

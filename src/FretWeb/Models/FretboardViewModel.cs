@@ -1,4 +1,5 @@
 ﻿using FretWeb.Fretboards;
+using FretWeb.Music;
 
 namespace FretWeb.Models;
 
@@ -17,4 +18,5 @@ public class FretboardViewModel
     public int? Frets { get; init; }
     public string? Scale { get; init; }
     public string? Root { get; init; }
+    public string? Chord { get; set; }
 }

@@ -63,6 +63,22 @@ public static class Notes
         // yield return CFlat;
     }
 
+    public static IEnumerable<Note> ChromaticWithFlats()
+    {
+        yield return C;
+        yield return DFlat;
+        yield return D;
+        yield return EFlat;
+        yield return E;
+        yield return F;
+        yield return GFlat;
+        yield return G;
+        yield return AFlat;
+        yield return A;
+        yield return BFlat;
+        yield return B;
+    }
+
     private static Dictionary<char, Note[]> CreateLookup()
     {
         // Sign enum is Natural 0, Flat 1, Sharp 2

@@ -25,6 +25,18 @@ public abstract class Note : IEquatable<Note>
     public virtual bool IsTheoretical => false;
 
     public abstract Note AddSemitone();
+
+    public Note AddSemitones(int count)
+    {
+        var note = this;
+        for (int i = 0; i < count; i++)
+        {
+            note = note.AddSemitone();
+        }
+
+        return note;
+    }
+    
     public Note AddTone() => AddSemitone().AddSemitone();
     public abstract Note SubtractSemitone();
     public Note SubtractTone() => SubtractSemitone().SubtractSemitone();
@@ -146,4 +158,9 @@ public abstract class Note : IEquatable<Note>
             'G' => Notes.GSharp,
             _ => throw new ArgumentOutOfRangeException()
         };
+
+    public bool IsSemitoneHigherThan(Note other)
+    {
+        return other.AddSemitone().IsEquivalentTo(this);
+    }
 }

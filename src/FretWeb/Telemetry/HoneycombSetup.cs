@@ -11,6 +11,7 @@ public static class HoneycombSetup
     public static void AddHoneycombOpenTelemetry(this WebApplicationBuilder builder)
     {
         var honeycombOptions = builder.Configuration.GetHoneycombOptions();
+        honeycombOptions.MetricsDataset ??= honeycombOptions.Dataset ??= "fretweb";
 
         if (honeycombOptions.ApiKey is not { Length: > 0 }) return;
         

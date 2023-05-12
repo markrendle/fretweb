@@ -7,6 +7,8 @@ public static class SignExtension
         Sign.Natural => DisplayStrings.Natural,
         Sign.Flat => DisplayStrings.Flat,
         Sign.Sharp => DisplayStrings.Sharp,
+        Sign.FlatFlat => DisplayStrings.FlatFlat,
+        Sign.SharpSharp => DisplayStrings.SharpSharp,
         _ => throw new ArgumentOutOfRangeException(nameof(sign), sign, null)
     };
 }

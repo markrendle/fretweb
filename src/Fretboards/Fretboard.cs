@@ -31,6 +31,22 @@ public class Fretboard
         }
     }
 
+    public void SetBadges(Chord chord, Note rootNote)
+    {
+        foreach (var fret in _frets)
+        {
+            fret.SetBadges(chord, rootNote);
+        }
+    }
+
+    public void SetBadges(Note note)
+    {
+        foreach (var fret in _frets)
+        {
+            fret.SetBadges(note);
+        }
+    }
+
     public static Fretboard Create(int fretCount, params Note[] openNotes)
     {
         var frets = new List<Fret>();
