@@ -22,9 +22,9 @@ public static class Chords
 
     public static Chord Dominant7 { get; } = new("Dominant", "Dominant 7", 1, 3, 5, Flat(7));
     public static Chord Dominant7Flat5 { get; } = new("Dominant", $"Dominant 7({DisplayStrings.Flat}5)", 1, 3, Flat(5), Flat(7));
-    public static Chord Dominant9 { get; } = new("Dominant", "Dominant 9", 1, 3, 5, Flat(7));
-    public static Chord Dominant11 { get; } = new("Dominant", "Dominant 11", 1, 3, 5, Flat(7));
-    public static Chord Dominant13 { get; } = new("Dominant", "Dominant 13", 1, 3, 5, Flat(7));
+    public static Chord Dominant9 { get; } = new("Dominant", "Dominant 9", 1, 3, 5, Flat(7), 9);
+    public static Chord Dominant11 { get; } = new("Dominant", "Dominant 11", 1, 3, 5, Flat(7), 9, 11);
+    public static Chord Dominant13 { get; } = new("Dominant", "Dominant 13", 1, 3, 5, Flat(7), 9, 11, 13);
     public static Chord Dominant7Sus4 { get; } = new("Dominant", "Dominant 7 Sus 4", 1, 4, 5, Flat(7));
 
     public static Chord Sus2 { get; } = new("Sus", "Sus 2", 1, 2, 5);

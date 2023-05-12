@@ -185,7 +185,7 @@ else
           <table class="w-100">
             @{
               var bg = "dark";
-              foreach (var chord in Chords.All())
+              foreach (var chord in Chords.All().Where(c => c.Count < 5))
               {
                 bg = bg == "dark" ? "secondary" : "dark";
                 <tr>
