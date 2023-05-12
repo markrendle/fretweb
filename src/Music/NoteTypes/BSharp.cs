@@ -6,9 +6,9 @@ public sealed class BSharp : Note
     private BSharp() { }
     
     public override int Value => 0;
-    public override char Letter => 'C';
+    public override char Letter => 'B';
     public override Sign Sign => Sign.Sharp;
-    public override string Display => DisplayStrings.CSharp;
+    public override string Display => DisplayStrings.BSharp;
     public override Note Alt => Notes.C;
     public override bool IsTheoretical => true;
 
