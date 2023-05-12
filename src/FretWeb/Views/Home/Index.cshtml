@@ -1,4 +1,5 @@
-﻿@{
+﻿@using FretWeb.Music
+@{
   ViewData["Title"] = "FretWeb";
 }
 
@@ -65,15 +66,10 @@
       <div class="card-body">
         <h2 class="card-title">Scales</h2>
         <ul class="nav">
-          <li class="nav-item"><a href="@Url.Scale("Major")" class="nav-link">Major</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Minor")" class="nav-link">Minor</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Ionian")" class="nav-link">Ionian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Dorian")" class="nav-link">Dorian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Phrygian")" class="nav-link">Phrygian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Lydian")" class="nav-link">Lydian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Mixolydian")" class="nav-link">Mixolydian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Aeolian")" class="nav-link">Aeolian</a></li>
-          <li class="nav-item"><a href="@Url.Scale("Locrian")" class="nav-link">Locrian</a></li>
+          @foreach (var scaleSet in Scales.Enumerate())
+          {
+            <li class="nav-item"><a href="@Url.Scale(scaleSet.Name)" class="nav-link">@scaleSet.Name</a></li>
+          }
         </ul>
       </div>
     </div>

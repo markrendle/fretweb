@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,7 @@ if (!app.Environment.IsDevelopment())
 
 const int duration = 60 * 60 * 24;
 var cacheHeader = $"public,max-age={duration}";
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
