@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FretWeb.Music.NoteTypes;
 
 namespace FretWeb.Music;
@@ -36,6 +37,12 @@ public static class Notes
         if (index is < 0 or > 2) throw new ArgumentOutOfRangeException(nameof(sign));
         if (!lookup.TryGetValue(letter, out var notes)) throw new ArgumentOutOfRangeException(nameof(letter));
         return notes[index];
+    }
+
+    public static bool TryGet(string id, [NotNullWhen(true)] out Note? note)
+    {
+        note = All().FirstOrDefault(n => n.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        return note is not null;
     }
 
     public static IEnumerable<Note> All()

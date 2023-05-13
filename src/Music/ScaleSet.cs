@@ -11,7 +11,7 @@ public class ScaleSet
     {
         _scales = scales.ToDictionary(s => s[0], s => s);
     }
-    
+
     public required string Name { get; init; }
 
     public ScaleSet Clone(string name)
@@ -21,6 +21,7 @@ public class ScaleSet
             Name = name
         };
     }
+    
     public ScaleSet ToDorian() => Shift(1, "Dorian");
     public ScaleSet ToPhrygian() => Shift(2, "Phrygian");
     public ScaleSet ToLydian() => Shift(3, "Lydian");

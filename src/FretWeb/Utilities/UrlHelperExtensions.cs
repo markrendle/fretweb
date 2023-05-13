@@ -34,74 +34,73 @@ public static class UrlHelperExtensions
         return urlHelper.Action("Get", "Fretboards", routeValues);
     }
     
-    public static string? FretboardScale(this IUrlHelper urlHelper, FretboardViewModel fretboardViewModel, string scale, string root,
+    public static string? FretboardScale(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string scale, string root,
         int? frets = null, string? tab = null)
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardViewModel.OpenNotes },
-            { "scale", scale },
-            { "root", root }
+            { "openNotes", fretboardPageViewModel.OpenNotes },
+            { "scales", $"{root}-{scale}" },
         };
         
-        routeValues.AddIfNotNull("tab", tab, fretboardViewModel.Tab);
-        routeValues.AddIfNotNull("frets", frets, fretboardViewModel.Frets);
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
-        return urlHelper.Action("Get", "Fretboards", routeValues);
+        return urlHelper.Action("Scale", "Fretboards", routeValues);
     }
 
-    public static string? FretboardChord(this IUrlHelper urlHelper, FretboardViewModel fretboardViewModel, string chord, string root,
+    public static string? FretboardChord(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string chord, string root,
         int? frets = null, string? tab = null)
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardViewModel.OpenNotes },
+            { "openNotes", fretboardPageViewModel.OpenNotes },
             { "chord", chord },
             { "root", root }
         };
         
-        routeValues.AddIfNotNull("tab", tab, fretboardViewModel.Tab);
-        routeValues.AddIfNotNull("frets", frets, fretboardViewModel.Frets);
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
         return urlHelper.Action("Get", "Fretboards", routeValues);
     }
 
-    public static string? FretboardNote(this IUrlHelper urlHelper, FretboardViewModel fretboardViewModel, string root,
+    public static string? FretboardNote(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string root,
         int? frets = null, string? tab = null)
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardViewModel.OpenNotes },
+            { "openNotes", fretboardPageViewModel.OpenNotes },
             { "root", root }
         };
         
-        routeValues.AddIfNotNull("tab", tab, fretboardViewModel.Tab);
-        routeValues.AddIfNotNull("frets", frets, fretboardViewModel.Frets);
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
         return urlHelper.Action("Get", "Fretboards", routeValues);
     }
     
-    public static string? Fretboard(this IUrlHelper urlHelper, FretboardViewModel fretboardViewModel, string? scale = null, string? root = null,
+    public static string? Fretboard(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string? scale = null, string? root = null,
         string? chord = null, int? frets = null, string? tab = null)
     {
-        var routeValues = new RouteValueDictionary { { "openNotes", fretboardViewModel.OpenNotes } };
+        var routeValues = new RouteValueDictionary { { "openNotes", fretboardPageViewModel.OpenNotes } };
         
         if (chord is null)
         {
-            routeValues.AddIfNotNull("scale", scale, fretboardViewModel.Scale);
+            routeValues.AddIfNotNull("scale", scale, fretboardPageViewModel.Scale);
         }
         else if (scale is null)
         {
-            routeValues.AddIfNotNull("chord", chord, fretboardViewModel.Chord);
+            routeValues.AddIfNotNull("chord", chord, fretboardPageViewModel.Chord);
         }
 
-        routeValues.AddIfNotNull("root", root, fretboardViewModel.Root);
-        routeValues.AddIfNotNull("tab", tab, fretboardViewModel.Tab);
-        routeValues.AddIfNotNull("frets", frets, fretboardViewModel.Frets);
+        routeValues.AddIfNotNull("root", root, fretboardPageViewModel.Root);
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
         return urlHelper.Action("Get", "Fretboards", routeValues);
     }
-
+    
     private static void AddIfNotNull(this RouteValueDictionary routeValues, string key, string? first, string? second)
     {
         if (first is { Length: > 0 })

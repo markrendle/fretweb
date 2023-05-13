@@ -4,6 +4,7 @@ namespace FretWeb.Music.NoteTypes;
 
 public abstract class Note : IEquatable<Note>
 {
+    private string? _id;
     private string? _text;
 
     private protected Note()
@@ -17,6 +18,7 @@ public abstract class Note : IEquatable<Note>
     public abstract string Display { get; }
     public abstract Note Alt { get; }
 
+    public string Id => _id ??= GetId();
     public string Text => _text ??= GetText();
 
     public bool IsSharp => Sign == Sign.Sharp;
@@ -78,6 +80,20 @@ public abstract class Note : IEquatable<Note>
         };
         return $"{Letter}{sign}";
     }
+    
+    private string GetId()
+    {
+        var sign = Sign switch
+        {
+            Sign.Natural => "",
+            Sign.Flat => "flat",
+            Sign.FlatFlat => "flatflat",
+            Sign.Sharp => "sharp",
+            Sign.SharpSharp => "sharpsharp",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        return $"{Letter}{sign}";
+    }
 
     public static bool TryParse(string str, [NotNullWhen(true)] out Note? note)
     {
@@ -94,7 +110,7 @@ public abstract class Note : IEquatable<Note>
 
         var rest = str.AsSpan().Slice(1).Trim().TrimStart('-').ToString();
 
-        if (rest.Equals("flat", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Flat))
+        if (char.ToLower(str[0]) == 'f' || rest.Equals("flat", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Flat))
         {
             note = GetFlat(c);
             return true;

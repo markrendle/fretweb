@@ -1,0 +1,64 @@
+﻿@model FretboardViewModel
+
+@{
+  var openFret = Model.Fretboard.Frets[0];
+}
+
+<h3>@Model.Title</h3>
+<div class="fretboard">
+  <div class="fretboard-prefix">
+    <div class="fretboard-top"></div>
+    @foreach (var fs in openFret.Strings)
+    {
+      <div class="fretboard-prefix-note">@fs.Note.Display</div>
+    }
+    <div class="fretboard-bottom"></div>
+  </div>
+  <div class="open-fret">
+    <div class="fretboard-top"></div>
+    @foreach (var fs in openFret.Strings)
+    {
+      <div class="open-fret-string color-@fs.Note.Text">
+        @if (fs.Badge is {Length: > 0})
+        {
+          <span class="fret-badge">@fs.Badge</span>
+        }
+      </div>
+    }
+    <div class="fretboard-bottom"></div>
+  </div>
+  @foreach (var fret in Model.Fretboard.Frets.Skip(1))
+  {
+    string inlay;
+    if (fret.Number is 12 or 24)
+    {
+      inlay = "⬤ ⬤";
+    }
+    else if (fret.Number % 12 is 3 or 5 or 7 or 9)
+    {
+      inlay = "⬤";
+    }
+    else
+    {
+      inlay = string.Empty;
+    }
+    <div class="fret">
+      <div class="fretboard-top">
+        @inlay
+      </div>
+      @foreach (var fs in fret.Strings)
+      {
+        <div class="fret-string color-@fs.Note.Text">
+          @if (fs.Badge is {Length: > 0})
+          {
+            var cls = fs.IsRoot ? "fret-badge fret-badge-root" : "fret-badge";
+            <span class="@cls">@fs.Badge</span>
+          }
+        </div>
+      }
+      <div class="fretboard-bottom">
+        @inlay
+      </div>
+    </div>
+  }
+</div>

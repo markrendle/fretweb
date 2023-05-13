@@ -1,0 +1,143 @@
+﻿@model FretboardPageViewModel
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    @{
+      var tabHref = Url.Fretboard(Model, tab: "scales");
+    }
+    @if (Model.Tab.Equals("scales", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Scales</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Scales</a>
+    }
+  </li>
+  <li class="nav-item">
+    @{
+      tabHref = Url.Fretboard(Model, tab: "arpeggios");
+    }
+    @if (Model.Tab.Equals("arpeggios", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Arpeggios</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Arpeggios</a>
+    }
+  </li>
+  <li class="nav-item">
+    @{
+      tabHref = Url.Fretboard(Model, tab: "chords");
+    }
+    @if (Model.Tab.Equals("chords", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Chords</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Chords</a>
+    }
+  </li>
+  <li class="nav-item">
+    @{
+      tabHref = Url.Fretboard(Model, tab: "notes");
+    }
+    @if (Model.Tab.Equals("notes", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Notes</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Notes</a>
+    }
+  </li>
+</ul>
+<div class="px-5 pt-2">
+  @if (Model.Tab.Equals("scales", StringComparison.OrdinalIgnoreCase))
+  {
+    <table class="w-100">
+      @{
+        var bg = "dark";
+        foreach (var scaleSet in Scales.Enumerate())
+        {
+          bg = bg == "dark" ? "secondary" : "dark";
+          <tr>
+            <td class="fw-bold">@scaleSet.Name</td>
+            @foreach (var scale in scaleSet.Enumerate())
+            {
+              var href = Url.FretboardScale(Model, scale: scaleSet.Name, root: scale[0].Id);
+              <td>
+                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@scale[0].Text">@scale[0].Display</a>
+              </td>
+            }
+          </tr>
+        }
+      }
+    </table>
+  }
+  else if (Model.Tab.Equals("arpeggios", StringComparison.OrdinalIgnoreCase))
+  {
+    <table class="w-100">
+      @{
+        var bg = "dark";
+        foreach (var chord in Chords.All())
+        {
+          bg = bg == "dark" ? "secondary" : "dark";
+          <tr>
+            <td class="fw-bold">@chord.Name</td>
+            @foreach (var note in Notes.ChromaticWithFlats())
+            {
+              var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
+              <td>
+                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+              </td>
+            }
+          </tr>
+        }
+      }
+    </table>
+  }
+  else if (Model.Tab.Equals("chords", StringComparison.OrdinalIgnoreCase))
+  {
+    <table class="w-100">
+      @{
+        var bg = "dark";
+        foreach (var chord in Chords.All().Where(c => c.Count < 5))
+        {
+          bg = bg == "dark" ? "secondary" : "dark";
+          <tr>
+            <td class="fw-bold">@chord.Name</td>
+            @foreach (var note in Notes.ChromaticWithFlats())
+            {
+              var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
+              <td>
+                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+              </td>
+            }
+          </tr>
+        }
+      }
+    </table>
+  }
+  else if (Model.Tab.Equals("notes", StringComparison.OrdinalIgnoreCase))
+  {
+    <table class="w-100">
+      <tr>
+        <td class="fw-bold">Notes</td>
+      @{
+        var bg = "dark";
+        foreach (var note in Notes.ChromaticWithFlats())
+        {
+          bg = bg == "dark" ? "secondary" : "dark";
+          var href = Url.FretboardNote(Model, root: note.Text);
+          <td>
+            <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+          </td>
+        }
+      }
+      </tr>
+    </table>
+  }
+</div>

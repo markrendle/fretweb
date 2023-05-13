@@ -18,7 +18,7 @@ public class FretboardsController : Controller
         
         var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
 
-        var viewModel = new FretboardViewModel(fretboard)
+        var viewModel = new FretboardPageViewModel(fretboard)
         {
             OpenNotes = openNotes,
             Frets = frets,
@@ -58,6 +58,46 @@ public class FretboardsController : Controller
             fretboard.SetBadges(rootNote);
         }
         
+        return View(viewModel);
+    }
+
+    [HttpGet("{openNotes}/scale/{scales}")]
+    public IActionResult Scale(string openNotes, string scales, [FromQuery] int? frets, [FromQuery] string? tab)
+    {
+        var openNoteArray = ParseOpenNoteArray(openNotes);
+        var scaleParts = scales.Split('-');
+        if (scaleParts.Length != 2)
+        {
+            return NotFound();
+        }
+
+        if (scaleParts[0] is not { Length: > 0 } root || !Note.TryParse(root, out var rootNote))
+        {
+            return NotFound();
+        }
+
+        if (scaleParts[1] is not { Length: > 0 } scaleName || !(Scales.FindByName(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
+        {
+            return NotFound();
+        }
+
+        var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
+        fretboard.SetBadges(scale, rootNote.Sign);
+
+        var title = $"{rootNote.Display} {scaleSet.Name}";
+        var viewModel = new FretboardPageViewModel(fretboard)
+        {
+            Title = title,
+            OpenNotes = openNotes,
+            Scales = scales,
+            Frets = frets,
+            Scale = scaleName,
+            Root = root,
+            Tab = tab ?? "Scales"
+        };
+        
+        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+
         return View(viewModel);
     }
 
