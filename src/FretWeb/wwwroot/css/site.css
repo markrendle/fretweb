@@ -45,7 +45,7 @@ h3 {
 }
 
 .color-C, .color-B-sharp {
-  color: #f94144;
+  color: #f94144 !important;
 }
 
 .color-C-sharp, .color-D-flat {
@@ -96,4 +96,8 @@ h3 {
   font-size: 1.2em;
   min-width: 64px;
   padding: 1px;
+}
+
+.btn-print {
+  
 }

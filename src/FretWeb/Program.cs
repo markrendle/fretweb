@@ -1,4 +1,6 @@
 using FretWeb.Telemetry;
+using FretWeb.Utilities;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,31 @@ var cacheHeader = $"public,max-age={duration}";
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx => { ctx.Context.Response.Headers[HeaderNames.CacheControl] = cacheHeader; }
+});
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Query.TryGetValue("theme", out var values))
+    {
+        if (Enum.TryParse(values.FirstOrDefault(), true, out Theme theme))
+        {
+            context.Response.Cookies.Append("fretweb.theme", theme.ToString().ToLower());
+        }
+
+        var path = context.Request.Path;
+        if (context.Request.Query.Count == 1)
+        {
+            context.Response.Redirect(path);
+        }
+        else
+        {
+            var query = context.Request.QueryString.ToString().Replace($"&theme={theme.ToString().ToLower()}", "");
+            context.Response.Redirect($"{path}{query}");
+        }
+
+        return;
+    }
+    await next();
 });
 
 app.UseRouting();

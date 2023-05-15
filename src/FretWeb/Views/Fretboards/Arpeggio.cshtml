@@ -1,11 +1,11 @@
 ﻿@model FretboardPageViewModel
 
 @{
-  ViewBag.Title = "Fretboard";
+  ViewBag.Title = "Arpeggios";
   Layout = "_Layout";
 }
 
-<div class="row pt-2">
+<div class="row mt-2">
   <div class="col-12">
     @foreach (var fretboard in Model.Fretboards)
     {
@@ -13,7 +13,6 @@
     }
   </div>
 </div>
-
 <div class="row pt-4">
   <div class="col-12">
     <partial name="_Navigation" model="Model"/>

@@ -5,12 +5,11 @@ namespace FretWeb.Models;
 
 public class FretboardPageViewModel
 {
-    public FretboardPageViewModel(Fretboard fretboard)
+    public FretboardPageViewModel()
     {
-        Fretboard = fretboard;
     }
 
-    public Fretboard Fretboard { get; }
+    public Fretboard? Fretboard { get; }
 
     public List<FretboardViewModel> Fretboards { get; } = new();
 
@@ -21,7 +20,10 @@ public class FretboardPageViewModel
     public string? Scale { get; init; }
     public string? Root { get; init; }
     public string? Chord { get; set; }
-    public string Scales { get; set; }
+    public string? Scales { get; set; }
+    public string? Arpeggios { get; set; }
+    public string? Chords { get; set; }
+    public string? PrintLink { get; set; }
 }
 
 public class FretboardViewModel

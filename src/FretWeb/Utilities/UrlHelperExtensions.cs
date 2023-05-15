@@ -1,5 +1,6 @@
 ﻿using FretWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace FretWeb.Utilities;
 
@@ -84,7 +85,15 @@ public static class UrlHelperExtensions
         string? chord = null, int? frets = null, string? tab = null)
     {
         var routeValues = new RouteValueDictionary { { "openNotes", fretboardPageViewModel.OpenNotes } };
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
         
+        if (fretboardPageViewModel.Scales is { Length: > 0 })
+        {
+            routeValues.Add("scales", fretboardPageViewModel.Scales);
+            return urlHelper.Action("Scale", "Fretboards", routeValues);
+        }
+
         if (chord is null)
         {
             routeValues.AddIfNotNull("scale", scale, fretboardPageViewModel.Scale);
@@ -95,8 +104,6 @@ public static class UrlHelperExtensions
         }
 
         routeValues.AddIfNotNull("root", root, fretboardPageViewModel.Root);
-        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
-        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
         return urlHelper.Action("Get", "Fretboards", routeValues);
     }

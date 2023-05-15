@@ -1,5 +1,9 @@
 ﻿@model FretboardPageViewModel
 
+@{
+  var theme = Context.Request.GetTheme();
+}
+
 <ul class="nav nav-tabs">
   <li class="nav-item">
     @{
@@ -59,17 +63,25 @@
   {
     <table class="w-100">
       @{
-        var bg = "dark";
+        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
         foreach (var scaleSet in Scales.Enumerate())
         {
-          bg = bg == "dark" ? "secondary" : "dark";
+          @if (theme == Theme.Dark)
+          {
+            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+          }
+          else
+          {
+            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+          }
           <tr>
             <td class="fw-bold">@scaleSet.Name</td>
             @foreach (var scale in scaleSet.Enumerate())
             {
               var href = Url.FretboardScale(Model, scale: scaleSet.Name, root: scale[0].Id);
+              var title = $"{scale[0].Display} {scaleSet.Name}";
               <td>
-                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@scale[0].Text">@scale[0].Display</a>
+                <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@scale[0].Text" title="@title">@scale[0].Display</a>
               </td>
             }
           </tr>
@@ -81,17 +93,25 @@
   {
     <table class="w-100">
       @{
-        var bg = "dark";
+        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
         foreach (var chord in Chords.All())
         {
-          bg = bg == "dark" ? "secondary" : "dark";
+          @if (theme == Theme.Dark)
+          {
+            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+          }
+          else
+          {
+            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+          }
           <tr>
             <td class="fw-bold">@chord.Name</td>
             @foreach (var note in Notes.ChromaticWithFlats())
             {
               var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
+              var title = $"{note.Display} {chord.Name}";
               <td>
-                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+                <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@title">@note.Display</a>
               </td>
             }
           </tr>
@@ -103,17 +123,25 @@
   {
     <table class="w-100">
       @{
-        var bg = "dark";
+        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
         foreach (var chord in Chords.All().Where(c => c.Count < 5))
         {
-          bg = bg == "dark" ? "secondary" : "dark";
+          @if (theme == Theme.Dark)
+          {
+            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+          }
+          else
+          {
+            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+          }
           <tr>
             <td class="fw-bold">@chord.Name</td>
             @foreach (var note in Notes.ChromaticWithFlats())
             {
               var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
+              var title = $"{note.Display} {chord.Name}";
               <td>
-                <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+                <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@title">@note.Display</a>
               </td>
             }
           </tr>
@@ -127,13 +155,20 @@
       <tr>
         <td class="fw-bold">Notes</td>
       @{
-        var bg = "dark";
+        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
         foreach (var note in Notes.ChromaticWithFlats())
         {
-          bg = bg == "dark" ? "secondary" : "dark";
+          @if (theme == Theme.Dark)
+          {
+            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+          }
+          else
+          {
+            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+          }
           var href = Url.FretboardNote(Model, root: note.Text);
           <td>
-            <a href="@href" class="btn btn-@bg btn-sm w-100 m-1 btn-scale color-@note.Text">@note.Display</a>
+            <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@note.Display">@note.Display</a>
           </td>
         }
       }

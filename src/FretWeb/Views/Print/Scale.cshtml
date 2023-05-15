@@ -1,0 +1,17 @@
+﻿@model PrintViewModel
+
+@{
+  ViewBag.Title = "Print";
+  Layout = "_LayoutPrint";
+}
+
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-12">
+      @foreach (var fretboard in Model.Fretboards)
+      {
+        <partial name="_Fretboard" model="fretboard"/>
+      }
+    </div>
+  </div>
+</div>

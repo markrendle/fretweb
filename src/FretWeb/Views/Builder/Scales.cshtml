@@ -1,0 +1,61 @@
+﻿@model FretWeb.Models.ScalesBuilderViewModel
+
+@{
+  ViewBag.Title = "Build Scale Sheet";
+  Layout = "_Layout";
+}
+
+<div class="row">
+  <div class="col-12">
+    <h1>Build Scale Sheet</h1>
+  </div>
+</div>
+
+<form asp-action="BuildScales">
+  <div class="row">
+    <div class="col-1 fw-bold">
+      Tuning
+    </div>
+    <div class="col-3">
+        <input asp-for="Tuning" class="form-control">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 fw-bold">
+      Root
+    </div>
+    <div class="col-3 fw-bold">
+      Scale
+    </div>
+  </div>
+
+  @for (int i = 0; i < Model.Scales.Length; i++)
+  {
+    int index = i;
+    <div class="row mb-1">
+      <div class="col-1">
+        <select asp-for="Scales[index].Root" class="form-select">
+          <option></option>
+          @foreach (var note in Notes.All())
+          {
+            <option value="@note.Id">@note.Display</option>
+          }
+        </select>
+      </div>
+      <div class="col-3">
+        <select asp-for="Scales[index].Scale" class="form-select">
+          <option></option>
+          @foreach (var scale in Scales.Enumerate())
+          {
+            <option value="@scale.Name">@scale.Name</option>
+          }
+        </select>
+      </div>
+    </div>
+  }
+  <div class="row">
+    <div class="col-4">
+      <button type="submit" class="btn btn-primary w-100">Build</button>
+    </div>
+  </div>
+</form>

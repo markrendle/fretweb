@@ -1,18 +1,35 @@
-﻿<!DOCTYPE html>
+﻿@{
+  var theme = Context.Request.GetTheme();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>@ViewData["Title"] - FretWeb</title>
   @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/> *@
-  <link rel="stylesheet" href="~/lib/bootswatch/darkly.min.css"/>
+  @if (theme == Theme.Dark)
+  {
+    <link rel="stylesheet" href="~/lib/bootswatch/darkly.min.css"/>
+  }
+  else
+  {
+    <link rel="stylesheet" href="~/lib/bootswatch/flatly.min.css"/>
+  }
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-  <link rel="stylesheet" href="~/css/fretboard.css" asp-append-version="true"/>
+  @if (theme == Theme.Dark)
+  {
+  <link rel="stylesheet" href="~/css/fretboard-dark.css" asp-append-version="true"/>
+  }
+  else
+  {
+  <link rel="stylesheet" href="~/css/fretboard-light.css" asp-append-version="true"/>
+  }
   @* <link rel="stylesheet" href="~/FretWeb.styles.css" asp-append-version="true" /> *@
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-secondary border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-@theme.ToString().ToLower() bg-secondary border-bottom box-shadow mb-3">
     <div class="container-fluid">
       <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FretWeb</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -37,8 +54,9 @@
             <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="locrian">Locrian</a>
           </div>
         </div>
+        
         <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Fretboards
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
@@ -52,6 +70,26 @@
             <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="DGCFAD">Guitar - Tone Down</a>
           </div>
         </div>
+        
+        <div class="dropdown show">
+          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownBuilder" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Builder
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownBuilder">
+            <a class="dropdown-item" asp-controller="Builder" asp-action="Scales">Scales</a>
+          </div>
+        </div>
+        
+        <div class="dropdown show">
+          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownTheme" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Theme
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownTheme">
+            <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Light)">Light</a>
+            <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Dark)">Dark</a>
+          </div>
+        </div>
+        
         <a class="nav-link mx-2" asp-action="Feedback">Feedback</a>
       </div>
     </div>
