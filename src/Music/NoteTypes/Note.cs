@@ -115,13 +115,13 @@ public abstract class Note : IEquatable<Note>
 
         var rest = str.AsSpan().Slice(1).Trim().TrimStart('-').ToString();
 
-        if (char.ToLower(str[0]) == 'f' || rest.Equals("flat", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Flat))
+        if (char.ToLower(rest[0]) == 'f' || rest.Equals("flat", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Flat))
         {
             note = GetFlat(c);
             return true;
         }
 
-        if (rest.Equals("sharp", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Sharp))
+        if (char.ToLower(rest[0]) == 's' || rest.Equals("sharp", StringComparison.OrdinalIgnoreCase) || rest.Equals(DisplayStrings.Sharp))
         {
             note = GetSharp(c);
             return true;

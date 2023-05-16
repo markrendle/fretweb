@@ -67,14 +67,10 @@
             Fretboards
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EADG">Bass</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DADG">Bass - Drop-D</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EfAfDfGf">Bass - Semitone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DGCF">Bass - Tone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EADGBE">Guitar</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DADGBE">Guitar - Drop-D</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EfAfDfGfBfEf">Guitar - Semitone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DGCFAD">Guitar - Tone Down</a>
+            @foreach(var t in StandardTunings.All())
+            {
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="@t.Tuning">@t.Group @t.Name</a>
+            }
           </div>
         </div>
 

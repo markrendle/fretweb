@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -10,36 +11,44 @@ public static class HoneycombSetup
 {
     public static void AddHoneycombOpenTelemetry(this WebApplicationBuilder builder)
     {
-        var honeycombOptions = builder.Configuration.GetHoneycombOptions();
-        honeycombOptions.MetricsDataset ??= honeycombOptions.Dataset ??= "fretweb";
-
-        if (honeycombOptions.ApiKey is not { Length: > 0 }) return;
-        
-        var resourceBuilder = ResourceBuilder.CreateEmpty()
-            .AddService("fretweb", serviceVersion: Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0");
-        builder.Logging.AddOpenTelemetry(options =>
+        try
         {
-            options.SetResourceBuilder(resourceBuilder);
-            options.AddOtlpExporter(o =>
+            var honeycombOptions = builder.Configuration.GetHoneycombOptions();
+        
+            if (honeycombOptions.ApiKey is not { Length: > 0 }) return;
+        
+            honeycombOptions.MetricsDataset ??= honeycombOptions.Dataset ??= "fretweb";
+        
+            var resourceBuilder = ResourceBuilder.CreateEmpty()
+                .AddService("fretweb", serviceVersion: Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "1.0.0");
+            builder.Logging.AddOpenTelemetry(options =>
             {
-                o.Endpoint = new Uri("https://api.honeycomb.io");
-                o.Headers = $"x-honeycomb-team={honeycombOptions.ApiKey}";
+                options.SetResourceBuilder(resourceBuilder);
+                options.AddOtlpExporter(o =>
+                {
+                    o.Endpoint = new Uri("https://api.honeycomb.io");
+                    o.Headers = $"x-honeycomb-team={honeycombOptions.ApiKey}";
+                });
             });
-        });
 
-        builder.Services.AddOpenTelemetry()
-            .WithTracing(otel =>
-            {
-                otel.AddHoneycomb(honeycombOptions)
-                    .AddAspNetCoreInstrumentationWithBaggage()
-                    .AddHttpClientInstrumentation()
-                    .SetSampler(new TraceIdRatioBasedSampler(0.1));
-            })
-            .WithMetrics(otel =>
-            {
-                otel.AddHoneycomb(honeycombOptions)
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation();
-            });
+            builder.Services.AddOpenTelemetry()
+                .WithTracing(otel =>
+                {
+                    otel.AddHoneycomb(honeycombOptions)
+                        .AddAspNetCoreInstrumentationWithBaggage()
+                        .AddHttpClientInstrumentation()
+                        .SetSampler(new TraceIdRatioBasedSampler(0.1));
+                })
+                .WithMetrics(otel =>
+                {
+                    otel.AddHoneycomb(honeycombOptions)
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation();
+                });
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.ToString());
+        }
     }
 }

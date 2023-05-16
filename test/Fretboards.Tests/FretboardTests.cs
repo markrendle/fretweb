@@ -32,7 +32,7 @@ public class FretboardTests
         Assert.Equal(notes.Length, fret.Strings.Count);
         for (int i = 0; i < notes.Length; i++)
         {
-            Assert.Equal(notes[i], fret.Strings[i].Note);
+            Assert.True(notes[i].IsEquivalentTo(fret.Strings[i].Note));
         }
     }
 }
