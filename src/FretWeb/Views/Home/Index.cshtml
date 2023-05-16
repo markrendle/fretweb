@@ -3,7 +3,24 @@
   ViewData["Title"] = "FretWeb";
 }
 
-<div class="row">
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Hello!</h2>
+        <p class="fs-5">This is FretWeb, a site I made to help me learn my bass fretboard. It can render fretboards
+          showing notes, scales, arpeggios and chords. You can use the Builder to create pages with multiple
+          <a asp-controller="Builder" asp-action="Scales">scales</a> and
+          <a asp-controller="Builder" asp-action="Arpeggios">arpeggios</a>, bookmark those pages to save them,
+          and print them out too.</p>
+        <p>It's a work in progress, so if something doesn't work or there's a scale or arpeggio missing, please
+          use the <a asp-controller="Home" asp-action="Feedback">Feedback</a> page to let me know.</p>
+        <p>The project is open-source and hosted on <a href="https://github.com/markrendle/fretweb">GitHub</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-2">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
@@ -64,7 +81,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row mb-2">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
@@ -79,7 +96,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row mb-2">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
