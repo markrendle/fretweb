@@ -5,18 +5,31 @@
   Layout = "_Layout";
 }
 
-<h2>@Model.Name Scales</h2>
+<div class="row">
+  <div class="col-3">
+    <h2>@Model.Name scales</h2>
+  </div>
+  <div class="col-7"></div>
+  <div class="col-2 d-flex align-items-center justify-content-end">
+    <a asp-action="Get" asp-route-id="@Model.Id" asp-route-force="flat" class="btn btn-sm btn-secondary flex-fill m-1 @(Model.ForceSign == Sign.Flat ? " active" : "")">Flat</a>
+    <a asp-action="Get" asp-route-id="@Model.Id" asp-route-force="sharp" class="btn btn-sm btn-secondary flex-fill m-1 @(Model.ForceSign == Sign.Sharp ? " active" : "")">Sharp</a>
+  </div>
+</div>
 
-<table class="table table-striped">
-  @foreach (var scale in Model.ScaleSet.Enumerate())
-  {
-    <tr>
-      <td class="scale-note">@scale[0].Display</td>
-      @foreach (var note in scale)
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped">
+      @foreach (var scale in Model.Scales)
       {
-        <td class="scale-note color-@note.Text">@note.Display</td>
+        <tr>
+          <td class="scale-note">@scale[0].Display</td>
+          @foreach (var note in scale)
+          {
+            <td class="scale-note color-@note.Text">@note.Display</td>
+          }
+          <td class="scale-note color-@scale[0].Text">@scale[0].Display</td>
+        </tr>
       }
-      <td class="scale-note color-@scale[0].Text">@scale[0].Display</td>
-    </tr>
-  }
-</table>
+    </table>
+  </div>
+</div>

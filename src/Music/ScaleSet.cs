@@ -7,19 +7,19 @@ public class ScaleSet
 {
     private readonly Dictionary<Note, Scale> _scales;
 
-    internal ScaleSet(params Scale[] scales)
+    internal ScaleSet(string name, params Scale[] scales)
     {
+        Id = NameToId(name);
+        Name = name;
         _scales = scales.ToDictionary(s => s[0], s => s);
     }
 
-    public required string Name { get; init; }
+    public string Id { get; }
+    public string Name { get; }
 
     public ScaleSet Clone(string name)
     {
-        return new ScaleSet(Enumerate().ToArray())
-        {
-            Name = name
-        };
+        return new ScaleSet(name, Enumerate().ToArray());
     }
     
     public ScaleSet ToDorian() => Shift(1, "Dorian");
@@ -41,10 +41,7 @@ public class ScaleSet
             }
         }
 
-        return new ScaleSet(scales)
-        {
-            Name = name
-        };
+        return new ScaleSet(name, scales);
     }
 
     private Scale[] RotateDown(Scale[] scales, int by)
@@ -70,4 +67,32 @@ public class ScaleSet
     public Scale Get(Note note) => _scales[note];
 
     public bool TryGet(Note note, [NotNullWhen(true)] out Scale? scale) => _scales.TryGetValue(note, out scale);
+    
+    private static string NameToId(ReadOnlySpan<char> name)
+    {
+        var flat = DisplayStrings.Flat[0];
+        var sharp = DisplayStrings.Sharp[0];
+        Span<char> id = stackalloc char[128];
+        int index = 0;
+        foreach (var c in name)
+        {
+            if (char.IsAsciiLetter(c) || char.IsAsciiDigit(c))
+            {
+                id[index] = c;
+                index++;
+            }
+            else if (c == flat)
+            {
+                "Flat".AsSpan().CopyTo(id.Slice(index));
+                index += 4;
+            }
+            else if (c == sharp)
+            {
+                "Sharp".AsSpan().CopyTo(id.Slice(index));
+                index += 5;
+            }
+        }
+
+        return new string(id.Slice(0, index));
+    }
 }

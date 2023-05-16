@@ -19,11 +19,11 @@
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
   @if (theme == Theme.Dark)
   {
-  <link rel="stylesheet" href="~/css/fretboard-dark.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/fretboard-dark.css" asp-append-version="true"/>
   }
   else
   {
-  <link rel="stylesheet" href="~/css/fretboard-light.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/fretboard-light.css" asp-append-version="true"/>
   }
   @* <link rel="stylesheet" href="~/FretWeb.styles.css" asp-append-version="true" /> *@
 </head>
@@ -39,59 +39,72 @@
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-start">
         @* <ul class="navbar-nav flex-grow-1"> *@
         <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownScales" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownScales" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Scales
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownScales">
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="major">Major</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="minor">Minor</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="ionian">Ionian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="dorian">Dorian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="phrygian">Phrygian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="lydian">Lydian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="mixolydian">Mixolydian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="aeolian">Aeolian</a>
-            <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-name="locrian">Locrian</a>
+            @foreach (var scale in Scales.EnumerateScales())
+            {
+              <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-id="@scale.Id">@scale.Name</a>
+            }
           </div>
         </div>
-        
+
         <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownModes" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Modes
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownModes">
+            @foreach (var scale in Scales.EnumerateModes())
+            {
+              <a class="dropdown-item" asp-controller="Scales" asp-action="Get" asp-route-id="@scale.Id">@scale.Name</a>
+            }
+          </div>
+        </div>
+
+        <div class="dropdown show">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Fretboards
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="EADG">Bass</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="DADG">Bass - Drop-D</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="EfAfDfGf">Bass - Semitone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="DGCF">Bass - Tone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="EADGBE">Guitar</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="DADGBE">Guitar - Drop-D</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="EfAfDfGfBfEf">Guitar - Semitone Down</a>
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-openNotes="DGCFAD">Guitar - Tone Down</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EADG">Bass</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DADG">Bass - Drop-D</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EfAfDfGf">Bass - Semitone Down</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DGCF">Bass - Tone Down</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EADGBE">Guitar</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DADGBE">Guitar - Drop-D</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="EfAfDfGfBfEf">Guitar - Semitone Down</a>
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="DGCFAD">Guitar - Tone Down</a>
           </div>
         </div>
-        
+
         <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownBuilder" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownBuilder" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Builder
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownBuilder">
             <a class="dropdown-item" asp-controller="Builder" asp-action="Scales">Scales</a>
+            <a class="dropdown-item" asp-controller="Builder" asp-action="Arpeggios">Arpeggios</a>
           </div>
         </div>
-        
-        <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle m-2" type="button" id="dropdownTheme" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Theme
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownTheme">
-            <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Light)">Light</a>
-            <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Dark)">Dark</a>
-          </div>
-        </div>
-        
-        <a class="nav-link mx-2" asp-action="Feedback">Feedback</a>
+
       </div>
+      <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+        <li class="nav-item">
+          <div class="dropdown show">
+            <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownTheme" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Theme
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownTheme">
+              <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Light)">Light</a>
+              <a class="dropdown-item" href="@Context.Request.SetThemeUrl(Theme.Dark)">Dark</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-primary mx-2" asp-action="Feedback">Feedback</a>
+        </li>
+      </ul>
     </div>
   </nav>
 </header>

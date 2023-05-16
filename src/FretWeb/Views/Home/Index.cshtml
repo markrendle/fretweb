@@ -68,7 +68,7 @@
         <ul class="nav">
           @foreach (var scaleSet in Scales.Enumerate())
           {
-            <li class="nav-item"><a href="@Url.Scale(scaleSet.Name)" class="nav-link">@scaleSet.Name</a></li>
+            <li class="nav-item"><a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a></li>
           }
         </ul>
       </div>

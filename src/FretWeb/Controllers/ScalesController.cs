@@ -7,41 +7,33 @@ namespace FretWeb.Controllers;
 [Route("scales")]
 public class ScalesController : Controller
 {
-    [HttpGet("{name}")]
-    public IActionResult Get(string name)
+    [HttpGet("{id}")]
+    public IActionResult Get(string id, [FromQuery] string? force = null)
     {
-        name = name.ToLowerInvariant();
-        
-        var scaleSet = name switch
-        {
-            "major" => Scales.Major,
-            "minor" => Scales.Minor,
-            "ionian" => Scales.Ionian,
-            "dorian" => Scales.Dorian,
-            "phrygian" => Scales.Phrygian,
-            "lydian" => Scales.Lydian,
-            "mixolydian" => Scales.Mixolydian,
-            "aeolian" => Scales.Aeolian,
-            "locrian" => Scales.Locrian,
-            _ => null
-        };
+        var scaleSet = Scales.FindById(id);
         
         if (scaleSet == null) return NotFound();
-        
-        name = name switch
-        {
-            "major" => "Major",
-            "minor" => "Minor",
-            "ionian" => "Ionian",
-            "dorian" => "Dorian",
-            "phrygian" => "Phrygian",
-            "lydian" => "Lydian",
-            "mixolydian" => "Mixolydian",
-            "aeolian" => "Aeolian",
-            "locrian" => "Locrian",
-            _ => throw new ArgumentException()
-        };
 
-        return View(new ScalesViewModel(name, scaleSet));
+        var scales = scaleSet.Enumerate().ToArray();
+
+        if (force is { Length: > 0 } && Enum.TryParse(force, true, out Sign sign))
+        {
+            if (sign == Sign.Sharp)
+            {
+                for (int i = 0; i < scales.Length; i++)
+                {
+                    scales[i] = Normalizer.ForceSharp(scales[i]);
+                }
+            }
+            else if (sign == Sign.Flat)
+            {
+                for (int i = 0; i < scales.Length; i++)
+                {
+                    scales[i] = Normalizer.ForceFlat(scales[i]);
+                }
+            }
+        }
+        
+        return View(new ScalesViewModel(id, scaleSet.Name, scales));
     }
 }

@@ -21,8 +21,8 @@ public abstract class Note : IEquatable<Note>
     public string Id => _id ??= GetId();
     public string Text => _text ??= GetText();
 
-    public bool IsSharp => Sign == Sign.Sharp;
-    public bool IsFlat => Sign == Sign.Flat;
+    public bool IsSharp => Sign is Sign.Sharp or Sign.SharpSharp;
+    public bool IsFlat => Sign is Sign.Flat or Sign.FlatFlat;
     public bool IsNatural => Sign == Sign.Natural;
     public virtual bool IsTheoretical => false;
 
@@ -38,7 +38,10 @@ public abstract class Note : IEquatable<Note>
 
         return note;
     }
-    
+
+    public virtual Note AsFlat() => Sign == Sign.Sharp ? Alt : this;
+    public virtual Note AsSharp() => Sign == Sign.Flat ? Alt : this;
+
     public Note AddTone() => AddSemitone().AddSemitone();
     public abstract Note SubtractSemitone();
     public Note SubtractTone() => SubtractSemitone().SubtractSemitone();
@@ -75,7 +78,9 @@ public abstract class Note : IEquatable<Note>
         {
             Sign.Natural => "",
             Sign.Flat => "-flat",
+            Sign.FlatFlat => "-flatflat",
             Sign.Sharp => "-sharp",
+            Sign.SharpSharp => "-sharpsharp",
             _ => throw new ArgumentOutOfRangeException()
         };
         return $"{Letter}{sign}";

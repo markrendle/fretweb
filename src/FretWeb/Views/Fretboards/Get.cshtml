@@ -14,8 +14,11 @@
   </div>
 </div>
 
-<div class="row pt-4">
-  <div class="col-12">
-    <partial name="_Navigation" model="Model"/>
+@if (!Model.Print)
+{
+  <div class="row pt-4">
+    <div class="col-12">
+      <partial name="_Navigation" model="Model"/>
+    </div>
   </div>
-</div>
+}

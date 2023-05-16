@@ -1,10 +1,10 @@
 ﻿namespace FretWeb.Music;
 
-public class Chord
+public class Arpeggio
 {
-    private readonly ChordNote[] _notes;
+    private readonly ArpeggioNote[] _notes;
 
-    public Chord(string group, string name, params ChordNote[] notes)
+    public Arpeggio(string group, string name, params ArpeggioNote[] notes)
     {
         Group = group;
         Name = name;
@@ -17,8 +17,8 @@ public class Chord
     public string Name { get; }
 
     public int Count => _notes.Length;
-    public ChordNote this[int index] => _notes[index];
-    public ReadOnlySpan<ChordNote> AsSpan() => _notes.AsSpan();
+    public ArpeggioNote this[int index] => _notes[index];
+    public ReadOnlySpan<ArpeggioNote> AsSpan() => _notes.AsSpan();
 
     private static string NameToId(ReadOnlySpan<char> name)
     {

@@ -13,4 +13,7 @@ public sealed class C : Note
 
     public override Note AddSemitone() => Notes.CSharp;
     public override Note SubtractSemitone() => Notes.B;
+
+    public override Note AsSharp() => Notes.BSharp;
+    public override Note AsFlat() => DFlatFlat.Instance;
 }

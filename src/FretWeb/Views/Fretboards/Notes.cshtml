@@ -1,12 +1,10 @@
 ﻿@model FretboardPageViewModel
 
 @{
-  ViewBag.Title = "Arpeggios";
+  ViewBag.Title = "Notes";
   Layout = Model.Print ? "_LayoutPrint" : "_Layout";
 }
 
-@if (Model.PrintLink is {Length: > 0})
-{
 <div class="row">
   <div class="col-1 offset-11">
     <a type="button" class="btn btn-outline-primary" href="@Model.PrintLink" target="_blank">
@@ -18,7 +16,6 @@
     </a>
   </div>
 </div>
-}
 
 <div class="row mt-2">
   <div class="col-12">
@@ -31,9 +28,10 @@
 
 @if (!Model.Print)
 {
-<div class="row pt-4">
-  <div class="col-12">
-    <partial name="_Navigation" model="Model"/>
+
+  <div class="row pt-4">
+    <div class="col-12">
+      <partial name="_Navigation" model="Model"/>
+    </div>
   </div>
-</div>
 }

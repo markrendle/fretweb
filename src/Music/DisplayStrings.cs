@@ -28,4 +28,16 @@ public static class DisplayStrings
     public const string BFlat = "B♭";
     public const string B = "B";
     public const string BSharp = "B♯";
+    
+    // Weird stuff
+    public const string CSharpSharp = "C𝄪";
+    public const string DFlatFlat =   "D𝄫";
+    public const string DSharpSharp = "D𝄪";
+    public const string EFlatFlat =   "E𝄫";
+    public const string FSharpSharp = "F𝄪";
+    public const string GFlatFlat =   "G𝄫";
+    public const string GSharpSharp = "G𝄪";
+    public const string AFlatFlat =   "A𝄫";
+    public const string ASharpSharp = "A𝄪";
+    public const string BFlatFlat =   "B𝄫";
 }

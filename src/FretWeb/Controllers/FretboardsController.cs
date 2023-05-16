@@ -9,35 +9,61 @@ namespace FretWeb.Controllers;
 [Route("fretboards")]
 public class FretboardsController : Controller
 {
-    [HttpGet("{openNotes}")]
-    public IActionResult Get(string openNotes, [FromQuery] int? frets, [FromQuery] string? tab)
+    [HttpGet("{tuning}")]
+    public IActionResult Get(string tuning, [FromQuery] int? frets, [FromQuery] string? tab)
     {
-        var openNoteArray = ParseOpenNoteArray(openNotes);
+        var tuningArray = ParseTuningArray(tuning);
 
-        var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
+        var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
 
         var viewModel = new FretboardPageViewModel
         {
-            OpenNotes = openNotes,
+            Tuning = tuning,
             Frets = frets,
             Tab = tab ?? "Scales"
         };
         
-        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, openNotes));
+        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, tuning));
 
         return View(viewModel);
     }
 
-    [HttpGet("{openNotes}/arpeggio/{arpeggios}")]
-    public IActionResult Arpeggio(string openNotes, string arpeggios, [FromQuery] int? frets, [FromQuery] string? tab)
+    [HttpGet("{tuning}/note/{noteId}")]
+    public IActionResult Notes(string tuning, string noteId, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
     {
-        var openNoteArray = ParseOpenNoteArray(openNotes);
+        if (!Note.TryParse(noteId, out var note)) return NotFound();
+        
+        var tuningArray = ParseTuningArray(tuning);
+
+        var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
+        fretboard.SetBadges(note);
+
         var viewModel = new FretboardPageViewModel
         {
-            OpenNotes = openNotes,
+            Tuning = tuning,
+            Frets = frets,
+            Tab = tab ?? "Notes",
+            Print = print.GetValueOrDefault(),
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Arpeggio", new { tuning, noteId, frets, tab, print = true })
+        };
+        
+        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, note.Display));
+
+        return View(viewModel);
+    }
+
+    [HttpGet("{tuning}/arpeggio/{arpeggios}")]
+    public IActionResult Arpeggio(string tuning, string arpeggios, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
+    {
+        var tuningArray = ParseTuningArray(tuning);
+        var viewModel = new FretboardPageViewModel
+        {
+            Tuning = tuning,
             Frets = frets,
             Tab = tab ?? "Arpeggios",
-            Arpeggios = arpeggios
+            Arpeggios = arpeggios,
+            Print = print.GetValueOrDefault(),
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Arpeggio", new { tuning, arpeggios, frets, tab, print = true })
         };
 
         var arpeggioArray = arpeggios.Split('+');
@@ -56,13 +82,13 @@ public class FretboardsController : Controller
                 return NotFound();
             }
 
-            if (parts[1] is not { Length: > 0 } arpeggioName || !Chords.TryGet(arpeggioName, out var arpeggio))
+            if (parts[1] is not { Length: > 0 } arpeggioName || !Arpeggios.TryGet(arpeggioName, out var arpeggio))
             {
                 return NotFound();
             }
 
             var title = $"{rootNote.Display} {arpeggio.Name}";
-            var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
+            var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(arpeggio, rootNote);
             viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
         }
@@ -70,16 +96,18 @@ public class FretboardsController : Controller
         return View(viewModel);
     }
 
-    [HttpGet("{openNotes}/chord/{chords}")]
-    public IActionResult Chord(string openNotes, string chords, [FromQuery] int? frets, [FromQuery] string? tab)
+    [HttpGet("{tuning}/chord/{chords}")]
+    public IActionResult Chord(string tuning, string chords, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
     {
-        var openNoteArray = ParseOpenNoteArray(openNotes);
+        var tuningArray = ParseTuningArray(tuning);
         var viewModel = new FretboardPageViewModel
         {
-            OpenNotes = openNotes,
+            Tuning = tuning,
             Frets = frets,
             Tab = tab ?? "Chords",
-            Chords = chords
+            Chords = chords,
+            Print = print.GetValueOrDefault(),
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Chord", new { tuning, chords, frets, tab, print = true })
         };
 
         var chordArray = chords.Split('+');
@@ -98,13 +126,13 @@ public class FretboardsController : Controller
                 return NotFound();
             }
 
-            if (parts[1] is not { Length: > 0 } chordName || !Chords.TryGet(chordName, out var chord))
+            if (parts[1] is not { Length: > 0 } chordName || !Arpeggios.TryGet(chordName, out var chord))
             {
                 return NotFound();
             }
 
             var title = $"{rootNote.Display} {chord.Name}";
-            var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
+            var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(chord, rootNote);
             viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
         }
@@ -112,17 +140,18 @@ public class FretboardsController : Controller
         return View(viewModel);
     }
 
-    [HttpGet("{openNotes}/scale/{scales}")]
-    public IActionResult Scale(string openNotes, string scales, [FromQuery] int? frets, [FromQuery] string? tab)
+    [HttpGet("{tuning}/scale/{scales}")]
+    public IActionResult Scale(string tuning, string scales, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
     {
-        var openNoteArray = ParseOpenNoteArray(openNotes);
+        var tuningArray = ParseTuningArray(tuning);
         var viewModel = new FretboardPageViewModel
         {
-            OpenNotes = openNotes,
+            Tuning = tuning,
             Scales = scales,
             Frets = frets,
             Tab = tab ?? "Scales",
-            PrintLink = Url.Action("Scale", "Print", new { tuning = openNotes, scales, frets })
+            Print = print.GetValueOrDefault(),
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Scale", new { tuning, scales, frets, tab, print = true })
         };
 
         var scalesArray = scales.Split('+');
@@ -139,15 +168,15 @@ public class FretboardsController : Controller
                 return NotFound();
             }
 
-            if (parts[1] is not { Length: > 0 } scaleName || !(Scales.FindByName(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
+            if (parts[1] is not { Length: > 0 } scaleName || !(Scales.FindById(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
             {
                 return NotFound();
             }
 
-            var fretboard = Fretboard.Create(frets ?? 12, openNoteArray);
+            var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(scale, rootNote.Sign);
 
-            var title = $"{rootNote.Display} {scaleSet.Name}";
+            var title = $"{rootNote.Display} {scaleSet.Id}";
 
             viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
         }
@@ -155,10 +184,10 @@ public class FretboardsController : Controller
         return View(viewModel);
     }
 
-    private static Note[] ParseOpenNoteArray(string openNotes)
+    private static Note[] ParseTuningArray(string tuning)
     {
         var list = new List<Note>();
-        var notes = openNotes.AsSpan();
+        var notes = tuning.AsSpan();
         for (int i = 0; i < notes.Length; i++)
         {
             var n = notes[i];
@@ -179,7 +208,7 @@ public class FretboardsController : Controller
                 }
             }
 
-            list.Add(Notes.Get(n, sign));
+            list.Add(Music.Notes.Get(n, sign));
         }
 
         var openNoteArray = list.ToArray();

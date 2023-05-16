@@ -37,14 +37,6 @@ public class Scale : IEnumerable<Note>
         return GetEnumerator();
     }
 
-    public Scale AsDorian() => ShiftLeft(1);
-    public Scale AsPhrygian() => ShiftLeft(2);
-    
-    public Scale AsLydian() => ShiftLeft(3);
-    public Scale AsMixolydian() => ShiftLeft(4);
-    public Scale AsAeolian() => ShiftLeft(5);
-    public Scale AsLocrian() => ShiftLeft(6);
-
     public Scale ShiftLeft(int by)
     {
         var notes = new Note[_notes.Length];
@@ -66,5 +58,38 @@ public class Scale : IEnumerable<Note>
     {
         var notes = _notes.Select(n => n.Alt).ToArray();
         return new Scale(notes);
+    }
+
+    public bool ContainsSharp() => _notes.Any(n => n.Sign is Sign.Sharp or Sign.SharpSharp);
+    public bool ContainsFlat() => _notes.Any(n => n.Sign is Sign.Flat or Sign.FlatFlat);
+    public bool ContainsTheoretical() => _notes.Any(n => n.Sign is Sign.SharpSharp or Sign.FlatFlat);
+
+    public bool ContainsMixedSigns()
+    {
+        bool flat = false;
+        bool sharp = false;
+
+        foreach (var note in _notes)
+        {
+            switch (note.Sign)
+            {
+                case Sign.Natural:
+                    break;
+                case Sign.Flat:
+                case Sign.FlatFlat:
+                    if (sharp) return true;
+                    flat = true;
+                    break;
+                case Sign.Sharp:
+                case Sign.SharpSharp:
+                    if (flat) return true;
+                    sharp = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        return false;
     }
 }

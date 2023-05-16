@@ -28,7 +28,7 @@ public class PrintController : Controller
                 return NotFound();
             }
 
-            if (parts[1] is not { Length: > 0 } scaleName || !(Scales.FindByName(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
+            if (parts[1] is not { Length: > 0 } scaleName || !(Scales.FindById(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
             {
                 return NotFound();
             }
@@ -36,10 +36,45 @@ public class PrintController : Controller
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(scale, rootNote.Sign);
 
-            var title = $"{rootNote.Display} {scaleSet.Name}";
+            var title = $"{rootNote.Display} {scaleSet.Id}";
 
             viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
         }
+        return View(viewModel);
+    }
+    
+    [HttpGet("{tuning}/arpeggio/{arpeggios}")]
+    public IActionResult Arpeggio(string tuning, string arpeggios, [FromQuery] int? frets, [FromQuery] string? tab)
+    {
+        var tuningArray = ParseTuningArray(tuning);
+        var arpeggioArray = arpeggios.Split('+');
+        var viewModel = new PrintViewModel();
+
+        foreach (var arpeggioStr in arpeggioArray)
+        {
+            var parts = arpeggioStr.Split('-');
+            
+            if (parts.Length != 2)
+            {
+                return NotFound();
+            }
+
+            if (parts[0] is not { Length: > 0 } root || !Note.TryParse(root, out var rootNote))
+            {
+                return NotFound();
+            }
+
+            if (parts[1] is not { Length: > 0 } arpeggioName || !Arpeggios.TryGet(arpeggioName, out var arpeggio))
+            {
+                return NotFound();
+            }
+
+            var title = $"{rootNote.Display} {arpeggio.Name}";
+            var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
+            fretboard.SetBadges(arpeggio, rootNote);
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+        }
+
         return View(viewModel);
     }
     

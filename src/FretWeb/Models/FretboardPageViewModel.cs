@@ -1,5 +1,4 @@
 ﻿using FretWeb.Fretboards;
-using FretWeb.Music;
 
 namespace FretWeb.Models;
 
@@ -15,7 +14,7 @@ public class FretboardPageViewModel
 
     public string? Title { get; set; }
     public required string Tab { get; init; }
-    public required string OpenNotes { get; init; }
+    public required string Tuning { get; init; }
     public int? Frets { get; init; }
     public string? Scale { get; init; }
     public string? Root { get; init; }
@@ -24,6 +23,7 @@ public class FretboardPageViewModel
     public string? Arpeggios { get; set; }
     public string? Chords { get; set; }
     public string? PrintLink { get; set; }
+    public bool Print { get; set; }
 }
 
 public class FretboardViewModel

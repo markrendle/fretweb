@@ -88,7 +88,7 @@ public class Fret
         }
     }
 
-    public void SetBadges(Chord chord, Note rootNote)
+    public void SetBadges(Arpeggio arpeggio, Note rootNote)
     {
         foreach (var fretString in _strings)
         {
@@ -102,7 +102,7 @@ public class Fret
             fretString.IsRoot = false;
             fretString.Badge = string.Empty;
 
-            foreach (var chordNote in chord.AsSpan().Slice(1))
+            foreach (var chordNote in arpeggio.AsSpan().Slice(1))
             {
                 var number = chordNote.Number;
                 switch (chordNote.Sign)

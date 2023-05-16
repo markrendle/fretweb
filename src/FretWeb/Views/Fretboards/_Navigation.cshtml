@@ -20,6 +20,19 @@
   </li>
   <li class="nav-item">
     @{
+      tabHref = Url.Fretboard(Model, tab: "modes");
+    }
+    @if (Model.Tab.Equals("modes", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Modes</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Modes</a>
+    }
+  </li>
+  <li class="nav-item">
+    @{
       tabHref = Url.Fretboard(Model, tab: "arpeggios");
     }
     @if (Model.Tab.Equals("arpeggios", StringComparison.OrdinalIgnoreCase))
@@ -57,6 +70,19 @@
       <a class="nav-link" href="@tabHref">Notes</a>
     }
   </li>
+  <li class="nav-item">
+    @{
+      tabHref = Url.Fretboard(Model, tab: "custom");
+    }
+    @if (Model.Tab.Equals("custom", StringComparison.OrdinalIgnoreCase))
+    {
+      <a class="nav-link active" aria-current="page" href="@tabHref">Custom</a>
+    }
+    else
+    {
+      <a class="nav-link" href="@tabHref">Custom</a>
+    }
+  </li>
 </ul>
 <div class="px-5 pt-2">
   @if (Model.Tab.Equals("scales", StringComparison.OrdinalIgnoreCase))
@@ -64,7 +90,7 @@
     <table class="w-100">
       @{
         var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
-        foreach (var scaleSet in Scales.Enumerate())
+        foreach (var scaleSet in Scales.EnumerateScales())
         {
           @if (theme == Theme.Dark)
           {
@@ -78,8 +104,38 @@
             <td class="fw-bold">@scaleSet.Name</td>
             @foreach (var scale in scaleSet.Enumerate())
             {
-              var href = Url.FretboardScale(Model, scale: scaleSet.Name, root: scale[0].Id);
-              var title = $"{scale[0].Display} {scaleSet.Name}";
+              var href = Url.FretboardScale(Model, scale: scaleSet.Id, root: scale[0].Id);
+              var title = $"{scale[0].Display} {scaleSet.Id}";
+              <td>
+                <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@scale[0].Text" title="@title">@scale[0].Display</a>
+              </td>
+            }
+          </tr>
+        }
+      }
+    </table>
+  }
+  @if (Model.Tab.Equals("modes", StringComparison.OrdinalIgnoreCase))
+  {
+    <table class="w-100">
+      @{
+        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
+        foreach (var scaleSet in Scales.EnumerateModes())
+        {
+          @if (theme == Theme.Dark)
+          {
+            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+          }
+          else
+          {
+            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+          }
+          <tr>
+            <td class="fw-bold">@scaleSet.Name</td>
+            @foreach (var scale in scaleSet.Enumerate())
+            {
+              var href = Url.FretboardScale(Model, scale: scaleSet.Id, root: scale[0].Id);
+              var title = $"{scale[0].Display} {scaleSet.Id}";
               <td>
                 <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@scale[0].Text" title="@title">@scale[0].Display</a>
               </td>
@@ -94,7 +150,7 @@
     <table class="w-100">
       @{
         var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
-        foreach (var chord in Chords.All())
+        foreach (var arpeggio in Arpeggios.All())
         {
           @if (theme == Theme.Dark)
           {
@@ -105,11 +161,11 @@
             bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
           }
           <tr>
-            <td class="fw-bold">@chord.Name</td>
+            <td class="fw-bold">@arpeggio.Name</td>
             @foreach (var note in Notes.ChromaticWithFlats())
             {
-              var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
-              var title = $"{note.Display} {chord.Name}";
+              var href = Url.FretboardArpeggio(Model, arpeggio.Id, note.Id);
+              var title = $"{note.Display} {arpeggio.Name}";
               <td>
                 <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@title">@note.Display</a>
               </td>
@@ -124,7 +180,7 @@
     <table class="w-100">
       @{
         var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
-        foreach (var chord in Chords.All().Where(c => c.Count < 5))
+        foreach (var chord in Arpeggios.All().Where(c => c.Count < 5))
         {
           @if (theme == Theme.Dark)
           {
@@ -138,7 +194,7 @@
             <td class="fw-bold">@chord.Name</td>
             @foreach (var note in Notes.ChromaticWithFlats())
             {
-              var href = Url.FretboardChord(Model, chord: chord.Id, root: note.Text);
+              var href = Url.FretboardChord(Model, chord.Id, note.Id);
               var title = $"{note.Display} {chord.Name}";
               <td>
                 <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@title">@note.Display</a>
@@ -154,25 +210,38 @@
     <table class="w-100">
       <tr>
         <td class="fw-bold">Notes</td>
-      @{
-        var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
-        foreach (var note in Notes.ChromaticWithFlats())
-        {
-          @if (theme == Theme.Dark)
+        @{
+          var bg = theme == Theme.Dark ? "btn-dark" : "btn-outline-dark";
+          foreach (var note in Notes.ChromaticWithFlats())
           {
-            bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+            @if (theme == Theme.Dark)
+            {
+              bg = bg == "btn-dark" ? "btn-secondary" : "btn-dark";
+            }
+            else
+            {
+              bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
+            }
+            var href = Url.FretboardNote(Model, root: note.Text);
+            <td>
+              <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@note.Display">@note.Display</a>
+            </td>
           }
-          else
-          {
-            bg = bg == "btn-outline-dark" ? "btn-outline-secondary" : "btn-outline-dark";
-          }
-          var href = Url.FretboardNote(Model, root: note.Text);
-          <td>
-            <a href="@href" class="btn @bg btn-sm w-100 m-1 btn-scale color-@note.Text" title="@note.Display">@note.Display</a>
-          </td>
         }
-      }
       </tr>
     </table>
+  }
+  else if (Model.Tab.Equals("custom", StringComparison.OrdinalIgnoreCase))
+  {
+    <div class="w-100">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a asp-controller="Builder" asp-action="Scales" asp-route-tuning="@Model.Tuning" class="nav-link">Build custom Scales sheet</a>
+        </li>
+        <li class="nav-item">
+          <a asp-controller="Builder" asp-action="Arpeggios" asp-route-tuning="@Model.Tuning" class="nav-link">Build custom Arpeggios sheet</a>
+        </li>
+      </ul>
+    </div>
   }
 </div>

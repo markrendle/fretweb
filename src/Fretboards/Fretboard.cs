@@ -31,11 +31,11 @@ public class Fretboard
         }
     }
 
-    public void SetBadges(Chord chord, Note rootNote)
+    public void SetBadges(Arpeggio arpeggio, Note rootNote)
     {
         foreach (var fret in _frets)
         {
-            fret.SetBadges(chord, rootNote);
+            fret.SetBadges(arpeggio, rootNote);
         }
     }
 
@@ -47,11 +47,11 @@ public class Fretboard
         }
     }
 
-    public static Fretboard Create(int fretCount, params Note[] openNotes)
+    public static Fretboard Create(int fretCount, params Note[] tuning)
     {
         var frets = new List<Fret>();
-        var strings = new List<FretString>(openNotes.Length);
-        var notes = openNotes.Reverse().ToArray();
+        var strings = new List<FretString>(tuning.Length);
+        var notes = tuning.Reverse().ToArray();
         
         for (int f = 0; f <= fretCount; f++)
         {

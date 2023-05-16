@@ -7,10 +7,10 @@ namespace FretWeb.Utilities;
 public static class UrlHelperExtensions
 {
     public static string? Scale(this IUrlHelper urlHelper, string name) => urlHelper.Action("Get", "Scales", new { name });
-    public static string? Fretboard(this IUrlHelper urlHelper, string openNotes, string? scale = null, string? root = null,
+    public static string? Fretboard(this IUrlHelper urlHelper, string tuning, string? scale = null, string? root = null,
         string? chord = null, int? frets = null, string? tab = null)
     {
-        var routeValues = new RouteValueDictionary { { "openNotes", openNotes } };
+        var routeValues = new RouteValueDictionary { { "tuning", tuning } };
         if (scale is { Length: > 0 })
         {
             routeValues.Add("scale", scale);
@@ -40,7 +40,7 @@ public static class UrlHelperExtensions
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardPageViewModel.OpenNotes },
+            { "tuning", fretboardPageViewModel.Tuning },
             { "scales", $"{root}-{scale}" },
         };
         
@@ -55,15 +55,29 @@ public static class UrlHelperExtensions
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardPageViewModel.OpenNotes },
-            { "chord", chord },
-            { "root", root }
+            { "tuning", fretboardPageViewModel.Tuning },
+            { "chords", $"{root}-{chord}" },
         };
         
         routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
         routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
 
-        return urlHelper.Action("Get", "Fretboards", routeValues);
+        return urlHelper.Action("Chord", "Fretboards", routeValues);
+    }
+
+    public static string? FretboardArpeggio(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string arpeggio, string root,
+        int? frets = null, string? tab = null)
+    {
+        var routeValues = new RouteValueDictionary
+        {
+            { "tuning", fretboardPageViewModel.Tuning },
+            { "arpeggios", $"{root}-{arpeggio}" },
+        };
+        
+        routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
+        routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
+
+        return urlHelper.Action("Arpeggio", "Fretboards", routeValues);
     }
 
     public static string? FretboardNote(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string root,
@@ -71,7 +85,7 @@ public static class UrlHelperExtensions
     {
         var routeValues = new RouteValueDictionary
         {
-            { "openNotes", fretboardPageViewModel.OpenNotes },
+            { "tuning", fretboardPageViewModel.Tuning },
             { "root", root }
         };
         
@@ -84,7 +98,7 @@ public static class UrlHelperExtensions
     public static string? Fretboard(this IUrlHelper urlHelper, FretboardPageViewModel fretboardPageViewModel, string? scale = null, string? root = null,
         string? chord = null, int? frets = null, string? tab = null)
     {
-        var routeValues = new RouteValueDictionary { { "openNotes", fretboardPageViewModel.OpenNotes } };
+        var routeValues = new RouteValueDictionary { { "tuning", fretboardPageViewModel.Tuning } };
         routeValues.AddIfNotNull("tab", tab, fretboardPageViewModel.Tab);
         routeValues.AddIfNotNull("frets", frets, fretboardPageViewModel.Frets);
         

@@ -3,11 +3,5 @@
 public class ScalesBuilderViewModel
 {
     public string? Tuning { get; set; }
-    public BuilderScale[] Scales { get; set; }
-}
-
-public class BuilderScale
-{
-    public string? Root { get; set; }
-    public string? Scale { get; set; }
+    public RootedScale[] Scales { get; set; }
 }
