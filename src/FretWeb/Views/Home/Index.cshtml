@@ -10,7 +10,7 @@
         <h2 class="card-title">Fretboards</h2>
         <div class="container">
           <div class="row">
-            <div class="col-6">
+            <div class="col-4">
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Bass</h3>
@@ -26,13 +26,29 @@
                 </div>
               </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Guitar</h3>
 
                   <ul class="nav flex-column">
                     @foreach (var t in StandardTunings.Group("Guitar"))
+                    {
+                    <li class="nav-item">
+                      <a href="@Url.Fretboard(t.Tuning)" class="nav-link">@t.Name</a>
+                    </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Ukulele</h3>
+
+                  <ul class="nav flex-column">
+                    @foreach (var t in StandardTunings.Group("Ukulele"))
                     {
                     <li class="nav-item">
                       <a href="@Url.Fretboard(t.Tuning)" class="nav-link">@t.Name</a>

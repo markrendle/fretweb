@@ -27,6 +27,11 @@ public static class StandardTunings
         new("Guitar", "Drop-D", "DADGBE"),
         new("Guitar", "Semitone Down", "EfAfDfGfBfEf"),
         new("Guitar", "Tone Down", "DGCFAD"),
+        new("Ukulele", "Standard", "GCEA"),
+        new("Ukulele", "D-Tuning", "ADFsB"),
+        new("Ukulele", "Slack-Key", "GCEG"),
+        new("Ukulele", "Slide", "GCEBf"),
+        new("Ukulele", "Baritone", "DGBE"),
     };
 
     public static IEnumerable<StandardTuning> All() => _tunings.AsEnumerable();
