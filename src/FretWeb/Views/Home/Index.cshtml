@@ -54,7 +54,22 @@
       <div class="card-body">
         <h2 class="card-title">Scales</h2>
         <ul class="nav">
-          @foreach (var scaleSet in Scales.Enumerate())
+          @foreach (var scaleSet in Scales.EnumerateScales())
+          {
+            <li class="nav-item"><a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a></li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Modes</h2>
+        <ul class="nav">
+          @foreach (var scaleSet in Scales.EnumerateModes())
           {
             <li class="nav-item"><a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a></li>
           }
