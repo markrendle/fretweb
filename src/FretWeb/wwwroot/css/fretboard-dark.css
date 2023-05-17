@@ -85,3 +85,12 @@
     border-width: medium;
     background-color: #111111;
 }
+
+.fret-btn {
+    cursor: pointer;
+}
+
+.fret-fade>.fret-badge {
+    opacity: 0.2;
+}
+

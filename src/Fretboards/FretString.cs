@@ -19,5 +19,6 @@ public class FretString
 
     public Note Note { get; }
     public string Badge { get; set; }
+    public int? Index { get; set; }
     public bool IsRoot { get; set; }
 }

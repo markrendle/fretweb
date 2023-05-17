@@ -24,6 +24,16 @@ public class FretboardArpeggioTests : IClassFixture<WebApplicationFactory<Fretbo
         Assert.True(response.IsSuccessStatusCode);
     }
 
+    [Theory]
+    [MemberData(nameof(TuningsAndArpeggios))]
+    public async Task GetsTuningArpeggiosForPrint(string tuning, string arpeggio)
+    {
+        var client = _factory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/fretboards/{tuning}/arpeggio/{arpeggio}?print=true");
+        var response = await client.SendAsync(request);
+        Assert.True(response.IsSuccessStatusCode);
+    }
+
     public static IEnumerable<object[]> TuningsAndArpeggios()
     {
         foreach (var standardTuning in StandardTunings.All())

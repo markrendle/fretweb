@@ -59,6 +59,8 @@ public class Fret
                 continue;
             }
 
+            fretString.Index = index;
+
             if (index == 0)
             {
                 fretString.Badge = notes[index].Display;
@@ -96,14 +98,17 @@ public class Fret
             {
                 fretString.Badge = rootNote.Display;
                 fretString.IsRoot = true;
+                fretString.Index = 0;
                 continue;
             }
 
             fretString.IsRoot = false;
             fretString.Badge = string.Empty;
 
-            foreach (var chordNote in arpeggio.AsSpan().Slice(1))
+            var notes = arpeggio.AsSpan();
+            for (var index = 1; index < notes.Length; index++)
             {
+                var chordNote = notes[index];
                 var number = chordNote.Number;
                 switch (chordNote.Sign)
                 {
@@ -120,10 +125,12 @@ public class Fret
                         number += 2;
                         break;
                 }
+
                 var note = rootNote.AddSemitones(number);
                 if (fretString.Note.IsEquivalentTo(note))
                 {
                     fretString.Badge = $"{chordNote.Sign.GetString()}{chordNote.Number}";
+                    fretString.Index = index;
                 }
             }
         }

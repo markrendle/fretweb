@@ -24,6 +24,16 @@ public class FretboardScaleTests : IClassFixture<WebApplicationFactory<Fretboard
         Assert.True(response.IsSuccessStatusCode);
     }
 
+    [Theory]
+    [MemberData(nameof(TuningsAndScales))]
+    public async Task GetsTuningScaleForPrint(string tuning, string scale)
+    {
+        var client = _factory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/fretboards/{tuning}/scale/{scale}?print=true");
+        var response = await client.SendAsync(request);
+        Assert.True(response.IsSuccessStatusCode);
+    }
+
     public static IEnumerable<object[]> TuningsAndScales()
     {
         foreach (var standardTuning in StandardTunings.All())

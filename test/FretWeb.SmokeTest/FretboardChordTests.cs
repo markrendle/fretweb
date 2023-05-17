@@ -24,6 +24,16 @@ public class FretboardChordTests : IClassFixture<WebApplicationFactory<Fretboard
         Assert.True(response.IsSuccessStatusCode);
     }
 
+    [Theory]
+    [MemberData(nameof(TuningsAndChords))]
+    public async Task GetsTuningChordsForPrint(string tuning, string chord)
+    {
+        var client = _factory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/fretboards/{tuning}/chord/{chord}?print=true");
+        var response = await client.SendAsync(request);
+        Assert.True(response.IsSuccessStatusCode);
+    }
+
     public static IEnumerable<object[]> TuningsAndChords()
     {
         foreach (var standardTuning in StandardTunings.All())
