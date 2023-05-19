@@ -25,15 +25,3 @@ public class FretboardPageViewModel
     public string? PrintLink { get; set; }
     public bool Print { get; set; }
 }
-
-public class FretboardViewModel
-{
-    public FretboardViewModel(Fretboard fretboard, string title)
-    {
-        Fretboard = fretboard;
-        Title = title;
-    }
-
-    public Fretboard Fretboard { get; }
-    public string Title { get; }
-}

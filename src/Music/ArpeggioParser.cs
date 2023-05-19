@@ -1,9 +1,28 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace FretWeb.Music;
 
 public static class ArpeggioParser
 {
+    public static IEnumerable<Arpeggio> Load()
+    {
+        var resourcePath = $"{typeof(ArpeggioParser).Namespace}.Data.arpeggios.csv";
+        using var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourcePath);
+        if (resource is null) yield break;
+        using var reader = new StreamReader(resource);
+        while (!reader.EndOfStream)
+        {
+            if (reader.ReadLine() is { Length: > 0 } line)
+            {
+                if (TryParse(line, out var arpeggio))
+                {
+                    yield return arpeggio;
+                }
+            }
+        }
+    }
+    
     public static bool TryParse(string source, [NotNullWhen(true)] out Arpeggio? arpeggio)
     {
         var parts = source.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);

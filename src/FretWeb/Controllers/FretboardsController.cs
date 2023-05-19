@@ -23,7 +23,7 @@ public class FretboardsController : Controller
             Tab = tab ?? "Scales"
         };
         
-        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, tuning));
+        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, "default", tuning));
 
         return View(viewModel);
     }
@@ -47,7 +47,7 @@ public class FretboardsController : Controller
             PrintLink = print.GetValueOrDefault() ? null : Url.Action("Arpeggio", new { tuning, noteId, frets, tab, print = true })
         };
         
-        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, note.Display));
+        viewModel.Fretboards.Add(new FretboardViewModel(fretboard, noteId.ToLowerInvariant(), note.Display));
 
         return View(viewModel);
     }
@@ -90,7 +90,7 @@ public class FretboardsController : Controller
             var title = $"{rootNote.Display} {arpeggio.Name}";
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(arpeggio, rootNote);
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, arpeggioStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);
@@ -134,7 +134,7 @@ public class FretboardsController : Controller
             var title = $"{rootNote.Display} {chord.Name}";
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(chord, rootNote);
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, chordStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);
@@ -178,7 +178,7 @@ public class FretboardsController : Controller
 
             var title = $"{rootNote.Display} {scaleSet.Id}";
 
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, scaleStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);

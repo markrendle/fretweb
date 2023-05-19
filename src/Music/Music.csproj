@@ -7,4 +7,11 @@
     <RootNamespace>FretWeb.Music</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Data\arpeggios.csv" />
+    <EmbeddedResource Include="Data\arpeggios.csv" />
+    <None Remove="Data\scales.csv" />
+    <EmbeddedResource Include="Data\scales.csv" />
+  </ItemGroup>
+
 </Project>

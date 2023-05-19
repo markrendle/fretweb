@@ -16,6 +16,15 @@
     }
     return maxIndex;
   }
+  
+  function clearHighlights(e) {
+    const fretboard = e.closest('.fretboard');
+    if (fretboard) {
+      fretboard.querySelectorAll('.fret-fade').forEach(f => f.classList.remove('fret-fade'));
+      const id = fretboard.id + '-highlight';
+      localStorage.removeItem(id);
+    }
+  }
 
   function highlight(string, row, column, fretMap) {
     console.log([row, column]);
@@ -67,8 +76,18 @@
         fretMap[i][fret] = {e: string, i: index};
         if (index === 0) {
           string.classList.add('fret-btn');
+          const id = string.closest('.fretboard').id + '-highlight';
+          const json = JSON.stringify({ s: i, f: fret });
           string.addEventListener('click', e => {
-            highlight(string, i, fret, fretMap);
+            if (e.currentTarget.dataset.highlighted) {
+              clearHighlights(e.currentTarget);
+              delete e.currentTarget.dataset.highlighted;
+              localStorage.removeItem(id);
+            } else {
+              e.currentTarget.dataset.highlighted = 'true';
+              highlight(string, i, fret, fretMap);
+              localStorage.setItem(id, json);
+            }
           });
         }
       }
@@ -82,6 +101,26 @@
     const frets = [...e.querySelectorAll('.fret')];
     for (let i = 0; i < frets.length; i++) {
       mapNotes(frets[i], '.fret-string', fretMap, i + 1);
+    }
+    const id = e.id + '-highlight';
+    const json = localStorage.getItem(id);
+    if (json && json.length > 0) {
+      const reference = JSON.parse(json);
+      if (typeof reference.s === 'number' && typeof reference.f === 'number') {
+        if (reference.f === 0) {
+          const openFretStrings = [...openFret.querySelectorAll('.open-fret-string')].reverse();
+          const string = openFretStrings[reference.s];
+          highlight(string, reference.s, reference.f, fretMap);
+          string.dataset.highlighted = 'true';
+        } else {
+          const fret = frets[reference.f - 1];
+          const fretStrings = [...fret.querySelectorAll('.fret-string')].reverse();
+          const string = fretStrings[reference.s];
+          highlight(string, reference.s, reference.f, fretMap);
+          string.dataset.highlighted = 'true';
+        }
+      }
+        
     }
   });
 });

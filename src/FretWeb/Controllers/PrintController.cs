@@ -38,7 +38,7 @@ public class PrintController : Controller
 
             var title = $"{rootNote.Display} {scaleSet.Id}";
 
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, scaleStr.ToLowerInvariant(), title));
         }
         return View(viewModel);
     }
@@ -72,7 +72,7 @@ public class PrintController : Controller
             var title = $"{rootNote.Display} {arpeggio.Name}";
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(arpeggio, rootNote);
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, title));
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, arpeggioStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);
