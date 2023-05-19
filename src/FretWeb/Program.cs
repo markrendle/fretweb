@@ -1,5 +1,6 @@
 using FretWeb.Telemetry;
 using FretWeb.Utilities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.AddHoneycombOpenTelemetry();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
+builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -18,7 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
-const int duration = 60 * 60 * 24;
+const int duration = 60 * 60;
 var cacheHeader = $"public,max-age={duration}";
 app.UseStaticFiles(new StaticFileOptions
 {
@@ -31,7 +33,9 @@ app.Use(async (context, next) =>
     {
         if (Enum.TryParse(values.FirstOrDefault(), true, out Theme theme))
         {
-            context.Response.Cookies.Append("fretweb.theme", theme.ToString().ToLower());
+            var themeStr = theme.ToString().ToLower();
+            context.Response.Cookies.Append("fretweb.theme", themeStr);
+            context.Response.Headers.TryAdd("X-Theme", themeStr);
         }
 
         var path = context.Request.Path;
@@ -51,6 +55,17 @@ app.Use(async (context, next) =>
 });
 
 app.UseRouting();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.CacheControl = cacheHeader;
+    context.Response.Headers.Vary = "X-Theme, Accept-Encoding";
+    if (context.Request.Cookies.TryGetValue("fretweb.theme", out var theme))
+    {
+        context.Response.Headers.TryAdd("X-Theme", theme);
+    }
+    await next();
+});
 
 app.UseAuthorization();
 
