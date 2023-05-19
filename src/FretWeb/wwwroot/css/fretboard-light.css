@@ -95,6 +95,10 @@
     opacity: 0.2;
 }
 
+.btn-fretboard-nav {
+    background-color: #f0f0f0;
+}
+
 @media print {
     .fretboard-container {
         break-inside: avoid;
