@@ -60,10 +60,11 @@ app.Use(async (context, next) =>
 {
     context.Response.Headers.CacheControl = cacheHeader;
     context.Response.Headers.Vary = "X-Theme, Accept-Encoding";
-    if (context.Request.Cookies.TryGetValue("fretweb.theme", out var theme))
+    if (!context.Request.Cookies.TryGetValue("fretweb.theme", out var theme))
     {
-        context.Response.Headers.TryAdd("X-Theme", theme);
+        theme = "light";
     }
+    context.Response.Headers.TryAdd("X-Theme", theme);
     await next();
 });
 
