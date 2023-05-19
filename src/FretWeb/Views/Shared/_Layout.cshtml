@@ -11,6 +11,20 @@
   {
   <script async src="@umamiUrl" data-website-id="@umamiWebsiteId"></script>
   }
+  <script>
+  const theme = localStorage.getItem('theme');
+  const themeStylesheet = document.querySelector('#theme-stylesheet');
+  const fretboardStylesheet = document.querySelector('#fretboard-stylesheet');
+  if (themeStylesheet && fretboardStylesheet) {
+    if (theme === 'dark') {
+      themeStylesheet.href = '/lib/bootswatch/darkly.min.css';
+      fretboardStylesheet.href = '/css/fretboard-dark.css';
+    } else {
+      themeStylesheet.href = '/lib/bootswatch/flatly.min.css';
+      fretboardStylesheet.href = '/css/fretboard-light.css';
+    }
+  }
+  </script>
 </head>
 <body>
 <header>
