@@ -58,8 +58,8 @@ app.UseRouting();
 
 app.Use(async (context, next) =>
 {
-    context.Response.Headers.CacheControl = cacheHeader;
-    context.Response.Headers.Vary = "X-Theme, Accept-Encoding";
+    // context.Response.Headers.CacheControl = cacheHeader;
+    // context.Response.Headers.Vary = "X-Theme, Accept-Encoding";
     if (!context.Request.Cookies.TryGetValue("fretweb.theme", out var theme))
     {
         theme = "light";
