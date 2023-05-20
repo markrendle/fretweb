@@ -16,7 +16,9 @@
       "launchUrl": "https://localhost:7006/",
       "applicationUrl": "https://localhost:7006;http://localhost:5111",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CLOUDFLARE_API_TOKEN": "Oc-C_iZhy3vymmnC-uUkNpYjgbP8XQHNNNFxOBhv",
+        "CLOUDFLARE_API_ZONE": "4a4b3dc313ee6eb9e08abf128fe88161"
       }
     }
   }

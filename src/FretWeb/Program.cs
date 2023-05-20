@@ -1,4 +1,6 @@
+using FretWeb.Services;
 using FretWeb.Telemetry;
+using FretWeb.Utilities;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ builder.AddHoneycombOpenTelemetry();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddResponseCaching();
+
+if (EnvironmentVariables.HaveValues("CLOUDFLARE_API_TOKEN", "CLOUDFLARE_API_ZONE"))
+{
+    builder.Services.AddHostedService<CloudflarePurgeService>();
+}
 
 var app = builder.Build();
 
