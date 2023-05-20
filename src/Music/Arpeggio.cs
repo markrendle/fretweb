@@ -1,4 +1,6 @@
-﻿namespace FretWeb.Music;
+﻿using FretWeb.Music.NoteTypes;
+
+namespace FretWeb.Music;
 
 public class Arpeggio
 {
@@ -19,6 +21,46 @@ public class Arpeggio
     public int Count => _notes.Length;
     public ArpeggioNote this[int index] => _notes[index];
     public ReadOnlySpan<ArpeggioNote> AsSpan() => _notes.AsSpan();
+
+    public Note[] GetNotes(Note root)
+    {
+        var notes = new Note[Count];
+        var index = 0;
+        notes[index++] = root;
+
+        foreach (var arpeggioNote in _notes.Skip(1))
+        {
+            var number = arpeggioNote.Sign switch
+            {
+                Sign.Natural => arpeggioNote.Number,
+                Sign.Flat => arpeggioNote.Number - 1,
+                Sign.Sharp => arpeggioNote.Number + 1,
+                Sign.FlatFlat => arpeggioNote.Number - 2,
+                Sign.SharpSharp => arpeggioNote.Number + 2, 
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            
+            notes[index++] = root.AddSemitones(number);
+        }
+
+        // Prefer flat notes
+        var flat = Normalizer.ForceFlat(notes);
+        if (!(Normalizer.ContainsRepeatedLetter(flat) || flat.Any(n => n.IsTheoretical)))
+        {
+            return flat;
+        }
+
+        if (Normalizer.ContainsRepeatedLetter(notes))
+        {
+            var sharp = Normalizer.ForceSharp(notes);
+            if (!(Normalizer.ContainsRepeatedLetter(sharp) || sharp.Any(n => n.IsTheoretical)))
+            {
+                return sharp;
+            }
+        }
+
+        return notes;
+    }
 
     private static string NameToId(ReadOnlySpan<char> name)
     {

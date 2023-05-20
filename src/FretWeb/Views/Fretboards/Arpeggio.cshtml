@@ -20,14 +20,23 @@
 </div>
 }
 
-<div class="row mt-2">
-  <div class="col-12">
-    @foreach (var fretboard in Model.Fretboards)
-    {
-      <partial name="_Fretboard" model="fretboard"/>
-    }
+@for (var i = 0; i < Model.Fretboards.Count; i++)
+{
+  var fretboard = Model.Fretboards[i];
+  <div class="row mt-2">
+    <div class="col-12">
+        <partial name="_Fretboard" model="@fretboard"/>
+    </div>
   </div>
-</div>
+  @if (i == 0 && !Model.Print)
+  {
+    <div class="row">
+      <div class="col-12 text-center">
+        <small>Tip: click the root notes to see fingering suggestions</small>
+      </div>
+    </div>
+  }
+}
 
 @if (!Model.Print)
 {
@@ -39,5 +48,5 @@
 }
 
 @section Scripts {
-  <script type="text/javascript" src="~/js/fretboard.js"></script>
+  <script type="text/javascript" src="~/js/fretboard.js" asp-append-version="true"></script>
 }

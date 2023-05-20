@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>@ViewData["Title"] - FretBadger</title>
-  <link rel="stylesheet" href="~/lib/bootswatch/flatly.min.css" id="theme-stylesheet"/>
+  <link rel="stylesheet" href="~/lib/bootswatch/flatly.min.css" id="theme-stylesheet" asp-append-version="true"/>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
   <link rel="stylesheet" href="~/css/fretboard-light.css" asp-append-version="true" id="fretboard-stylesheet"/>
   @if (Environment.GetEnvironmentVariable("UMAMI_URL") is {Length: > 0} umamiUrl && Environment.GetEnvironmentVariable("UMAMI_WEBSITE_ID") is {Length: > 0} umamiWebsiteId)

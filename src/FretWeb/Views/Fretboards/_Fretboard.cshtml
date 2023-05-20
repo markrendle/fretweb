@@ -5,7 +5,14 @@
 }
 
 <div class="fretboard-container card p-2 p-sm-1 mb-2">
-  <h3>@Model.Title</h3>
+  <span class="fs-4 mx-1">
+    @Model.Title ::
+    @foreach (var note in Model.Notes)
+    {
+      <span class="color-@note.Text"> @note.Display </span>
+    }
+  </span>
+  <hr/>
   <div class="fretboard" id="fb-@Model.Id">
     <div class="fretboard-prefix">
       <div class="fretboard-top"></div>

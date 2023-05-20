@@ -1,4 +1,5 @@
-﻿using FretWeb.Music.NoteTypes;
+﻿using System.Buffers;
+using FretWeb.Music.NoteTypes;
 
 namespace FretWeb.Music;
 
@@ -7,7 +8,14 @@ public static class Normalizer
     public static Scale ForceFlat(Scale scale)
     {
         var span = scale.AsSpan();
-        if (!span.Any(n => n.Sign is Sign.Sharp or Sign.SharpSharp)) return scale;
+        var notes = ForceFlat(span);
+        if (span.SequenceEqual(notes)) return scale;
+        return new Scale(notes);
+    }
+
+    public static Note[] ForceFlat(ReadOnlySpan<Note> span)
+    {
+        if (!span.Any(n => n.Sign is Sign.Sharp or Sign.SharpSharp)) return span.ToArray();
         
         var notes = new Note[span.Length];
         span.CopyTo(notes);
@@ -38,14 +46,19 @@ public static class Normalizer
             if (!changed) break;
         }
 
-        return new Scale(notes);
+        return notes;
     }
     
     public static Scale ForceSharp(Scale scale)
     {
         var span = scale.AsSpan();
-        if (!span.Any(n => n.IsFlat)) return scale;
-        
+        var notes = ForceSharp(span);
+        if (span.SequenceEqual(notes)) return scale;
+        return new Scale(notes);
+    }
+    
+    public static Note[] ForceSharp(ReadOnlySpan<Note> span)
+    {
         var notes = new Note[span.Length];
         span.CopyTo(notes);
         
@@ -77,10 +90,11 @@ public static class Normalizer
             if (allSharp || !changed) break;
         }
 
-        return new Scale(notes);
+        return notes;
     }
+    
 
-    private static bool ContainsRepeatedLetter(ReadOnlySpan<Note> notes)
+    public static bool ContainsRepeatedLetter(ReadOnlySpan<Note> notes)
     {
         Span<int> count = stackalloc int[7];
         foreach (var note in notes)
@@ -92,6 +106,16 @@ public static class Normalizer
         for (int i = 0; i < 7; i++)
         {
             if (count[i] > 1) return true;
+        }
+
+        return false;
+    }
+
+    public static bool ContainsSharps(ReadOnlySpan<Note> notes)
+    {
+        foreach (var note in notes)
+        {
+            if (note.IsSharp) return true;
         }
 
         return false;
