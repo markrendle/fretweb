@@ -184,4 +184,6 @@ public abstract class Note : IEquatable<Note>
     {
         return other.AddSemitone().IsEquivalentTo(this);
     }
+
+    public override string ToString() => Display;
 }

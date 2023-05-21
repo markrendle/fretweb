@@ -28,30 +28,43 @@ public class Arpeggio
         var index = 0;
         notes[index++] = root;
 
+        var scale = Scales.Major.Get(root).AsSpan();
+
         foreach (var arpeggioNote in _notes.Skip(1))
         {
-            var number = arpeggioNote.Sign switch
+            var notePosition = (arpeggioNote.Number - 1) % scale.Length;
+            var note = scale[notePosition];
+            switch (arpeggioNote.Sign)
             {
-                Sign.Natural => arpeggioNote.Number,
-                Sign.Flat => arpeggioNote.Number - 1,
-                Sign.Sharp => arpeggioNote.Number + 1,
-                Sign.FlatFlat => arpeggioNote.Number - 2,
-                Sign.SharpSharp => arpeggioNote.Number + 2, 
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            
-            notes[index++] = root.AddSemitones(number);
+                case Sign.Flat:
+                    note = note.Sign == Sign.Sharp ? note.SubtractSemitone() : note.SubtractSemitone().AsFlat();
+                    break;
+                case Sign.FlatFlat:
+                    note = note.SubtractTone().AsFlat();
+                    break;
+                case Sign.Sharp:
+                    note = note.Sign == Sign.Flat ? note.AddSemitone() : note.AddSemitone().AsSharp();
+                    break;
+                case Sign.SharpSharp:
+                    note = note.AddTone().AsSharp();
+                    break;
+            }
+
+            notes[index++] = note;
         }
 
-        // Prefer flat notes
-        var flat = Normalizer.ForceFlat(notes);
-        if (!(Normalizer.ContainsRepeatedLetter(flat) || flat.Any(n => n.IsTheoretical)))
+        if (notes.Any(n => n.Sign is Sign.FlatFlat or Sign.SharpSharp))
         {
-            return flat;
+            notes = Normalizer.TryRemoveDoubleSigns(notes);
         }
-
+        
         if (Normalizer.ContainsRepeatedLetter(notes))
         {
+            var flat = Normalizer.ForceFlat(notes);
+            if (!(Normalizer.ContainsRepeatedLetter(flat) || flat.Any(n => n.IsTheoretical)))
+            {
+                return flat;
+            }
             var sharp = Normalizer.ForceSharp(notes);
             if (!(Normalizer.ContainsRepeatedLetter(sharp) || sharp.Any(n => n.IsTheoretical)))
             {

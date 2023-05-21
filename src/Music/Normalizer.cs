@@ -228,4 +228,22 @@ public static class Normalizer
 
         return false;
     }
+
+    public static Note[] TryRemoveDoubleSigns(Note[] original)
+    {
+        if (!original.Any(n => n.Sign is Sign.FlatFlat or Sign.SharpSharp)) return original;
+
+        var notes = new Note[original.Length];
+        original.AsSpan().CopyTo(notes);
+        for (int i = 0; i < notes.Length; i++)
+        {
+            var note = notes[i];
+            if (note.Sign is Sign.FlatFlat or Sign.SharpSharp)
+            {
+                notes[i] = note.Alt;
+            }
+        }
+
+        return notes;
+    }
 }

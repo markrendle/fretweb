@@ -8,10 +8,10 @@ public static class Arpeggios
 
     private static Arpeggio[] Array => _arpeggios ??= ArpeggioParser.Load().ToArray();
 
-    public static bool TryGet(string id, [NotNullWhen(true)] out Arpeggio? chord)
+    public static bool TryGet(string id, [NotNullWhen(true)] out Arpeggio? arpeggio)
     {
-        chord = All().FirstOrDefault(c => c.Id == id);
-        return chord is not null;
+        arpeggio = All().FirstOrDefault(c => c.Id.Equals(id, StringComparison.OrdinalIgnoreCase));
+        return arpeggio is not null;
     }
 
     public static IEnumerable<Arpeggio> All() => Array.AsEnumerable();
