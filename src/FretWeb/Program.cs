@@ -36,6 +36,7 @@ app.UseRouting();
 
 app.Use(async (context, next) =>
 {
+    context.Response.Headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
     context.Response.Headers.CacheControl = cacheHeader;
     context.Response.Headers.Vary = "Accept-Encoding";
     await next();
