@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'BravuraText';
+    font-style: normal;
+    font-weight: normal;
+    src: url('BravuraText.woff2') format('woff2');
+}
+
 html {
   font-size: 14px;
 }
@@ -104,5 +111,10 @@ h3 {
 
 .fretboard-container hr {
   margin: 1px 4px 8px 4px;
+}
+
+.fretboard, .btn-fretboard-nav {
+    font-family: "BravuraText", sans-serif;
+    font-weight: bold;
 }
 
