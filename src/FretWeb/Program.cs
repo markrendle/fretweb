@@ -11,6 +11,7 @@ builder.AddHoneycombOpenTelemetry();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddResponseCaching();
+builder.Services.AddHealthChecks();
 
 if (EnvironmentVariables.HaveValues("CLOUDFLARE_API_TOKEN", "CLOUDFLARE_API_ZONE"))
 {
@@ -33,6 +34,8 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseRouting();
+
+app.MapHealthChecks("/health");
 
 app.Use(async (context, next) =>
 {
