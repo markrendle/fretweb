@@ -1,0 +1,16 @@
+﻿@model NavigationViewModel
+
+<table class="w-100" id="fretboard-navigation">
+  @foreach (var row in Model.Rows)
+  {
+      <tr>
+        <td class="fw-bold">@row.Name</td>
+        @foreach (var button in row.Buttons)
+        {
+          <td>
+            <a href="@button.Href" class="btn btn-fretboard-nav btn-sm w-100 m-1 btn-scale color-@button.Text" title="@button.Title">@button.Display</a>
+          </td>
+        }
+      </tr>
+  }
+</table>

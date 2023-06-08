@@ -1,38 +1,48 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>@ViewData["Title"] - FretBadger</title>
-  <link rel="prefetch alternate stylesheet" href="~/lib/bootswatch/darkly.min.css">
-  <link rel="prefetch alternate stylesheet" href="~/css/fretboard-dark.css">
-  <link rel="stylesheet" href="~/lib/bootswatch/flatly.min.css" id="theme-stylesheet" asp-append-version="true"/>
+  @* <link rel="prefetch alternate stylesheet" href="~/lib/bootswatch/darkly.min.css"> *@
+  @* <link rel="prefetch alternate stylesheet" href="~/css/fretboard-dark.css"> *@
+  @* <link rel="stylesheet" href="~/lib/bootswatch/flatly.min.css" id="theme-stylesheet" asp-append-version="true"/> *@
+  <link rel="stylesheet" href="~/css/styles.css" id="theme-stylesheet" asp-append-version="true"/>
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-  <link rel="stylesheet" href="~/css/fretboard-light.css" asp-append-version="true" id="fretboard-stylesheet"/>
+  <link rel="stylesheet" href="~/css/fretboard.css" asp-append-version="true" id="fretboard-stylesheet"/>
   @if (Environment.GetEnvironmentVariable("UMAMI_URL") is {Length: > 0} umamiUrl && Environment.GetEnvironmentVariable("UMAMI_WEBSITE_ID") is {Length: > 0} umamiWebsiteId)
   {
   <script async src="@umamiUrl" data-website-id="@umamiWebsiteId"></script>
   }
   <script>
   const theme = localStorage.getItem('theme');
-  const themeStylesheet = document.querySelector('#theme-stylesheet');
-  const fretboardStylesheet = document.querySelector('#fretboard-stylesheet');
-  if (themeStylesheet && fretboardStylesheet) {
+  const html = document.querySelector('html');
+  if (html) {
     if (theme === 'dark') {
-      themeStylesheet.href = '/lib/bootswatch/darkly.min.css';
-      fretboardStylesheet.href = '/css/fretboard-dark.css';
-    } else {
-      themeStylesheet.href = '/lib/bootswatch/flatly.min.css';
-      fretboardStylesheet.href = '/css/fretboard-light.css';
+      html.setAttribute('data-bs-theme', 'dark');
+    } else if (theme === 'light') {
+      html.setAttribute('data-bs-theme', 'light');
     }
   }
+  // const themeStylesheet = document.querySelector('#theme-stylesheet');
+  // const fretboardStylesheet = document.querySelector('#fretboard-stylesheet');
+  // if (themeStylesheet && fretboardStylesheet) {
+  //   if (theme === 'dark') {
+  //     themeStylesheet.href = '/lib/bootswatch/darkly.min.css';
+  //     fretboardStylesheet.href = '/css/fretboard-dark.css';
+  //   } else {
+  //     themeStylesheet.href = '/lib/bootswatch/flatly.min.css';
+  //     fretboardStylesheet.href = '/css/fretboard-light.css';
+  //   }
+  // }
   </script>
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-secondary border-bottom box-shadow mb-3" id="main-nav">
-    <div class="container-fluid">
-      <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FretBadger</a>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" id="main-nav">
+    <div class="container">
+      @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FretBadger</a> *@
+      <a class="navbar-brand"  asp-controller="Home" asp-action="Index"><div class="nav-logo"></div></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
               aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

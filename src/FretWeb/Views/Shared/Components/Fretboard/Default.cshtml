@@ -1,0 +1,20 @@
+﻿@model FretboardViewModel
+
+<div class="fretboard-container card p-2 p-sm-1 mb-2">
+  <span class="fs-4 mx-1">
+    @Model.Title ::
+    @foreach (var note in Model.Notes)
+    {
+      <span class="color-@note.Text"> @note.Display </span>
+    }
+  </span>
+  <hr/>
+  <div class="fretboard" id="fb-@Model.Id">
+    <vc:fretboard-prefix fret="@Model.OpenFret"></vc:fretboard-prefix>
+    <vc:open-fret fret="@Model.OpenFret"></vc:open-fret>
+    @foreach (var fret in Model.Fretboard.Frets.Skip(1))
+    {
+      <vc:fret fret="@fret"></vc:fret>
+    }
+  </div>
+</div>

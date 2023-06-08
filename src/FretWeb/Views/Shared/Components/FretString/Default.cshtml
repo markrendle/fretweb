@@ -1,0 +1,9 @@
+﻿@model FretString
+
+<div class="@ViewData["backgroundClass"] color-@Model.Note.Text" data-fret-index="@ViewData["index"]">
+  @if (Model.Badge is {Length: > 0})
+  {
+    var cls = Model.IsRoot ? "fret-badge fret-badge-root" : "fret-badge";
+    <span class="@ViewData["cls"]">@Model.Badge</span>
+  }
+</div>

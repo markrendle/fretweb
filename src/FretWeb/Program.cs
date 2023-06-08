@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddHoneycombOpenTelemetry();
 
 // Add services to the container.
+builder.Services.AddServerSideBlazor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddResponseCaching();

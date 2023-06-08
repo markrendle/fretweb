@@ -9,6 +9,10 @@ html {
   font-size: 14px;
 }
 
+body {
+  padding: 0;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -116,5 +120,16 @@ h3 {
 .fretboard, .btn-fretboard-nav {
     font-family: "BravuraText", sans-serif;
     font-weight: bold;
+}
+
+.nav-logo {
+  background-image: url(/img/logoblack.svg);
+  width: 180px;
+  height: 45px;
+  background-repeat: no-repeat;
+}
+
+html[data-bs-theme=dark] .nav-logo {
+  background-image: url(/img/logowhite.svg);
 }
 

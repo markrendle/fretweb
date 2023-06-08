@@ -1,0 +1,137 @@
+.fretboard {
+    display: flex;
+    flex-direction: row;
+}
+
+.fret, .open-fret {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fret {
+    border-left-color: #444;
+    border-left-width: thin;
+    border-left-style: solid;
+    border-right-color: #444;
+    border-right-width: thin;
+    border-right-style: solid;
+    background-color: #eeeeee;
+}
+
+html[data-bs-theme=dark] .fret {
+    background-color: #1a1a1a;
+}
+
+.fretboard-top, .fretboard-bottom {
+    flex: 1;
+    text-align: center;
+    color: #444444;
+}
+
+.fret-string, .open-fret-string {
+    display: flex;
+    flex: 1;
+    font-weight: bold;
+    min-height: 2.5em;
+    line-height: 2.5em;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.5em;
+    background-image: url("/img/string.svg");
+    background-size: 4px;
+    background-repeat: repeat-x;
+    background-position: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.fret-string.color-G {}
+
+.open-fret-string {
+    background-clip: content-box;
+    /* padding-left: 40%; */
+    /* text-align: left; */
+}
+
+.fretboard-prefix {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fretboard-prefix-note {
+    flex: 1;
+    font-weight: bold;
+    min-height: 2.5em;
+    line-height: 2.5em;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.fret-badge {
+    border-style: solid;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.4rem;
+    border-width: thin;
+    background-color: #ffffff;
+}
+
+.fret-badge-root {
+    border-style: solid;
+    border-radius: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    line-height: 2.3rem;
+    border-width: medium;
+    background-color: #ffffff;
+}
+
+html[data-bs-theme=dark] .fret-badge-root {
+    background-color: #222222;
+}
+
+html[data-bs-theme=dark] .fret-badge {
+    background-color: #222222;
+}
+
+.fret-btn {
+    cursor: pointer;
+}
+
+.fret-fade>.fret-badge {
+    opacity: 0.2;
+}
+
+.btn-fretboard-nav {
+    background-color: #f0f0f0;
+}
+html[data-bs-theme=dark] .btn-fretboard-nav {
+    background-color: #3a3a3a;
+}
+
+@media print {
+    .fretboard-container {
+        break-inside: avoid;
+    }
+    .fret-badge {
+        width: 2rem;
+        height: 2rem;
+        line-height: 1.9rem;
+    }
+    .fret-badge-root {
+        width: 2.1rem;
+        height: 2.1rem;
+        line-height: 2rem;
+    }
+    .fret-string, .open-fret-string {
+        font-size: 1em;
+    }
+    .fretboard-prefix-note {
+        font-size: 1em;
+    }
+}

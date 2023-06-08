@@ -8,6 +8,12 @@
     <UserSecretsId>21780539-e4a4-465a-9815-fa06c0978595</UserSecretsId>
     <Version>1.0.0-beta1</Version>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <WarningsAsErrors>
+      CA2254
+    </WarningsAsErrors>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Fretboards\Fretboards.csproj" />
@@ -26,6 +32,12 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol.Logs" Version="1.4.0-rc.4" />
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Components\FretboardPrefix.razor" />
+    <_ContentIncludedByDefault Remove="Views\Components\_Imports.razor" />
+    <_ContentIncludedByDefault Remove="Views\Components\FretboardPrefix\Default.cshtml" />
   </ItemGroup>
 
 </Project>

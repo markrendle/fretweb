@@ -1,0 +1,10 @@
+﻿@model Fret
+
+<div class="fretboard-prefix">
+  <div class="fretboard-top"></div>
+  @foreach (var fs in Model.Strings)
+  {
+    <div class="fretboard-prefix-note">@fs.Note.Display</div>
+  }
+  <div class="fretboard-bottom"></div>
+</div>

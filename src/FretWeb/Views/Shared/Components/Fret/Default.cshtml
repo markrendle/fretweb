@@ -1,0 +1,14 @@
+﻿@model Fret
+
+<div class="fret">
+  <div class="fretboard-top">
+    @ViewData["inlay"]
+  </div>
+  @foreach (var fs in Model.Strings)
+  {
+    <vc:fret-string fret-string="@fs" background-class="fret-string"></vc:fret-string>
+  }
+  <div class="fretboard-bottom">
+    @ViewData["inlay"]
+  </div>
+</div>

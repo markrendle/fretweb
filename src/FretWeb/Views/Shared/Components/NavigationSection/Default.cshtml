@@ -1,0 +1,23 @@
+﻿@model FretboardPageViewModel
+
+<vc:navigation-tabs model="Model"></vc:navigation-tabs>
+
+<div class="px-5 pt-2">
+  @if (Model.Tab.Equals("custom", StringComparison.OrdinalIgnoreCase))
+  {
+    <div class="w-100" id="fretboard-navigation">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a asp-controller="Builder" asp-action="Scales" asp-route-tuning="@Model.Tuning" class="nav-link">Build custom Scales sheet</a>
+        </li>
+        <li class="nav-item">
+          <a asp-controller="Builder" asp-action="Arpeggios" asp-route-tuning="@Model.Tuning" class="nav-link">Build custom Arpeggios sheet</a>
+        </li>
+      </ul>
+    </div>
+  }
+  else
+  {
+    <vc:navigation model="Model"></vc:navigation>
+  }
+</div>

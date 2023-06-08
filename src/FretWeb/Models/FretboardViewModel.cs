@@ -17,4 +17,5 @@ public class FretboardViewModel
     public Note[] Notes { get; }
     public string Id { get; }
     public string Title { get; }
+    public Fret OpenFret => Fretboard.Frets[0];
 }

@@ -1,0 +1,10 @@
+﻿@model Fret
+
+<div class="open-fret">
+  <div class="fretboard-top"></div>
+  @foreach (var fs in Model.Strings)
+  {
+    <vc:fret-string fret-string="@fs" background-class="open-fret-string"></vc:fret-string>
+  }
+  <div class="fretboard-bottom"></div>
+</div>

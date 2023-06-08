@@ -25,7 +25,7 @@
   var fretboard = Model.Fretboards[i];
   <div class="row mt-2">
     <div class="col-12">
-        <partial name="_Fretboard" model="@fretboard"/>
+      <vc:fretboard model="@fretboard"></vc:fretboard>
     </div>
   </div>
   @if (i == 0 && !Model.Print)
@@ -42,7 +42,7 @@
 {
 <div class="row pt-4">
   <div class="col-12">
-    <partial name="_Navigation" model="Model"/>
+    <vc:navigation-section model="Model"></vc:navigation-section>
   </div>
 </div>
 }
