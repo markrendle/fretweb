@@ -2,6 +2,6 @@
 
 public class ScalesBuilderViewModel
 {
-    public string? Tuning { get; set; }
-    public RootedScale[] Scales { get; set; }
+    public string? Tuning { get; init; }
+    public required RootedScale[] Scales { get; init; }
 }

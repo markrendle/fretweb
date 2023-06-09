@@ -6,16 +6,16 @@ public class NavigationViewModel
     
     public class Item
     {
-        public string Display { get; set; }
-        public string Href { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
+        public required string Display { get; init; }
+        public required string Href { get; init; }
+        public required string Title { get; init; }
+        public required string Text { get; init; }
     }
 
     public class Row
     {
-        public string Name { get; set; }
+        public required string Name { get; init; }
         public List<Item> Buttons { get; } = new();
-        public string Id { get; set; }
+        public required string Id { get; init; }
     }
 }

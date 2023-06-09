@@ -1,0 +1,14 @@
+﻿@model SharedNotesViewModel
+
+<div class="d-flex justify-content-center">
+  <div class="shared-notes bg-body d-flex">
+    <div class="shared-notes-left-border"></div>
+    <div class="d-inline-block">
+    @foreach (var note in Model.Notes)
+    {
+      <span class="note shared-note color-@note.Text" data-note="@note.Text">@note.Display</span>
+    }
+    </div>
+    <div class="shared-notes-right-border"></div>
+  </div>
+</div>

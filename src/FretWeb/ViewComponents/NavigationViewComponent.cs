@@ -41,6 +41,7 @@ public class NavigationViewComponent : ViewComponent
         var viewModel = new NavigationViewModel();
         var row = new NavigationViewModel.Row
         {
+            Id = "notes",
             Name = "Notes"
         };
         viewModel.Rows.Add(row);
@@ -102,6 +103,7 @@ public class NavigationViewComponent : ViewComponent
             foreach (var scale in scaleSet.Enumerate())
             {
                 var href = Url.FretboardScale(model, scale: scaleSet.Id, root: scale[0].Id);
+                if (href is not {Length: > 0}) continue;
                 var item = new NavigationViewModel.Item
                 {
                     Title = $"{scale[0].Display} {scaleSet.Id}",

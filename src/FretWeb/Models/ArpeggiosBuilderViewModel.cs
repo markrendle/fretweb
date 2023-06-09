@@ -3,5 +3,5 @@
 public class ArpeggiosBuilderViewModel
 {
     public string? Tuning { get; set; }
-    public RootedArpeggio[] Arpeggios { get; set; }
+    public required RootedArpeggio[] Arpeggios { get; init; }
 }

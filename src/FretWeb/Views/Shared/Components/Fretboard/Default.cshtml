@@ -1,11 +1,11 @@
 ﻿@model FretboardViewModel
 
-<div class="fretboard-container card p-2 p-sm-1 mb-2">
+<div class="fretboard-container card p-2 p-sm-1">
   <span class="fs-4 mx-1">
     @Model.Title ::
     @foreach (var note in Model.Notes)
     {
-      <span class="color-@note.Text"> @note.Display </span>
+      <span class="note mx-1 color-@note.Text"> @note.Display </span>
     }
   </span>
   <hr/>
