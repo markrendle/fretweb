@@ -33,9 +33,18 @@ public class Fretboard
 
     public void SetBadges(Arpeggio arpeggio, Note rootNote)
     {
+        var notes = arpeggio.GetNotes(rootNote);
         foreach (var fret in _frets)
         {
-            fret.SetBadges(arpeggio, rootNote);
+            fret.SetBadges(arpeggio, notes);
+        }
+    }
+
+    public void SetBadges(Note[] notes)
+    {
+        foreach (var fret in _frets)
+        {
+            fret.SetBadges(notes);
         }
     }
 

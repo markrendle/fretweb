@@ -90,8 +90,39 @@ public class Fret
         }
     }
 
-    public void SetBadges(Arpeggio arpeggio, Note rootNote)
+    public void SetBadges(Note[] notes)
     {
+        var scale = Scales.Major.Get(notes[0]);
+        
+        foreach (var fretString in _strings)
+        {
+            fretString.Badge = "";
+            
+            if (fretString.Note.IsEquivalentTo(notes[0]))
+            {
+                fretString.Badge = notes[0].Display;
+                fretString.IsRoot = true;
+                fretString.Index = 0;
+                continue;
+            }
+            
+            fretString.IsRoot = false;
+
+            for (int i = 1; i < notes.Length; i++)
+            {
+                var note = notes[i];
+                if (fretString.Note != note) continue;
+                int index = scale.AsSpan().IndexOf(note) + 1;
+                fretString.Badge = index.ToString();
+                break;
+            }
+        }
+    }
+
+    public void SetBadges(Arpeggio arpeggio, Note[] notes)
+    {
+        var arpeggioNotes = arpeggio.AsSpan();
+        var rootNote = notes[0];
         foreach (var fretString in _strings)
         {
             if (fretString.Note.IsEquivalentTo(rootNote))
@@ -105,33 +136,12 @@ public class Fret
             fretString.IsRoot = false;
             fretString.Badge = string.Empty;
 
-            var notes = arpeggio.AsSpan();
-            for (var index = 1; index < notes.Length; index++)
+            for (int i = 1; i < notes.Length; i++)
             {
-                var chordNote = notes[index];
-                var number = chordNote.Number;
-                switch (chordNote.Sign)
-                {
-                    case Sign.Flat:
-                        --number;
-                        break;
-                    case Sign.Sharp:
-                        ++number;
-                        break;
-                    case Sign.FlatFlat:
-                        number -= 2;
-                        break;
-                    case Sign.SharpSharp:
-                        number += 2;
-                        break;
-                }
-
-                var note = rootNote.AddSemitones(number);
-                if (fretString.Note.IsEquivalentTo(note))
-                {
-                    fretString.Badge = $"{chordNote.Sign.GetString()}{chordNote.Number}";
-                    fretString.Index = index;
-                }
+                if (!fretString.Note.IsEquivalentTo(notes[i])) continue;
+                var arpeggioNote = arpeggioNotes[i];
+                fretString.Badge = arpeggioNote.Sign == Sign.Natural ? arpeggioNote.Number.ToString() : $"{arpeggioNote.Sign.GetString()}{arpeggioNote.Number}";
+                fretString.Index = i;
             }
         }
     }

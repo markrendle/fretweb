@@ -5,6 +5,16 @@ namespace FretWeb.Music.Tests;
 public class ArpeggioTests
 {
     [Fact]
+    public void CMajor()
+    {
+        Assert.True(Arpeggios.TryGet("Major", out var arpeggio));
+        var notes = arpeggio.GetNotes(Notes.C);
+        Assert.Equal(Notes.C, notes[0]);
+        Assert.Equal(Notes.E, notes[1]);
+        Assert.Equal(Notes.G, notes[2]);
+    }
+    
+    [Fact]
     public void GMajor7()
     {
         Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
