@@ -35,16 +35,34 @@ public class ArpeggioTests
         var fretboard = Fretboard.Create(12, Notes.E, Notes.A, Notes.D, Notes.G);
         Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
         
-        var c = fretboard.GetFirst(Notes.C);
-        var e = fretboard.GetFirst(Notes.E);
-        var g = fretboard.GetFirst(Notes.G);
-        var b = fretboard.GetFirst(Notes.B);
+        var root = fretboard.GetFirst(Notes.C);
+        var three = fretboard.GetFirst(Notes.E);
+        var five = fretboard.GetFirst(Notes.G);
+        var seven = fretboard.GetFirst(Notes.B);
         
         fretboard.SetBadges(arpeggio, Notes.C);
-        Assert.Equal("C", c.Badge);
-        Assert.Equal("3", e.Badge);
-        Assert.Equal("5", g.Badge);
-        Assert.Equal("7", b.Badge);
+        Assert.Equal("C", root.Badge);
+        Assert.Equal("3", three.Badge);
+        Assert.Equal("5", five.Badge);
+        Assert.Equal("7", seven.Badge);
+    }
+    
+    [Fact]
+    public void GMajor7()
+    {
+        var fretboard = Fretboard.Create(12, Notes.E, Notes.A, Notes.D, Notes.G);
+        Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
+        
+        var root = fretboard.GetFirst(Notes.G);
+        var three = fretboard.GetFirst(Notes.B);
+        var five = fretboard.GetFirst(Notes.D);
+        var seven = fretboard.GetFirst(Notes.FSharp);
+        
+        fretboard.SetBadges(arpeggio, Notes.G);
+        Assert.Equal("G", root.Badge);
+        Assert.Equal("3", three.Badge);
+        Assert.Equal("5", five.Badge);
+        Assert.Equal("7", seven.Badge);
     }
     
     [Fact]

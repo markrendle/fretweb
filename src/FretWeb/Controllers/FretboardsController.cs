@@ -9,10 +9,49 @@ namespace FretWeb.Controllers;
 [Route("fretboards")]
 public class FretboardsController : Controller
 {
+    private readonly ILogger<FretboardsController> _logger;
+
+    public FretboardsController(ILogger<FretboardsController> logger)
+    {
+        _logger = logger;
+    }
+
+    [HttpGet]
+    public IActionResult Index([FromQuery] string? custom, [FromQuery] string? error)
+    {
+        if (custom is { Length: > 0 })
+        {
+            try
+            {
+                ParseTuningArray(custom);
+                return RedirectToAction("Get", new { tuning = custom });
+            }
+            catch (MusicException)
+            {
+                return RedirectToAction("Index", new { error = "Invalid note" });
+            }
+        }
+
+        if (error is { Length: > 0 })
+        {
+            ViewData["error"] = error;
+        }
+        
+        return View(FretboardIndexViewModel.Instance);
+    }
+
     [HttpGet("{tuning}")]
     public IActionResult Get(string tuning, [FromQuery] int? frets, [FromQuery] string? tab)
     {
-        var tuningArray = ParseTuningArray(tuning);
+        Note[] tuningArray;
+        try
+        {
+            tuningArray = ParseTuningArray(tuning);
+        }
+        catch (MusicException)
+        {
+            return RedirectToAction("Index", new { error = "Invalid note" });
+        }
 
         var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
 
@@ -191,7 +230,7 @@ public class FretboardsController : Controller
         for (int i = 0; i < notes.Length; i++)
         {
             var n = notes[i];
-            if (!char.IsUpper(n) || n is < 'A' or > 'G') continue;
+            if (!char.IsUpper(n) || n is < 'A' or > 'G') throw new MusicException("Invalid note specified");
             var sign = Sign.Natural;
             if (i + 1 < notes.Length)
             {

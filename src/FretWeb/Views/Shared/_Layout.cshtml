@@ -63,10 +63,11 @@
             Fretboards
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
-            @foreach(var t in StandardTunings.All())
+            @foreach(var t in StandardTunings.Dropdown())
             {
             <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="@t.Tuning">@t.Group @t.Name</a>
             }
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Index">More...</a>
           </div>
         </div>
 
@@ -110,7 +111,9 @@
 
 <footer class="border-top footer text-muted">
   <div class="container">
-    &copy; 2023 - Mark Rendle - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    &copy; 2023 - <a href="https://twitter.com/markrendle" target="_blank">Mark Rendle</a>
+    - FretBadger logo by <a href="https://www.fiverr.com/ingeniousarts" target="_blank">Moon</a>
+    - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
   </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

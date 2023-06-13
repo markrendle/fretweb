@@ -1,0 +1,68 @@
+﻿@model FretboardIndexViewModel
+
+@{
+  ViewBag.Title = "Fretboards";
+  Layout = "_Layout";
+}
+
+<div class="row">
+  <div class="col-12">
+    <h2>Fretboards</h2>
+  </div>
+</div>
+
+<div class="row mb-1">
+  <div class="col-12">
+    <div class="card p-2">
+      <form method="get" asp-action="Index" asp-route-tuning="@Model.Custom">
+        <div class="row">
+          <label asp-for="Custom" class="col-form-label col-2">Custom tuning:</label>
+          <div class="col-2">
+            <input asp-for="Custom" class="form-control col-auto" required>
+          </div>
+          <div class="col-1">
+            <button type="submit" class="btn btn-primary w-100">Go</button>
+          </div>
+          <div class="col-7 form-text d-flex flex-wrap align-content-center"><span>Use <strong>f</strong> for <strong>flat</strong> and <strong>s</strong> for <strong>sharp</strong>, e.g. <strong>EfAfDfGf</strong></span></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@foreach (var group in Model.Groups)
+{
+  <div class="row mb-1">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">@group.Title</h3>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              @foreach (var subGroup in group.SubGroups)
+              {
+                <div class="col-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-subtitle">@subGroup.Title</h4>
+                      <ul class="list-group list-group-flush">
+                        @foreach (var link in subGroup.Links)
+                        {
+                          <li class="list-group-item">
+                            <a asp-action="Get" asp-route-tuning="@link.Tuning">@link.Title</a>
+                          </li>
+                        }
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
