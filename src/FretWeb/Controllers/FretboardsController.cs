@@ -223,6 +223,50 @@ public class FretboardsController : Controller
         return View(viewModel);
     }
 
+    [HttpGet("{tuning}/mode/{modes}")]
+    public IActionResult Mode(string tuning, string modes, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
+    {
+        var tuningArray = ParseTuningArray(tuning);
+        var viewModel = new FretboardPageViewModel
+        {
+            Tuning = tuning,
+            Modes = modes,
+            Frets = frets,
+            Tab = tab ?? "Scales",
+            Print = print.GetValueOrDefault(),
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Scale", new { tuning, modes, frets, tab, print = true })
+        };
+
+        var modesArray = modes.Split('+');
+        foreach (var mode in modesArray)
+        {
+            var parts = mode.Split('-');
+            if (parts.Length != 2)
+            {
+                return NotFound();
+            }
+
+            if (parts[0] is not { Length: > 0 } root || !Note.TryParse(root, out var rootNote))
+            {
+                return NotFound();
+            }
+
+            if (parts[1] is not { Length: > 0 } scaleName || !(Scales.FindById(scaleName) is { } scaleSet) || !scaleSet.TryGet(rootNote, out var scale))
+            {
+                return NotFound();
+            }
+
+            var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
+            fretboard.SetBadges(scale, rootNote.Sign);
+
+            var title = $"{rootNote.Display} {scaleSet.Id}";
+
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, scale.ToArray(), mode.ToLowerInvariant(), title));
+        }
+
+        return View(viewModel);
+    }
+
     private static Note[] ParseTuningArray(string tuning)
     {
         var list = new List<Note>();

@@ -20,7 +20,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var model = FretboardIndexViewModel.Instance;
+        return View(model);
     }
 
     [HttpGet("feedback")]

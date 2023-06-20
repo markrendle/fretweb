@@ -1,17 +1,28 @@
 ﻿@model FretboardViewModel
 
 <div class="fretboard-container card p-2 p-sm-1">
-  <span class="fs-4 mx-1">
-    @Model.Title
-    @if (Model.Notes is {Length: > 0})
-    {
-      <span>::</span>
-      @foreach (var note in Model.Notes)
+  <div class="d-flex">
+    <div class="flex-fill">
+      <span class="fs-4 mx-1">
+        @Model.Title
+        @if (Model.Notes is {Length: > 0})
+        {
+          <span>::</span>
+          @foreach (var note in Model.Notes)
+          {
+            <span class="note mx-1 color-@note.Text"> @note.Display </span>
+          }
+        }
+      </span>
+    </div>
+    @{
+      var removeLink = Url.RemoveFretboard(Model.Id);
+      if (removeLink is {Length: > 0})
       {
-        <span class="note mx-1 color-@note.Text"> @note.Display </span>
+        <div class="mx-2 mt-1"><a href="@removeLink" class="text-decoration-none">&#x2A09;</a></div>
       }
     }
-  </span>
+  </div>
   <hr/>
   <div class="fretboard" id="fb-@Model.Id">
     <vc:fretboard-prefix fret="@Model.OpenFret"></vc:fretboard-prefix>

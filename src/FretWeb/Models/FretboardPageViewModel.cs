@@ -20,6 +20,7 @@ public class FretboardPageViewModel
     public string? Root { get; init; }
     public string? Chord { get; set; }
     public string? Scales { get; set; }
+    public string? Modes { get; set; }
     public string? Arpeggios { get; set; }
     public string? Chords { get; set; }
     public string? PrintLink { get; set; }

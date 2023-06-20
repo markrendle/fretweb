@@ -1,88 +1,15 @@
-﻿@model FretboardPageViewModel
+﻿@using FretWeb.ViewComponents
+@model FretboardPageViewModel
 
 <ul class="nav nav-tabs">
+  @if (NavigationViewComponent.CanAdd(Model))
+  {
+    <vc:navigation-tab model="Model" key="add" title="Add"></vc:navigation-tab>
+  }
   <vc:navigation-tab model="Model" key="scales" title="Scales"></vc:navigation-tab>
   <vc:navigation-tab model="Model" key="modes" title="Modes"></vc:navigation-tab>
   <vc:navigation-tab model="Model" key="arpeggios" title="Arpeggios"></vc:navigation-tab>
   <vc:navigation-tab model="Model" key="chords" title="Chords"></vc:navigation-tab>
   <vc:navigation-tab model="Model" key="notes" title="Notes"></vc:navigation-tab>
   <vc:navigation-tab model="Model" key="custom" title="Custom"></vc:navigation-tab>
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     var tabHref = Url.Fretboard(Model, tab: "scales"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("scales", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Scales</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Scales</a> *@
-  @*   } *@
-  @* </li> *@
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     tabHref = Url.Fretboard(Model, tab: "modes"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("modes", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Modes</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Modes</a> *@
-  @*   } *@
-  @* </li> *@
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     tabHref = Url.Fretboard(Model, tab: "arpeggios"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("arpeggios", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Arpeggios</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Arpeggios</a> *@
-  @*   } *@
-  @* </li> *@
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     tabHref = Url.Fretboard(Model, tab: "chords"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("chords", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Chords</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Chords</a> *@
-  @*   } *@
-  @* </li> *@
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     tabHref = Url.Fretboard(Model, tab: "notes"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("notes", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Notes</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Notes</a> *@
-  @*   } *@
-  @* </li> *@
-  @* <li class="nav-item"> *@
-  @*   @{ *@
-  @*     tabHref = Url.Fretboard(Model, tab: "custom"); *@
-  @*   } *@
-  @*   @if (Model.Tab.Equals("custom", StringComparison.OrdinalIgnoreCase)) *@
-  @*   { *@
-  @*     <a class="nav-link active" aria-current="page" href="@tabHref">Custom</a> *@
-  @*   } *@
-  @*   else *@
-  @*   { *@
-  @*     <a class="nav-link" href="@tabHref">Custom</a> *@
-  @*   } *@
-  @* </li> *@
 </ul>

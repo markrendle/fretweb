@@ -4,10 +4,17 @@
   <div class="shared-notes bg-body d-flex">
     <div class="shared-notes-left-border"></div>
     <div class="d-inline-block">
-    @foreach (var note in Model.Notes)
-    {
-      <span class="note shared-note color-@note.Text" data-note="@note.Text">@note.Display</span>
-    }
+      @if (Model.Notes is {Length: > 0})
+      {
+        foreach (var note in Model.Notes)
+        {
+          <span class="note shared-note color-@note.Text" data-note="@note.Text">@note.Display</span>
+        }
+      }
+      else
+      {
+        <span class="note">&mdash;</span>
+      }
     </div>
     <div class="shared-notes-right-border"></div>
   </div>

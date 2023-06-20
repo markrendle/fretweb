@@ -1,4 +1,6 @@
-﻿@{
+﻿@model FretboardIndexViewModel
+
+@{
   ViewData["Title"] = "FretBadger";
 }
 
@@ -7,16 +9,22 @@
     <div class="card">
       <div class="card-body">
         <h2 class="card-title">Hello!</h2>
-        <p class="fs-5">This is FretBadger*, a site I made to help me learn my bass fretboard. It can render fretboards
+        <p class="fs-5">
+          This is FretBadger*, a site I made to help me learn my bass fretboard. It can render fretboards
           showing notes, scales, arpeggios and chords. You can use the Builder to create pages with multiple
           <a asp-controller="Builder" asp-action="Scales">scales</a> and
           <a asp-controller="Builder" asp-action="Arpeggios">arpeggios</a>, bookmark those pages to save them,
-          and print them out too.</p>
-        <p>It's a work in progress, so if something doesn't work or there's a scale or arpeggio missing, please
-          use the <a asp-controller="Home" asp-action="Feedback">Feedback</a> page to let me know.</p>
-        <p>The project is open-source and hosted on <a href="https://github.com/markrendle/fretweb">GitHub</a>. If you
+          and print them out too.
+        </p>
+        <p>
+          It's a work in progress, so if something doesn't work or there's a scale or arpeggio missing, please
+          use the <a asp-controller="Home" asp-action="Feedback">Feedback</a> page to let me know.
+        </p>
+        <p>
+          The project is open-source and hosted on <a href="https://github.com/markrendle/fretweb">GitHub</a>. If you
           happen to be a web design guru you might help me make it look nicer - I'm a coder with minimal design
-          chops.</p>
+          chops.
+        </p>
         <p class="small">* It puts badges on frets. Also I like badgers.</p>
       </div>
     </div>
@@ -25,59 +33,47 @@
 <div class="row mb-2">
   <div class="col-12">
     <div class="card">
+      <div class="card-header">
+        <h2>Fretboards</h2>
+      </div>
       <div class="card-body">
-        <h2 class="card-title">Fretboards</h2>
         <div class="container">
-          <div class="row">
-            <div class="col-4">
-              <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Bass</h3>
-
-                  <ul class="nav flex-column">
-                    @foreach (var t in StandardTunings.Group("Bass"))
-                    {
-                    <li class="nav-item">
-                      <a href="@Url.Fretboard(t.Tuning)" class="nav-link">@t.Name</a>
-                    </li>
-                    }
-                  </ul>
+          @foreach (var group in Model.Groups)
+          {
+            <div class="row mb-1">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">@group.Title</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="container">
+                      <div class="row">
+                        @foreach (var subGroup in group.SubGroups)
+                        {
+                          <div class="col-4">
+                            <div class="card">
+                              <div class="card-body">
+                                <h4 class="card-subtitle">@subGroup.Title</h4>
+                                <ul class="list-group list-group-flush">
+                                  @foreach (var link in subGroup.Links)
+                                  {
+                                    <li class="list-group-item">
+                                      <a asp-action="Get" asp-controller="Fretboards" asp-route-tuning="@link.Tuning">@link.Title</a>
+                                    </li>
+                                  }
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-4">
-              <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Guitar</h3>
-
-                  <ul class="nav flex-column">
-                    @foreach (var t in StandardTunings.Group("Guitar"))
-                    {
-                    <li class="nav-item">
-                      <a href="@Url.Fretboard(t.Tuning)" class="nav-link">@t.Name</a>
-                    </li>
-                    }
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Ukulele</h3>
-
-                  <ul class="nav flex-column">
-                    @foreach (var t in StandardTunings.Group("Ukulele"))
-                    {
-                    <li class="nav-item">
-                      <a href="@Url.Fretboard(t.Tuning)" class="nav-link">@t.Name</a>
-                    </li>
-                    }
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+          }
         </div>
       </div>
     </div>
@@ -91,7 +87,9 @@
         <ul class="nav">
           @foreach (var scaleSet in Scales.EnumerateScales())
           {
-            <li class="nav-item"><a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a></li>
+            <li class="nav-item">
+              <a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a>
+            </li>
           }
         </ul>
       </div>
@@ -106,7 +104,9 @@
         <ul class="nav">
           @foreach (var scaleSet in Scales.EnumerateModes())
           {
-            <li class="nav-item"><a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a></li>
+            <li class="nav-item">
+              <a href="@Url.Scale(scaleSet.Id)" class="nav-link">@scaleSet.Id</a>
+            </li>
           }
         </ul>
       </div>

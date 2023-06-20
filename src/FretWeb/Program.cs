@@ -36,6 +36,16 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseRouting();
 
+if (Environment.GetEnvironmentVariable("GOOGLE_ADS_TXT") is { Length: > 0 } googleAdsTxt)
+{
+    app.MapGet("/ads.txt", context =>
+    {
+        context.Response.ContentType = "text/text";
+        context.Response.ContentLength = googleAdsTxt.Length;
+        return context.Response.WriteAsync(googleAdsTxt);
+    });
+}
+
 app.MapHealthChecks("/health");
 
 app.Use(async (context, next) =>

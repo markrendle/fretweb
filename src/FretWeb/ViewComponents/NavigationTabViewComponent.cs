@@ -10,6 +10,21 @@ public class NavigationTabViewComponent : ViewComponent
     {
         ViewData["tabHref"] = Url.Fretboard(model, tab: key);
         ViewData["active"] = model.Tab.Equals(key, StringComparison.OrdinalIgnoreCase) ? "active" : string.Empty;
+        if (key == "add")
+        {
+            if (model.Arpeggios is { Length: > 0 })
+            {
+                title = "Add Arpeggio";
+            }
+            else if (model.Scales is { Length: > 0 })
+            {
+                title = "Add Scale";
+            }
+            else if (model.Chords is { Length: > 0 })
+            {
+                title = "Add Chord";
+            }
+        }
         ViewData["title"] = title;
         return View(model);
     }
