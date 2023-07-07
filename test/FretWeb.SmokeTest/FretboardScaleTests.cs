@@ -36,13 +36,13 @@ public class FretboardScaleTests : IClassFixture<WebApplicationFactory<Fretboard
 
     public static IEnumerable<object[]> TuningsAndScales()
     {
-        foreach (var standardTuning in StandardTunings.All())
+        foreach (var tuning in AllTunings.Get())
         {
-            foreach (var scaleSet in Scales.Enumerate())
+            foreach (var scaleSet in Scales.EnumerateScales())
             {
                 foreach (var scale in scaleSet.Enumerate())
                 {
-                    yield return new object[] { standardTuning.Tuning, $"{scale[0].Id}-{scaleSet.Id}" };
+                    yield return new object[] { tuning, $"{scale[0].Id}-{scaleSet.Id}" };
                 }
             }
         }

@@ -25,9 +25,9 @@ public class FretboardTuningTests : IClassFixture<WebApplicationFactory<Fretboar
 
     public static IEnumerable<object[]> Tunings()
     {
-        foreach (var standardTuning in StandardTunings.All())
+        foreach (var tuning in AllTunings.Get())
         {
-            yield return new object[] { standardTuning.Tuning };
+            yield return new object[] { tuning };
         }
     }
 }

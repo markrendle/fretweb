@@ -36,13 +36,13 @@ public class FretboardArpeggioTests : IClassFixture<WebApplicationFactory<Fretbo
 
     public static IEnumerable<object[]> TuningsAndArpeggios()
     {
-        foreach (var standardTuning in StandardTunings.All())
+        foreach (var tuning in AllTunings.Get())
         {
             foreach (var arpeggio in Arpeggios.All())
             {
                 foreach (var note in Notes.ChromaticWithFlats())
                 {
-                    yield return new object[] { standardTuning.Tuning, $"{note.Id}-{arpeggio.Id}" };
+                    yield return new object[] { tuning, $"{note.Id}-{arpeggio.Id}" };
                 }
             }
         }
