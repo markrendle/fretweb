@@ -22,12 +22,12 @@ public class ScaleSet
         return new ScaleSet(name, Enumerate().ToArray());
     }
     
-    public ScaleSet ToDorian() => Shift(1, "Dorian");
-    public ScaleSet ToPhrygian() => Shift(2, "Phrygian");
-    public ScaleSet ToLydian() => Shift(3, "Lydian");
-    public ScaleSet ToMixolydian() => Shift(4, "Mixolydian");
-    public ScaleSet ToAeolian() => Shift(5, "Aeolian");
-    public ScaleSet ToLocrian() => Shift(6, "Locrian");
+    public ScaleSet ToDorian() => Shift(1, ScaleNames.Dorian);
+    public ScaleSet ToPhrygian() => Shift(2, ScaleNames.Phrygian);
+    public ScaleSet ToLydian() => Shift(3, ScaleNames.Lydian);
+    public ScaleSet ToMixolydian() => Shift(4, ScaleNames.Mixolydian);
+    public ScaleSet ToAeolian() => Shift(5, ScaleNames.Aeolian);
+    public ScaleSet ToLocrian() => Shift(6, ScaleNames.Locrian);
 
     private ScaleSet Shift(int shiftBy, string name)
     {
@@ -42,23 +42,6 @@ public class ScaleSet
         }
 
         return new ScaleSet(name, scales);
-    }
-
-    private Scale[] RotateDown(Scale[] scales, int by)
-    {
-        var rotated = new Scale[12];
-        int index = by - 1;
-        for (int i = 0; i < 12; i++)
-        {
-            if (++index > 11)
-            {
-                index = 0;
-            }
-
-            rotated[index] = scales[i];
-        }
-
-        return rotated;
     }
 
 

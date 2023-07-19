@@ -1,0 +1,21 @@
+﻿@model ChordExplorerViewModel
+
+@{
+  ViewBag.Title = Model.Chord.Name;
+  Layout = "_Layout";
+}
+
+<h2>@Model.Chord.Name</h2>
+
+<h3>Example:</h3>
+
+<span class="note">@(Model.Root.Display)@(Model.Chord.Symbol)</span>
+
+<h3>Modes:</h3>
+
+<ul>
+@foreach (var mode in Model.GetModes())
+{
+  <li>@mode.Name</li>
+}
+</ul>

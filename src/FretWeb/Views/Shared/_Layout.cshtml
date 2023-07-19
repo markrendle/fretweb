@@ -35,6 +35,19 @@
       </button>
       <div class="navbar-collapse collapse d-sm-inline-flex justify-content-start">
         <div class="dropdown show">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Fretboards
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
+            @foreach(var t in StandardTunings.Dropdown())
+            {
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="@t.Tuning">@t.Group @t.Name</a>
+            }
+            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Index">More...</a>
+          </div>
+        </div>
+
+        <div class="dropdown show">
           <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownScales" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Scales
           </button>
@@ -59,15 +72,14 @@
         </div>
 
         <div class="dropdown show">
-          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownFretboards" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Fretboards
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownChords" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Chords
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownFretboards">
-            @foreach(var t in StandardTunings.Dropdown())
+          <div class="dropdown-menu" aria-labelledby="dropdownChords">
+            @foreach (var arpeggio in Arpeggios.All())
             {
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Get" asp-route-tuning="@t.Tuning">@t.Group @t.Name</a>
+              <a class="dropdown-item" asp-controller="ChordExplorer" asp-action="Get" asp-route-id="@arpeggio.Id">@arpeggio.Name</a>
             }
-            <a class="dropdown-item" asp-controller="Fretboards" asp-action="Index">More...</a>
           </div>
         </div>
 

@@ -21,7 +21,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var model = FretboardIndexViewModel.Instance;
-        _logger.LogInformation($"{model.Custom}");
         return View(model);
     }
 

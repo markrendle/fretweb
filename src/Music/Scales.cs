@@ -1,36 +1,10 @@
 namespace FretWeb.Music;
 
-public static class ScaleNames
-{
-    public const string Major = "Major";
-    public const string Minor = "Minor";
-    public const string Ionian = "Ionian";
-    public const string Dorian = "Dorian";
-    public const string Phrygian = "Phrygian";
-    public const string Lydian = "Lydian";
-    public const string Mixolydian = "Mixolydian";
-    public const string Aeolian = "Aeolian";
-    public const string Locrian = "Locrian";
-
-    public static IEnumerable<string> Enumerate()
-    {
-        yield return Major;
-        yield return Minor;
-        yield return Ionian;
-        yield return Dorian;
-        yield return Phrygian;
-        yield return Lydian;
-        yield return Mixolydian;
-        yield return Aeolian;
-        yield return Locrian;
-    }
-}
-
 public static class Scales
 {
     static Scales()
     {
-        Ionian = new("Ionian",
+        Ionian = new(ScaleNames.Ionian,
             new Scale(Notes.C, Notes.D, Notes.E, Notes.F, Notes.G, Notes.A, Notes.B),
             new Scale(Notes.DFlat, Notes.EFlat, Notes.F, Notes.GFlat, Notes.AFlat, Notes.BFlat, Notes.C),
             new Scale(Notes.D, Notes.E, Notes.FSharp, Notes.G, Notes.A, Notes.B, Notes.CSharp),
@@ -51,8 +25,8 @@ public static class Scales
         Aeolian = Ionian.ToAeolian();
         Locrian = Ionian.ToLocrian();
 
-        Major = Ionian.Clone("Major");
-        Minor = Aeolian.Clone("Minor");
+        Major = Ionian.Clone(ScaleNames.Major);
+        Minor = Aeolian.Clone(ScaleNames.Minor);
 
         Bebop = ScaleBuilder.Create("Bebop", 2, 2, 1, 2, 2, 1, 1)
             .WithNotes(Notes.C, Notes.DFlat, Notes.D, Notes.EFlat, Notes.E, Notes.F, Notes.GFlat, Notes.G, Notes.AFlat, Notes.A, Notes.BFlat, Notes.B);
