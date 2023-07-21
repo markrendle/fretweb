@@ -234,7 +234,7 @@ public class FretboardsController : Controller
             Frets = frets,
             Tab = tab ?? "Scales",
             Print = print.GetValueOrDefault(),
-            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Scale", new { tuning, modes, frets, tab, print = true })
+            PrintLink = print.GetValueOrDefault() ? null : Url.Action("Mode", new { tuning, modes, frets, tab, print = true })
         };
 
         var modesArray = modes.Split('+');
