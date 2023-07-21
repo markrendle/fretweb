@@ -49,7 +49,8 @@ public class ScaleSet
 
     public Scale Get(Note note) => _scales[note];
 
-    public bool TryGet(Note note, [NotNullWhen(true)] out Scale? scale) => _scales.TryGetValue(note, out scale);
+    public bool TryGet(Note note, [NotNullWhen(true)] out Scale? scale) =>
+        _scales.TryGetValue(note, out scale) || _scales.TryGetValue(note.Alt, out scale);
     
     private static string NameToId(ReadOnlySpan<char> name)
     {

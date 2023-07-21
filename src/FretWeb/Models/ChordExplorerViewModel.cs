@@ -20,10 +20,12 @@ public class ChordExplorerViewModel
         
         foreach (var mode in Scales.EnumerateModes())
         {
-            var scale = mode.Get(Root);
-            if (notes.All(n => scale.Contains(n)))
+            if (mode.TryGet(Root, out var scale))
             {
-                yield return mode;
+                if (notes.All(n => scale.Contains(n)))
+                {
+                    yield return mode;
+                }
             }
         }
     }
