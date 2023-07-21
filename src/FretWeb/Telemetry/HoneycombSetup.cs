@@ -37,7 +37,7 @@ public static class HoneycombSetup
                     otel.AddHoneycomb(honeycombOptions)
                         .AddAspNetCoreInstrumentationWithBaggage()
                         .AddHttpClientInstrumentation()
-                        .SetSampler(new TraceIdRatioBasedSampler(0.1));
+                        .SetSampler<AlwaysOnSampler>();
                 })
                 .WithMetrics(otel =>
                 {
