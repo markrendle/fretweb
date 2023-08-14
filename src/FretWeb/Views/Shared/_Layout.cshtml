@@ -83,8 +83,28 @@
           </div>
         </div>
         
-        <a class="btn btn-primary mx-2 nav-item" type="button" id="btnKeys" asp-controller="Key" asp-action="Index">Keys</a>
-
+        <div class="dropdown show">
+          <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownKeys" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Keys
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownKeys" style="min-width: 240px">
+            <div class="row">
+              <div class="col-6">
+                @foreach (var note in KeyRoots.Major)
+                {
+                  <a class="note dropdown-item" asp-controller="Key" asp-action="Detail" asp-route-tone="major" asp-route-noteStr="@note.Text">@note.Display Major</a>
+                }
+              </div>
+              <div class="col-6">
+                @foreach (var note in KeyRoots.Minor)
+                {
+                  <a class="note dropdown-item" asp-controller="Key" asp-action="Detail" asp-route-tone="major" asp-route-noteStr="@note.Text">@note.Display Minor</a>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        
         <div class="dropdown show">
           <button class="btn btn-primary dropdown-toggle mx-2" type="button" id="dropdownBuilder" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Builder
