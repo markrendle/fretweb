@@ -17,7 +17,7 @@ public class ArpeggioTests
     [Fact]
     public void GMajor7()
     {
-        Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7th", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.G);
         Assert.Equal(Notes.G, notes[0]);
         Assert.Equal(Notes.B, notes[1]);
@@ -28,7 +28,7 @@ public class ArpeggioTests
     [Fact]
     public void GDiminished7()
     {
-        Assert.True(Arpeggios.TryGet("Diminished7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Diminished7th", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.G);
         Assert.Equal(Notes.G, notes[0]);
         Assert.Equal(Notes.BFlat, notes[1]);
@@ -39,7 +39,7 @@ public class ArpeggioTests
     [Fact]
     public void DFlatMajor7()
     {
-        Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7th", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.DFlat);
         AssertNotes(notes, Notes.DFlat, Notes.F, Notes.AFlat, Notes.C);
     }
@@ -47,7 +47,7 @@ public class ArpeggioTests
     [Fact]
     public void DFlatMinor7()
     {
-        Assert.True(Arpeggios.TryGet("Minor7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Minor7th", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.DFlat);
         AssertNotes(notes, Notes.DFlat, Notes.FFlat, Notes.AFlat, Notes.CFlat);
     }
@@ -55,7 +55,7 @@ public class ArpeggioTests
     [Fact]
     public void DMajor7Flat5()
     {
-        Assert.True(Arpeggios.TryGet("Major7flat5", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7thflat5", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.D);
         AssertNotes(notes, Notes.D, Notes.FSharp, Notes.AFlat, Notes.CSharp);
     }
@@ -63,7 +63,7 @@ public class ArpeggioTests
     [Fact]
     public void DMinor7()
     {
-        Assert.True(Arpeggios.TryGet("Minor7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Minor7th", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.D);
         AssertNotes(notes, Notes.D, Notes.F, Notes.A, Notes.C);
     }
@@ -71,7 +71,7 @@ public class ArpeggioTests
     [Fact]
     public void DMinor7Flat5()
     {
-        Assert.True(Arpeggios.TryGet("Minor7flat5", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Minor7thflat5", out var arpeggio));
         var notes = arpeggio.GetNotes(Notes.D);
         AssertNotes(notes, Notes.D, Notes.F, Notes.AFlat, Notes.C);
     }

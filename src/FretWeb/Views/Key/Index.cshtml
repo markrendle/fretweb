@@ -19,14 +19,14 @@
   <tbody>
   <tr>
     <td>Major</td>
-    @foreach (var note in Model.Notes)
+    @foreach (var note in KeyRoots.Major)
     {
       <td><a class="note color-@note.Text fw-bold" asp-action="Detail" asp-route-tone="major" asp-route-noteStr="@note.Text">@note.Display</a></td>
     }
   </tr>
   <tr>
     <td>Minor</td>
-    @foreach (var note in Model.Notes)
+    @foreach (var note in KeyRoots.Minor)
     {
       <td><a class="note color-@note.Text fw-bold" asp-action="Detail" asp-route-tone="minor" asp-route-noteStr="@note.Text">@note.Display</a></td>
     }

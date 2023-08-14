@@ -1,18 +1,10 @@
-﻿using FretWeb.Music;
 using FretWeb.Music.NoteTypes;
 
 namespace FretWeb.Models;
 
-public class KeyViewModel
+internal static class KeyRoots
 {
-    public Key Key { get; }
-
-    public KeyViewModel(Key key)
-    {
-        Key = key;
-    }
-    
-    public Note[] MajorRoots =
+    public static readonly Note[] Major =
     {
         Music.Notes.C,
         Music.Notes.DFlat,
@@ -28,7 +20,7 @@ public class KeyViewModel
         Music.Notes.B,
     };
     
-    public Note[] MinorRoots =
+    public static readonly Note[] Minor =
     {
         Music.Notes.C,
         Music.Notes.CSharp,

@@ -33,7 +33,7 @@ public class ArpeggioTests
     public void CMajor7()
     {
         var fretboard = Fretboard.Create(12, Notes.E, Notes.A, Notes.D, Notes.G);
-        Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7th", out var arpeggio));
         
         var root = fretboard.GetFirst(Notes.C);
         var three = fretboard.GetFirst(Notes.E);
@@ -51,7 +51,7 @@ public class ArpeggioTests
     public void GMajor7()
     {
         var fretboard = Fretboard.Create(12, Notes.E, Notes.A, Notes.D, Notes.G);
-        Assert.True(Arpeggios.TryGet("Major7", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7th", out var arpeggio));
         
         var root = fretboard.GetFirst(Notes.G);
         var three = fretboard.GetFirst(Notes.B);
@@ -69,7 +69,7 @@ public class ArpeggioTests
     public void CMajor7Flat5()
     {
         var fretboard = Fretboard.Create(12, Notes.E, Notes.A, Notes.D, Notes.G);
-        Assert.True(Arpeggios.TryGet("Major7flat5", out var arpeggio));
+        Assert.True(Arpeggios.TryGet("Major7thflat5", out var arpeggio));
         
         var c = fretboard.GetFirst(Notes.C);
         var e = fretboard.GetFirst(Notes.E);
