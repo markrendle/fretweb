@@ -1,0 +1,91 @@
+﻿@using System.Text
+@model KeyViewModel
+
+@{
+  ViewBag.Title = "Key of " + Model.Key.Name;
+  Layout = "_Layout";
+}
+
+<h2>Key of @Model.Key.Name</h2>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Chord</th>
+    <th colspan="3">Fretboards</th>
+    <th>Mode</th>
+    <th colspan="3">Fretboards</th>
+  </tr>
+  </thead>
+  <tbody>
+  @{
+    var allChords = new StringBuilder();
+    var allModes = new StringBuilder();
+  }
+  @foreach (var chord in Model.Key.Chords)
+  {
+    var arpeggioLink = chord.Root.Text.Replace("-", "") + '-' + chord.ChordName.Replace(" ", "");
+    if (allChords.Length > 0) allChords.Append('+');
+    allChords.Append(arpeggioLink);
+    var modeLink = chord.Root.Text.Replace("-", "") + '-' + chord.ChordMode;
+    if (allModes.Length > 0) allModes.Append('+');
+    allModes.Append(modeLink);
+    <tr>
+      <td><span class="note fw-bold">@chord.Number</span></td>
+      <td><span class="color-@chord.Root.Text fw-bold"><span class="note">@chord.Root.Display</span> @chord.ChordName</span></td>
+      <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADG" asp-route-arpeggios="@arpeggioLink">Bass</a></td>
+      <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADGBE" asp-route-arpeggios="@arpeggioLink">Guitar</a></td>
+      <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="GCEA" asp-route-arpeggios="@arpeggioLink">Ukulele</a></td>
+      <td><span class="color-@chord.Root.Text fw-bold"><span class="note">@chord.Root.Display</span> @chord.ChordMode</span></td>
+      <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="EADG" asp-route-modes="@modeLink">Bass</a></td>
+      <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="EADGBE" asp-route-modes="@modeLink">Guitar</a></td>
+      <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="GCEA" asp-route-modes="@modeLink">Ukulele</a></td>
+    </tr>
+  }
+  @{
+    var allChordsLink = allChords.ToString();
+    var allModesLink = allModes.ToString();
+  }
+  <tr>
+    <td></td>
+    <td>All chords</td>
+    <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADG" asp-route-arpeggios="@allChordsLink">Bass</a></td>
+    <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADGBE" asp-route-arpeggios="@allChordsLink">Guitar</a></td>
+    <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="GCEA" asp-route-arpeggios="@allChordsLink">Ukulele</a></td>
+    <td>All modes</td>
+    <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="EADG" asp-route-modes="@allModesLink">Bass</a></td>
+    <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="EADGBE" asp-route-modes="@allModesLink">Guitar</a></td>
+    <td><a asp-controller="Fretboards" asp-action="Mode" asp-route-tuning="GCEA" asp-route-modes="@allModesLink">Ukulele</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<h3 class="mt-5">Other keys</h3>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>
+      Tone
+    </th>
+    <th colspan="12" class="align-content-center">Notes</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Major</td>
+    @foreach (var note in Model.Notes)
+    {
+      <td><a class="note color-@note.Text fw-bold" asp-action="Detail" asp-route-tone="major" asp-route-noteStr="@note.Text">@note.Display</a></td>
+    }
+  </tr>
+  <tr>
+    <td>Minor</td>
+    @foreach (var note in Model.Notes)
+    {
+      <td><a class="note color-@note.Text fw-bold" asp-action="Detail" asp-route-tone="minor" asp-route-noteStr="@note.Text">@note.Display</a></td>
+    }
+  </tr>
+  </tbody>
+</table>

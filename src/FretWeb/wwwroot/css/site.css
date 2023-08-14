@@ -90,8 +90,12 @@ h3 {
   margin-left: 0.2em;
 }
 
-span.note {
+span.note, a.note {
   font-family: "BravuraText", sans-serif;
+}
+
+a.note {
+  text-decoration: none;
 }
 
 .color-C, .color-B-sharp, .color-D-flatflat {

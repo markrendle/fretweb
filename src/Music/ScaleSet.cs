@@ -47,7 +47,7 @@ public class ScaleSet
 
     public IEnumerable<Scale> Enumerate() => _scales.Values.OrderBy(s => s[0].Value);
 
-    public Scale Get(Note note) => _scales[note];
+    public Scale Get(Note note) => TryGet(note, out var scale) ? scale : throw new InvalidOperationException();
 
     public bool TryGet(Note note, [NotNullWhen(true)] out Scale? scale) =>
         _scales.TryGetValue(note, out scale) || _scales.TryGetValue(note.Alt, out scale);

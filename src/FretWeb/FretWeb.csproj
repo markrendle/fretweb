@@ -40,4 +40,8 @@
     <_ContentIncludedByDefault Remove="Views\Components\FretboardPrefix\Default.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>
