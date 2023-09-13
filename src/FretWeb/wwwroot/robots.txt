@@ -1,0 +1,4 @@
+﻿Sitemap: https://www.fretbadger.com/sitemap.xml
+
+User-agent: *
+Disallow: /feedback
