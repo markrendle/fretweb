@@ -12,6 +12,7 @@ COPY ["src/Fretboards/Fretboards.csproj", "src/Fretboards/"]
 COPY ["test/Fretboards.Tests/Fretboards.Tests.csproj", "test/Fretboards.Tests/"]
 COPY ["test/FretWeb.SmokeTest/FretWeb.SmokeTest.csproj", "test/FretWeb.SmokeTest/"]
 COPY ["test/Music.Tests/Music.Tests.csproj", "test/Music.Tests/"]
+COPY ["tools/SitemapBuilder/SitemapBuilder.csproj", "tools/SitemapBuilder/"]
 RUN dotnet restore
 COPY . .
 RUN dotnet build --no-restore -c Release -o /app/build
