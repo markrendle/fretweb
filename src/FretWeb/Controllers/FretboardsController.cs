@@ -130,16 +130,18 @@ public class FretboardsController : Controller
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(arpeggio, rootNote);
             var notes = arpeggio.GetNotes(rootNote);
-            for (int i = 0; i < notes.Length; i++)
+            for (int i = 1; i < notes.Length; i++)
             {
                 if (notes[i].IsTheoretical) notes[i] = notes[i].Alt;
+                else if (notes[0].IsSharp && notes[i].IsFlat) notes[i] = notes[i].AsSharp();
+                else if (notes[0].IsFlat && notes[i].IsSharp) notes[i] = notes[i].AsFlat();
             }
             viewModel.Fretboards.Add(new FretboardViewModel(fretboard, notes, arpeggioStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);
     }
-
+    
     [HttpGet("{tuning}/chord/{chords}")]
     public IActionResult Chord(string tuning, string chords, [FromQuery] int? frets, [FromQuery] string? tab, [FromQuery] bool? print = false)
     {
