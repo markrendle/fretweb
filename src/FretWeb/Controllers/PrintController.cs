@@ -72,7 +72,12 @@ public class PrintController : Controller
             var title = $"{rootNote.Display} {arpeggio.Name}";
             var fretboard = Fretboard.Create(frets ?? 12, tuningArray);
             fretboard.SetBadges(arpeggio, rootNote);
-            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, arpeggio.GetNotes(rootNote), arpeggioStr.ToLowerInvariant(), title));
+            var notes = arpeggio.GetNotes(rootNote);
+            for (int i = 0; i < notes.Length; i++)
+            {
+                if (notes[i].IsTheoretical) notes[i] = notes[i].Alt;
+            }
+            viewModel.Fretboards.Add(new FretboardViewModel(fretboard, notes, arpeggioStr.ToLowerInvariant(), title));
         }
 
         return View(viewModel);

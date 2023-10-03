@@ -25,7 +25,7 @@
   }
   @foreach (var chord in Model.Key.Chords)
   {
-    var arpeggioLink = chord.Root.Text.Replace("-", "") + '-' + chord.ChordName.Replace(" ", "");
+    var arpeggioLink = chord.Root.Text.Replace("-", "") + '-' + chord.ChordName7th.Replace(" ", "");
     if (allChords.Length > 0) allChords.Append('+');
     allChords.Append(arpeggioLink);
     var modeLink = chord.Root.Text.Replace("-", "") + '-' + chord.ChordMode;
@@ -33,7 +33,7 @@
     allModes.Append(modeLink);
     <tr>
       <td><span class="note fw-bold">@chord.Number</span></td>
-      <td><span class="color-@chord.Root.Text fw-bold"><span class="note">@chord.Root.Display</span> @chord.ChordName</span></td>
+      <td><span class="color-@chord.Root.Text fw-bold"><span class="note">@chord.Root.Display</span> @chord.ChordName7th</span></td>
       <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADG" asp-route-arpeggios="@arpeggioLink">Bass</a></td>
       <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="EADGBE" asp-route-arpeggios="@arpeggioLink">Guitar</a></td>
       <td><a asp-controller="Fretboards" asp-action="Arpeggio" asp-route-tuning="GCEA" asp-route-arpeggios="@arpeggioLink">Ukulele</a></td>
