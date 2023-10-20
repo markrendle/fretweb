@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <title>@ViewData["Title"]</title>
-  <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true"/>
-  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-  <link rel="stylesheet" href="~/css/fretboard.css" asp-append-version="true"/>
+  <link rel="preload" href="/css/BravuraText.woff2" as="font" type="font/woff2">
+  <link rel="stylesheet" href="/css/styles.css" asp-append-version="true"/>
+  <link rel="stylesheet" href="/css/site.css" asp-append-version="true"/>
+  <link rel="stylesheet" href="/css/fretboard.css" asp-append-version="true"/>
   @if (Environment.GetEnvironmentVariable("UMAMI_URL") is {Length: > 0} umamiUrl && Environment.GetEnvironmentVariable("UMAMI_WEBSITE_ID") is {Length: > 0} umamiWebsiteId)
   {
   <script async src="@umamiUrl" data-website-id="@umamiWebsiteId"></script>
