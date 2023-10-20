@@ -27,11 +27,14 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
-const int duration = 60 * 60;
-var cacheHeader = $"public,max-age={duration}";
+const string cacheHeader = "public,max-age=86400";
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    OnPrepareResponse = ctx => { ctx.Context.Response.Headers[HeaderNames.CacheControl] = cacheHeader; }
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers[HeaderNames.CacheControl] = cacheHeader;
+    }
 });
 
 app.UseRouting();
@@ -48,11 +51,18 @@ if (Environment.GetEnvironmentVariable("GOOGLE_ADS_TXT") is { Length: > 0 } goog
 
 app.MapHealthChecks("/health");
 
+Func<object, Task> setResponseHeaders = state =>
+{
+    var headers = ((HttpContext)state).Response.Headers;
+    headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
+    headers.CacheControl = cacheHeader;
+    headers.Vary = "Accept-Encoding";
+    return Task.CompletedTask;
+};
+
 app.Use(async (context, next) =>
 {
-    context.Response.Headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
-    context.Response.Headers.CacheControl = cacheHeader;
-    context.Response.Headers.Vary = "Accept-Encoding";
+    context.Response.OnStarting(setResponseHeaders, context);
     await next();
 });
 

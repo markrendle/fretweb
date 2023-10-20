@@ -1,5 +1,4 @@
-﻿using System.Text;
-using FretWeb.Models;
+﻿using FretWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FretWeb.Controllers;
