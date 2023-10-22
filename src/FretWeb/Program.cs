@@ -67,7 +67,7 @@ app.Use(async (context, next) =>
 
 app.UseAuthorization();
 
-app.Use(ContentLengthMiddleware.SetContentLength);
+// app.Use(ContentLengthMiddleware.SetContentLength);
 
 app.MapControllerRoute(
     name: "default",
