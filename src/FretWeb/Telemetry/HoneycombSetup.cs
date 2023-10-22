@@ -37,13 +37,15 @@ public static class HoneycombSetup
                     otel.AddHoneycomb(honeycombOptions)
                         .AddAspNetCoreInstrumentationWithBaggage()
                         .AddHttpClientInstrumentation()
+                        .AddSource(Observability.ActivitySource.Name)
                         .SetSampler<AlwaysOnSampler>();
                 })
                 .WithMetrics(otel =>
                 {
                     otel.AddHoneycomb(honeycombOptions)
                         .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation();
+                        .AddHttpClientInstrumentation()
+                        .AddMeter(Observability.Meter.Name);
                 });
         }
         catch (Exception ex)

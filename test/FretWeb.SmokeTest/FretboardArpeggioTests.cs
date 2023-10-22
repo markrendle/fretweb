@@ -1,5 +1,4 @@
 ﻿using FretWeb.Controllers;
-using FretWeb.Fretboards;
 using FretWeb.Music;
 using Microsoft.AspNetCore.Mvc.Testing;
 

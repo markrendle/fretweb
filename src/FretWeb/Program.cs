@@ -11,7 +11,6 @@ builder.AddHoneycombOpenTelemetry();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
-builder.Services.AddResponseCaching();
 builder.Services.AddHealthChecks();
 
 if (EnvironmentVariables.HaveValues("CLOUDFLARE_API_TOKEN", "CLOUDFLARE_API_ZONE"))
@@ -67,6 +66,8 @@ app.Use(async (context, next) =>
 });
 
 app.UseAuthorization();
+
+app.Use(ContentLengthMiddleware.SetContentLength);
 
 app.MapControllerRoute(
     name: "default",

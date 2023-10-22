@@ -3,6 +3,7 @@ using FretWeb.Models;
 using FretWeb.Music;
 using FretWeb.Music.NoteTypes;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace FretWeb.Controllers;
 
