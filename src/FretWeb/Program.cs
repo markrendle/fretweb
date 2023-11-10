@@ -5,7 +5,7 @@ using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddHoneycombOpenTelemetry();
+// builder.AddHoneycombOpenTelemetry();
 
 // Add services to the container.
 builder.Services.AddServerSideBlazor();
