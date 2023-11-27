@@ -1,7 +1,5 @@
 using FretWeb.Services;
-using FretWeb.Telemetry;
 using FretWeb.Utilities;
-using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,14 +24,15 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
-const string cacheHeader = "public,max-age=86400";
 
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
     {
-        ctx.Context.Response.Headers[HeaderNames.CacheControl] = cacheHeader;
-    }
+        const string staticFileCacheHeader = "public,max-age=604800";
+        ctx.Context.Response.Headers.CacheControl = staticFileCacheHeader;
+        ctx.Context.Response.Headers.Vary = "Accept-Encoding";
+    },
 });
 
 app.UseRouting();
@@ -52,6 +51,8 @@ app.MapHealthChecks("/health");
 
 Func<object, Task> setResponseHeaders = state =>
 {
+    const string cacheHeader = "public,max-age=86400";
+    
     var headers = ((HttpContext)state).Response.Headers;
     headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
     headers.CacheControl = cacheHeader;
