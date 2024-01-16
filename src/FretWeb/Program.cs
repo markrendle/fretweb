@@ -51,7 +51,7 @@ app.MapHealthChecks("/health");
 
 Func<object, Task> setResponseHeaders = state =>
 {
-    const string cacheHeader = "public,max-age=86400";
+    const string cacheHeader = "public,max-age=604800";
     
     var headers = ((HttpContext)state).Response.Headers;
     headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
@@ -67,8 +67,6 @@ app.Use(async (context, next) =>
 });
 
 app.UseAuthorization();
-
-// app.Use(ContentLengthMiddleware.SetContentLength);
 
 app.MapControllerRoute(
     name: "default",
