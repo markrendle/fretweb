@@ -7,7 +7,7 @@ public static class FretboardScaleUrls
 {
     public static IEnumerable<string> Get()
     {
-        foreach (var tuning in StandardTunings.All().Select(t => t.Tuning))
+        foreach (var tuning in StandardTunings.Standard().Select(t => t.Tuning))
         {
             foreach (var scaleSet in Scales.EnumerateScales())
             {

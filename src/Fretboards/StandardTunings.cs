@@ -49,6 +49,8 @@ public static class StandardTunings
 
     public static IEnumerable<StandardTuning> All() => Tunings.AsEnumerable();
 
+    public static IEnumerable<StandardTuning> Standard() => Tunings.Where(t => t.Name == "Standard");
+
     public static IEnumerable<StandardTuning> Dropdown() => Tunings.Where(t => t is { Group: "Bass", Strings: 4 }).OrderBy(t => t.Order)
         .Concat(Tunings.Where(t => t is { Group: "Guitar", Strings: 6 }).OrderBy(t => t.Order))
         .Concat(Tunings.Where(t => t is { Group: "Ukulele", Strings: 4 }).OrderBy(t => t.Order));

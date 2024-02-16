@@ -4,12 +4,6 @@ namespace FretWeb.Models;
 
 public class FretboardPageViewModel
 {
-    public FretboardPageViewModel()
-    {
-    }
-
-    public Fretboard? Fretboard { get; }
-
     public List<FretboardViewModel> Fretboards { get; } = new();
 
     public string? Title { get; set; }
