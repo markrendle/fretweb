@@ -1,9 +1,9 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0.3-bookworm-slim-arm64v8 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0.407-bookworm-slim-arm64v8 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0.202-bookworm-slim-arm64v8 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0.407-bookworm-slim-arm64v8 AS build
 WORKDIR /src
 COPY ["FretWeb.sln", "."]
 COPY ["src/FretWeb/FretWeb.csproj", "src/FretWeb/"]
@@ -13,7 +13,7 @@ COPY ["test/Fretboards.Tests/Fretboards.Tests.csproj", "test/Fretboards.Tests/"]
 COPY ["test/FretWeb.SmokeTest/FretWeb.SmokeTest.csproj", "test/FretWeb.SmokeTest/"]
 COPY ["test/Music.Tests/Music.Tests.csproj", "test/Music.Tests/"]
 COPY ["tools/SitemapBuilder/SitemapBuilder.csproj", "tools/SitemapBuilder/"]
-RUN dotnet restore ./src/FretWeb/FretWeb.csproj
+RUN dotnet restore
 COPY . .
 RUN dotnet build --no-restore -c Release -o /app/build
 RUN dotnet test -c Release -o /app/build --no-build
