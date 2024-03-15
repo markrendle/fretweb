@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fretweb
+spec:
+  selector:
+    matchLabels:
+      app: fretweb
+  template:
+    metadata:
+      labels:
+        app: fretweb
+    spec:
+      containers:
+      - name: fretweb
+        image: ghcr.io/markrendle/fretweb:2024.8286747535
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: ghcr-login-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fretweb
+spec:
+  selector:
+    app: fretweb
+  ports:
+  - port: 80
