@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{5C17E4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{12519DDE-3958-4E84-B5E4-E9E6ACCA3324}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\main_frets.yml = .github\workflows\main_frets.yml
+		.github\workflows\arm-docker-image.yml = .github\workflows\arm-docker-image.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fretboards", "src\Fretboards\Fretboards.csproj", "{A27ADA00-E21B-495C-9325-4EA9F39D1C40}"

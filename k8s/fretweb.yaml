@@ -13,13 +13,24 @@ spec:
     spec:
       containers:
       - name: fretweb
-        image: ghcr.io/markrendle/fretweb:2024.8480697082
+        image: ghcr.io/markrendle/fretweb:2024.8480813676
         resources:
           limits:
             memory: "1024Mi"
             cpu: "500m"
         ports:
         - containerPort: 80
+        env:
+        - name: CLOUDFLARE_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-api
+              key: key
+        - name: CLOUDFLARE_API_ZONE
+          valueFrom:
+            secretKeyRef:
+              name: cloudflare-api
+              key: zone
       imagePullSecrets:
       - name: ghcr-login-secret
 ---
