@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: fretweb
-        image: ghcr.io/markrendle/fretweb:2024.8298284112
+        image: ghcr.io/markrendle/fretweb:2024.8480697082
         resources:
           limits:
             memory: "1024Mi"

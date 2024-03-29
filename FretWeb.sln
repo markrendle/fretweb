@@ -35,6 +35,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{53073A48
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitemapBuilder", "tools\SitemapBuilder\SitemapBuilder.csproj", "{15C2FD3D-F7F6-4161-AB83-B0D0C0C37095}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{491DE0A4-B39D-42E3-9FCF-2F7CB52054DB}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\cftunnel.yaml = k8s\cftunnel.yaml
+		k8s\fretweb.yaml = k8s\fretweb.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
